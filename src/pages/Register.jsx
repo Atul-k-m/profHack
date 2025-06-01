@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import { User, Lock, Briefcase, Check, X } from 'lucide-react'
 
 
@@ -14,26 +14,49 @@ const Button = ({ children, onClick, variant, className, type, disabled, ...prop
   </button>
 )
 
-const FormInput = ({ label, error, ...props }) => (
-  <div className="space-y-2">
-    <label className="block text-xs font-medium text-black tracking-wide">
-      {label}
-    </label>
-    <input
-      className={`w-full px-3 py-2 border border-black rounded-none text-black placeholder-gray-500
-        transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
-        text-xs shadow-sm font-medium tracking-wide
-        ${error ? 'border-red-600 focus:ring-red-600' : 'border-black hover:border-gray-800'}`}
-      {...props}
-    />
-    {error && (
-      <p className="text-xs text-red-600 flex items-center gap-1 font-medium">
-        <span className="w-1 h-1 bg-red-600 rounded-full"></span>
-        {error}
-      </p>
-    )}
-  </div>
-)
+const FormInput = ({ label, error, onFocus, ...props }) => {
+  const inputRef = useRef(null)
+  
+  const handleFocus = (e) => {
+    // Scroll into view on mobile when keyboard appears
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center',
+          inline: 'nearest'
+        })
+      }
+    }, 300) // Delay for keyboard animation
+    
+    if (onFocus) onFocus(e)
+  }
+
+  return (
+    <div className="space-y-2">
+      <label className="block text-xs font-medium text-black tracking-wide">
+        {label}
+      </label>
+      <input
+        ref={inputRef}
+        onFocus={handleFocus}
+        // Prevent iOS zoom on focus
+        style={{ fontSize: '16px' }}
+        className={`w-full px-3 py-2 border border-black rounded-none text-black placeholder-gray-500
+          transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
+          shadow-sm font-medium tracking-wide
+          ${error ? 'border-red-600 focus:ring-red-600' : 'border-black hover:border-gray-800'}`}
+        {...props}
+      />
+      {error && (
+        <p className="text-xs text-red-600 flex items-center gap-1 font-medium">
+          <span className="w-1 h-1 bg-red-600 rounded-full"></span>
+          {error}
+        </p>
+      )}
+    </div>
+  )
+}
 
 const StepIndicator = ({ steps, currentStep }) => (
   <div className="flex items-center justify-center space-x-3 mb-6">
@@ -68,15 +91,50 @@ const StepIndicator = ({ steps, currentStep }) => (
 const SearchableDropdown = ({ label, options = [], value, onChange, placeholder, error, allowClear = true }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const dropdownRef = useRef(null)
+  const inputRef = useRef(null)
 
   const filteredOptions = options.filter(option =>
     option.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  // Improved mobile handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (isOpen && window.visualViewport) {
+        const viewport = window.visualViewport
+        const dropdown = dropdownRef.current
+        if (dropdown) {
+          const rect = dropdown.getBoundingClientRect()
+          const spaceBelow = viewport.height - rect.bottom
+          const spaceAbove = rect.top
+          
+          // If keyboard is up and no space below, position dropdown above
+          if (spaceBelow < 200 && spaceAbove > 200) {
+            dropdown.style.bottom = '100%'
+            dropdown.style.top = 'auto'
+          } else {
+            dropdown.style.top = '100%'
+            dropdown.style.bottom = 'auto'
+          }
+        }
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize)
+      return () => window.visualViewport.removeEventListener('resize', handleResize)
+    }
+  }, [isOpen])
+
   const handleSelect = (option) => {
     onChange(option)
     setSearchTerm('')
     setIsOpen(false)
+    // Blur input to hide keyboard on mobile
+    if (inputRef.current) {
+      inputRef.current.blur()
+    }
   }
 
   const handleClear = (e) => {
@@ -84,17 +142,24 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     onChange('')
     setSearchTerm('')
     setIsOpen(false)
+    // Blur input to hide keyboard on mobile
+    if (inputRef.current) {
+      inputRef.current.blur()
+    }
   }
 
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value
-    setSearchTerm(inputValue)
+  const handleInputFocus = () => {
     setIsOpen(true)
-    
-    
-    if (!inputValue) {
-      onChange('')
-    }
+    setSearchTerm('')
+    // Scroll input into view on mobile
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        })
+      }
+    }, 100)
   }
 
   return (
@@ -104,21 +169,34 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
       </label>
       <div className="relative">
         <input
+          ref={inputRef}
           type="text"
           value={isOpen ? searchTerm : value || ''}
-          onChange={handleInputChange}
-          onFocus={() => {
+          onChange={(e) => {
+            const inputValue = e.target.value
+            setSearchTerm(inputValue)
             setIsOpen(true)
-            setSearchTerm('')
+            if (!inputValue) onChange('')
+          }}
+          onFocus={handleInputFocus}
+          onBlur={(e) => {
+            // Delay blur to allow clicks on dropdown options
+            setTimeout(() => {
+              if (!dropdownRef.current?.contains(document.activeElement)) {
+                setIsOpen(false)
+                setSearchTerm('')
+              }
+            }, 150)
           }}
           placeholder={placeholder}
+          // Prevent zoom on iOS
+          style={{ fontSize: '16px' }}
           className={`w-full px-3 py-2 pr-8 border border-black rounded-none text-black placeholder-gray-500
             transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
-            text-xs shadow-sm font-medium tracking-wide
+            shadow-sm font-medium tracking-wide
             ${error ? 'border-red-600 focus:ring-red-600' : 'border-black hover:border-gray-800'}`}
         />
         
-    
         {allowClear && value && !isOpen && (
           <button
             type="button"
@@ -130,36 +208,35 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
         )}
         
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border-2 border-black shadow-lg max-h-48 overflow-y-auto">
+          <div 
+            ref={dropdownRef}
+            className="absolute z-50 w-full mt-1 bg-white border-2 border-black shadow-2xl max-h-48 overflow-y-auto"
+            style={{
+              // Ensure dropdown is always visible
+              minHeight: '120px'
+            }}
+          >
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
                 <div
                   key={option}
-                  onClick={() => handleSelect(option)}
-                  className="px-3 py-2 text-xs font-medium tracking-wide hover:bg-black hover:text-white cursor-pointer transition-colors duration-200"
+                  onMouseDown={(e) => {
+                    e.preventDefault() // Prevent input blur
+                    handleSelect(option)
+                  }}
+                  className="px-3 py-3 text-sm font-medium tracking-wide hover:bg-black hover:text-white cursor-pointer transition-colors duration-200 border-b border-gray-100 last:border-b-0"
                 >
                   {option}
                 </div>
               ))
             ) : (
-              <div className="px-3 py-2 text-xs text-gray-500 font-medium">
+              <div className="px-3 py-3 text-sm text-gray-500 font-medium">
                 No options found
               </div>
             )}
           </div>
         )}
       </div>
-      
-     
-      {isOpen && (
-        <div 
-          className="fixed inset-0 z-5" 
-          onClick={() => {
-            setIsOpen(false)
-            setSearchTerm('')
-          }}
-        />
-      )}
       
       {error && (
         <p className="text-xs text-red-600 flex items-center gap-1 font-medium">
@@ -170,7 +247,6 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     </div>
   )
 }
-
 // Updated mock data using your JSON format
 const mockEmployeeData = [
     {
@@ -1751,6 +1827,7 @@ const resendOtp = async () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1))
     setErrors({})
   }
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -2145,9 +2222,8 @@ const resendOtp = async () => {
         ))}
       </div>
 
-      
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-6">
-        <div className="w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+      <div className="relative z-10 flex items-start justify-center min-h-screen px-4 py-6 pb-20">
+    <div className="w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-2xl backdrop-blur-sm mt-4 mb-8 sm:mt-8 min-h-[calc(100vh-8rem)]">
           {/* Header */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-black mb-4 leading-none">
