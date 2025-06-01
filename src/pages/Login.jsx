@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LogIn, Eye, EyeOff, Lock, User } from 'lucide-react';
 
-// Mock components matching the register page style
+
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
     onClick={onClick}
@@ -85,7 +85,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Static Grid Background - Always Full Screen */}
+
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div 
           className="w-full h-full"
@@ -99,28 +99,13 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
         />
       </div>
       
-      {/* Floating Grid Squares */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute border border-black opacity-15"
-            style={{
-              width: '50px',
-              height: '50px',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${6 + i * 1.5}s ease-in-out infinite`,
-              animationDelay: `${i * 0.4}s`
-            }}
-          />
-        ))}
-      </div>
+    
+     
 
-      {/* Main Content */}
+ 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-6">
         <div className="w-full max-w-xl border-2 border-black bg-white p-8 md:p-12 shadow-2xl backdrop-blur-sm">
-          {/* Header */}
+          
           <div className="mb-10 text-center">
             <div className="w-20 h-20 bg-black mx-auto mb-6 flex items-center justify-center">
               <LogIn className="text-white" size={36} />
@@ -134,7 +119,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
             </p>
           </div>
 
-          {/* Error Message */}
+        
           {error && (
             <div className="mb-8">
               <div className="p-4 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide bg-red-50">
@@ -184,7 +169,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </div>
             </div>
 
-            {/* Additional Options */}
+            
             <div className="flex items-center justify-between pt-2">
               <label className="flex items-center cursor-pointer">
                 <input
@@ -203,7 +188,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </button>
             </div>
 
-            {/* Submit Button */}
+           
             <div className="pt-4">
               <Button
                 onClick={handleSubmit}
@@ -236,7 +221,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
 
           {/* Navigation Links */}
           <div className="mt-10 space-y-4">
-            {/* Register Link */}
+          
             <div className="text-center border-t border-gray-200 pt-6">
               <p className="text-sm text-black font-medium tracking-wide">
                 Don't have an account?{' '}
@@ -249,7 +234,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </p>
             </div>
 
-            {/* Back to Home */}
+          
             <div className="text-center">
               <Button
                 onClick={() => setCurrentPage('hero')}

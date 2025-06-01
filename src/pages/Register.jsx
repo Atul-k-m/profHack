@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { User, Lock, Briefcase, Check, X } from 'lucide-react'
 
-// Mock components (using the same structure as your existing components)
+
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
     onClick={onClick}
@@ -91,7 +91,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     setSearchTerm(inputValue)
     setIsOpen(true)
     
-    // If user clears the input, also clear the selected value
+    
     if (!inputValue) {
       onChange('')
     }
@@ -118,7 +118,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
             ${error ? 'border-red-600 focus:ring-red-600' : 'border-black hover:border-gray-800'}`}
         />
         
-        {/* Clear button */}
+    
         {allowClear && value && !isOpen && (
           <button
             type="button"
@@ -150,7 +150,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
         )}
       </div>
       
-      {/* Invisible overlay to close dropdown when clicking outside */}
+     
       {isOpen && (
         <div 
           className="fixed inset-0 z-5" 
@@ -1609,7 +1609,7 @@ const sendOtpEmail = async () => {
     
     if (response.ok) {
       setOtpSent(true)
-      setOtpTimer(300) // 5 minutes
+      setOtpTimer(300)
       setOtpVerified(false)
     } else {
       setErrors({ ...errors, email: data.message })
@@ -1851,7 +1851,7 @@ const resendOtp = async () => {
       disabled={otpVerified}
     />
     
-    {/* Send OTP Button */}
+ 
     {formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) === false && !otpSent && !otpVerified && (
       <Button
         onClick={sendOtpEmail}
@@ -1930,7 +1930,7 @@ const resendOtp = async () => {
       </div>
     )}
 
-    {/* Success Message */}
+ 
     {otpVerified && (
       <div className="p-3 border-2 border-green-600 bg-green-50 text-green-700 text-xs font-medium flex items-center gap-2">
         <Check className="w-4 h-4" />
@@ -2112,7 +2112,7 @@ const resendOtp = async () => {
         />
       </div>
       
-      {/* Floating Grid Squares */}
+     
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <div
@@ -2130,7 +2130,7 @@ const resendOtp = async () => {
         ))}
       </div>
 
-      {/* Main Content */}
+      
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-6">
         <div className="w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-2xl backdrop-blur-sm">
           {/* Header */}
@@ -2143,7 +2143,7 @@ const resendOtp = async () => {
 
           <StepIndicator steps={steps} currentStep={currentStep} />
 
-          {/* Error Message */}
+        
           {errors.submit && (
             <div className="mb-6">
               <div className="p-3 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide">
@@ -2152,11 +2152,11 @@ const resendOtp = async () => {
             </div>
           )}
 
-          {/* Form Content */}
+          
           <div>
             <div className="mb-8">{renderStepContent()}</div>
 
-            {/* Navigation Buttons */}
+           
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <Button
                 onClick={
@@ -2217,7 +2217,7 @@ const resendOtp = async () => {
             </div>
           </div>
 
-          {/* Login Link */}
+        
           <div className="mt-8 text-center">
             <p className="text-sm text-black font-medium tracking-wide">
               Already have an account?{' '}

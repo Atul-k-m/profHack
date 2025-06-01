@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
-// TrueFocus Component (placeholder - you can replace with your actual implementation)
-
-
+import bmsitLogo from './assets/bmsit.png';
+import ieeeLogo from './assets/stb.png';
+import iiclogo from './assets/iic.png';
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
     onClick={onClick}
@@ -30,6 +29,9 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+ 
+  
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Dynamic Grid Background */}
@@ -46,106 +48,78 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
           }}
         />
       </div>
-      
-   
 
-      {/* Logo Section with Enhanced Layout */}
-     <div className="relative z-10 pt-6 px-4">
-  <div className="max-w-7xl mx-auto">
-    {/* Mobile: Enhanced logo layout */}
-    <div className="flex md:hidden justify-center items-center gap-4 mb-8">
-      {/* Logo 1 */}
-      <div
-        className="w-14 h-14 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
-        }}
-      >
-        <span className="text-xs font-bold text-black">LOGO 1</span>
-        {/* Replace with: <img src="/path/to/logo1.png" alt="Logo 1" className="w-8 h-8 object-contain" /> */}
-      </div>
-      
-      {/* Logo 2 */}
-      <div className="w-14 h-14 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-        <span className="text-xs font-bold text-black">LOGO 2</span>
-        {/* Replace with: <img src="/path/to/logo2.png" alt="Logo 2" className="w-8 h-8 object-contain" /> */}
-      </div>
-      
-      {/* Logo 3 */}
-      <div
-        className="w-14 h-14 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
-        }}
-      >
-        <span className="text-xs font-bold text-black">LOGO 3</span>
-        {/* Replace with: <img src="/path/to/logo3.png" alt="Logo 3" className="w-8 h-8 object-contain" /> */}
-      </div>
-      
-      {/* Logo 4 */}
-      <div className="w-14 h-14 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-        <span className="text-xs font-bold text-black">LOGO 4</span>
-        {/* Replace with: <img src="/path/to/logo4.png" alt="Logo 4" className="w-8 h-8 object-contain" /> */}
-      </div>
-    </div>
+      <div className="relative z-10 pt-6 px-4">
+        <div className="max-w-7xl mx-auto">
+          
+         
+          <div className="flex md:hidden justify-center items-center gap-8 mb-8">
+           
+            <div
+              className="h-14 px-4 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              style={{
+                clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0% 100%)'
+              }}
+            >
+              <img src={bmsitLogo} alt="BMSIT Logo" className="h-8 object-contain" />
+            </div>
+            
+     
+            <div className="w-14 h-14 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-full">
+              <img src={ieeeLogo} alt="IEEE Logo" className="w-10 h-10 object-contain" />
+            </div>
+            
+            
+            <div
+              className="w-14 h-14 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              style={{
+                clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'
+              }}
+            >
+              <img src={iiclogo} alt="ProfHack Logo" className="w-10 h-10 object-contain" />
+            </div>
+          </div>
 
-    {/* Desktop: Enhanced logo layout with animations */}
-    <div className="hidden md:flex justify-between items-start mb-12">
-      <div className="flex items-center gap-8">
-        {/* Logo 1 */}
-        <div
-          className="group w-20 h-20 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:rotate-3"
-          style={{
-            clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0% 100%)'
-          }}
-        >
-          <span className="text-sm font-bold text-black group-hover:text-gray-700 transition-colors">LOGO 1</span>
-          {/* Replace with: <img src="/path/to/logo1.png" alt="Logo 1" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" /> */}
-        </div>
-        
-        {/* Logo 2 */}
-        <div
-          className="group w-20 h-20 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:rotate-3"
-          style={{
-            clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0% 100%)'
-          }}
-        >
-          <span className="text-sm font-bold text-black group-hover:text-gray-700 transition-colors">LOGO 2</span>
-          {/* Replace with: <img src="/path/to/logo2.png" alt="Logo 2" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" /> */}
-        </div>
-      </div>
-      
-      <div className="flex items-center gap-8">
-        {/* Logo 3 */}
-        <div
-          className="group w-20 h-20 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-3"
-          style={{
-            clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'
-          }}
-        >
-          <span className="text-sm font-bold text-black group-hover:text-gray-700 transition-colors">LOGO 3</span>
-          {/* Replace with: <img src="/path/to/logo3.png" alt="Logo 3" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" /> */}
-        </div>
-        
-        {/* Logo 4 */}
-        <div
-          className="group w-20 h-20 border-2 border-black bg-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-3"
-          style={{
-            clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'
-          }}
-        >
-          <span className="text-sm font-bold text-black group-hover:text-gray-700 transition-colors">LOGO 4</span>
-          {/* Replace with: <img src="/path/to/logo4.png" alt="Logo 4" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" /> */}
+          {/* Desktop Logo Layout */}
+          <div className="hidden md:flex justify-between items-start mb-12">
+           
+            <div className="flex items-center">
+              <div
+                className="group h-20 px-6 bg-transparent flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:rotate-1"
+                style={{
+                  clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)'
+                }}
+              >
+                <img src={bmsitLogo} alt="BMSIT Logo" className="h-18 object-contain group-hover:scale-105 transition-transform" />
+              </div>
+            </div>
+            
+           
+            <div className="flex items-center gap-8">
+             
+              <div
+                className="group w-20 h-20 bg-transparent flex items-center justify-center  hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-2 rounded-full"
+              >
+                <img src={ieeeLogo} alt="IEEE Logo" className="w-18 h-18 object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              
+              
+              <div
+                className="group w-20 h-20 bg-transparent flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-3"
+                style={{
+                  clipPath: 'polygon(5% 0, 100% 0, 100% 100%, 0% 100%)'
+                }}
+              >
+                <img src={iiclogo} alt="ProfHack Logo" className="w-16 h-16 object-contain group-hover:scale-105 transition-transform" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-      {/* Main Content with Enhanced Typography */}
       <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-140px)] px-4">
         <div className="text-center max-w-5xl mx-auto">
-          {/* Upper Title with Animation */}
+ 
           <div className="mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <h2 className="text-xl md:text-2xl font-bold tracking-[0.3em] text-black uppercase mb-4">
               BMSIT&M X IEEE
@@ -153,15 +127,12 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             <div className="w-32 h-1 bg-gradient-to-r from-transparent via-black to-transparent mx-auto"></div>
           </div>
 
-          {/* Main Title with TrueFocus Integration */}
           <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-black tracking-tighter text-black leading-none mb-6">
                ProfHack 
-                
             </h1>
           </div>
 
-          {/* Enhanced Description */}
           <div className="mb-14 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <p className="text-lg md:text-xl text-gray-700 font-medium tracking-wide max-w-3xl mx-auto leading-relaxed">
               Join the ultimate hackathon experience. 
@@ -171,7 +142,6 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             </p>
           </div>
 
-          {/* Enhanced Buttons with Better Interactions */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <Button
               onClick={() => setCurrentPage('register')}
@@ -210,7 +180,6 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             </Button>
           </div>
 
-          {/* Additional Call-to-Action */}
           <div className="mt-16 opacity-0 animate-fade-in-up" style={{ animationDelay: '1s' }}>
             <div className="flex items-center justify-center gap-4 text-sm text-gray-600 font-medium">
               <div className="w-8 h-px bg-gray-400"></div>

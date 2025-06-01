@@ -14,7 +14,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch user profile data from database
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -74,7 +74,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     setCurrentPage('hero');
   };
 
-  // Loading component
   const LoadingCard = () => (
     <div className="bg-white border-2 border-black p-6 animate-pulse">
       <div className="h-4 bg-gray-300 rounded mb-4"></div>
@@ -83,7 +82,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </div>
   );
 
-  // Error component
   const ErrorMessage = ({ message }) => (
     <div className="bg-red-50 border-2 border-red-500 p-4 mb-6">
       <div className="flex items-center">
@@ -96,7 +94,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </div>
   );
 
-  // Simple navbar component
+
   const Navbar = () => (
     <nav className="bg-white border-b-2 border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -127,10 +125,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </nav>
   );
 
-  // Card component with grid pattern
+
   const Card = ({ children, className = "" }) => (
     <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden ${className}`}>
-      {/* Grid pattern overlay */}
+      
       <div 
         className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
@@ -147,7 +145,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </div>
   );
 
-  // Stat card component
+
   const StatCard = ({ title, value, icon: Icon, description, loading = false }) => (
     <Card className="p-6">
       {loading ? (
@@ -178,8 +176,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
       )}
     </Card>
   );
-
-  // Show loading state while fetching data
+a
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -202,10 +199,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
       <Navbar />
 
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        {/* Error Message */}
+        
         {error && <ErrorMessage message={error} />}
 
-        {/* Welcome Section */}
+    
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-black mb-2 leading-tight">
             Welcome, {userProfile.name ? userProfile.name.split(' ')[0] : 'User'}
@@ -216,7 +213,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           </p>
         </div>
 
-        {/* Stats Grid */}
+       
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard
             title="Designation"
@@ -244,11 +241,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           />
         </div>
 
-        {/* Main Content Grid */}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column */}
+         
           <div className="lg:col-span-2 space-y-8">
-            {/* Skills & Expertise */}
+            
             <Card className="p-6">
               <div className="border-b-2 border-black mb-6 pb-4">
                 <h3 className="text-xl font-black tracking-tight text-black uppercase">
@@ -276,7 +273,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               </div>
             </Card>
 
-            {/* Profile Information */}
+        
             <Card className="p-6">
               <div className="border-b-2 border-black mb-6 pb-4">
                 <h3 className="text-xl font-black tracking-tight text-black uppercase">
@@ -285,7 +282,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               </div>
               
               <div className="space-y-4">
-                {/* First row - Username and Email */}
+        
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 border border-black bg-gray-50">
                     <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
@@ -305,7 +302,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 </div>
                 
-                {/* Second row - Designation and Department */}
+               
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 border border-black bg-gray-50">
                     <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
@@ -325,7 +322,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 </div>
                 
-                {/* Third row - Full Name */}
+           
                 <div className="p-3 border border-black bg-gray-50">
                   <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
                     Full Name
@@ -338,9 +335,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </Card>
           </div>
 
-          {/* Right Column */}
+        
           <div className="space-y-8">
-            {/* Achievements & Badges */}
+            
             <Card className="p-6">
               <div className="border-b-2 border-black mb-6 pb-4">
                 <h3 className="text-lg font-black tracking-tight text-black uppercase flex items-center gap-2">
@@ -350,7 +347,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               </div>
               
               <div className="space-y-4">
-                {/* ProfHack2025 Badge */}
+                
                 <div className="p-4 border-2 border-black bg-gradient-to-r from-yellow-400 to-orange-500 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-8 h-8 bg-black transform rotate-45 translate-x-4 -translate-y-4"></div>
                   <div className="flex items-center gap-3">
@@ -368,7 +365,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 </div>
 
-                {/* Skills Master Badge - Dynamic based on skills count */}
+   
                 {userProfile.skills && userProfile.skills.split(',').length >= 3 && (
                   <div className="p-3 border border-black bg-white">
                     <div className="flex items-center gap-3">
@@ -387,7 +384,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 )}
 
-                {/* Experience Badge */}
+             
                 {userProfile.experience >= 5 && (
                   <div className="p-3 border border-black bg-white">
                     <div className="flex items-center gap-3">
