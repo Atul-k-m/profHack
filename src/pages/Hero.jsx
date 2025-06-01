@@ -61,17 +61,17 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
                 clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0% 100%)'
               }}
             >
-              <img src={bmsitLogo} alt="BMSIT Logo" className="h-8 object-contain" />
+              <img src={bmsitLogo} alt="BMSIT Logo" className="h-12 object-contain" />
             </div>
             
      
-            <div className="w-14 h-14 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-full">
-              <img src={ieeeLogo} alt="IEEE Logo" className="w-10 h-10 object-contain" />
+            <div className="w-14 h-14 bg-transparent flex items-center justify-center  hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-full">
+              <img src={ieeeLogo} alt="IEEE Logo" className="w-12 h-12 object-contain" />
             </div>
             
             
             <div
-              className="w-14 h-14 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="w-14 h-14 bg-transparent flex items-center justify-center  hover:shadow-xl transition-all duration-300 hover:scale-105"
               style={{
                 clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'
               }}
