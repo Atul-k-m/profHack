@@ -176,7 +176,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
       )}
     </Card>
   );
-a
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
