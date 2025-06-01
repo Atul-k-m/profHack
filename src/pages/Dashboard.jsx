@@ -27,7 +27,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           return;
         }
 
-        const response = await fetch('http://localhost:5000/api/profile', {
+        const response = await fetch('http://profhack-backend.onrender.com/api/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
