@@ -174,6 +174,21 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
 // Updated mock data using your JSON format
 const mockEmployeeData = [
     {
+    "name": "Test1",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
+    "name": "Test2",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },{
+    "name": "Test3",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+
+    {
     "name": "Atul Kumar",
     "designation": "Database Administrator",
     "department": "Computer Science & Engineering"
