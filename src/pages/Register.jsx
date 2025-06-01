@@ -1609,7 +1609,7 @@ const sendOtpEmail = async () => {
   setErrors({ ...errors, email: '', otp: '' })
   
   try {
-    const response = await fetch('http://profhack-backend.onrender.com/api/send-otp', {
+    const response = await fetch('https://profhack-backend.onrender.com/api/send-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1647,7 +1647,7 @@ const verifyOtp = async () => {
   setErrors({ ...errors, otp: '' })
   
   try {
-    const response = await fetch('http://profhack-backend.onrender.com/api/verify-otp', {
+    const response = await fetch('https://profhack-backend.onrender.com/api/verify-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1680,7 +1680,7 @@ const resendOtp = async () => {
   setErrors({ ...errors, otp: '' })
   
   try {
-    const response = await fetch('http://profhack-backend.onrender.com/api/resend-otp', {
+    const response = await fetch('https://profhack-backend.onrender.com/api/resend-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1760,7 +1760,7 @@ const resendOtp = async () => {
     setErrors({})
 
     try {
-      const response = await fetch('http://profhack-backend.onrender.com/api/register', {
+      const response = await fetch('https://profhack-backend.onrender.com/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
