@@ -57,7 +57,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
     setError('');
 
     try {
-      const response = await fetch('https://profhack-backend.onrender.com/api/login', {
+      const response = await fetch('https://profhack-backend.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
