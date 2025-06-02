@@ -180,7 +180,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
           }}
           onFocus={handleInputFocus}
           onBlur={(e) => {
-            // Delay blur to allow clicks on dropdown options
+         
             setTimeout(() => {
               if (!dropdownRef.current?.contains(document.activeElement)) {
                 setIsOpen(false)
@@ -189,7 +189,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
             }, 150)
           }}
           placeholder={placeholder}
-          // Prevent zoom on iOS
+        
           style={{ fontSize: '16px' }}
           className={`w-full px-3 py-2 pr-8 border border-black rounded-none text-black placeholder-gray-500
             transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
@@ -1938,7 +1938,7 @@ const resendOtp = async () => {
           setOtpTimer(0)
         }
       }}
-      placeholder="your.email@company.com"
+      placeholder="enter BMSIT&M email"
       error={errors.email}
       disabled={otpVerified}
     />
