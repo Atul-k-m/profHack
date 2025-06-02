@@ -19,7 +19,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     const fetchUserProfile = async () => {
       try {
         setLoading(true);
-        const token = window.authToken || localStorage.getItem('authToken');
+        const token = window.authToken || localStorage.getItem('token')
         
         if (!token) {
           setError('No authentication token found');
@@ -37,7 +37,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
         if (!response.ok) {
           if (response.status === 401) {
-            // Token is invalid or expired
             setError('Session expired. Please login again.');
             handleLogout();
             return;
@@ -71,7 +70,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     window.authToken = null;
     localStorage.removeItem('authToken');
     setIsLoggedIn(false);
-    setCurrentPage('hero');
+    setCurrentPage('home');
   };
 
   const LoadingCard = () => (
@@ -94,30 +93,32 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </div>
   );
 
-
   const Navbar = () => (
     <nav className="bg-white border-b-2 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <h1 className="text-xl font-black tracking-tight text-black">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
+          <div className="flex items-center flex-shrink-0">
+            <h1 className="text-lg sm:text-xl font-black tracking-tight text-black">
               DASHBOARD
             </h1>
           </div>
           
-          <div className="flex items-center space-x-4">
-            <button className="p-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200">
-              <Bell size={18} />
-            </button>
-            <button className="p-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200">
-              <Settings size={18} />
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <button 
+              onClick={() => setCurrentPage('teams')}
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200"
+            >
+              <Users size={16} className="sm:w-5 sm:h-5" />
+              <span className="font-bold text-xs sm:text-sm tracking-wide uppercase hidden sm:inline">Teams</span>
+              <span className="font-bold text-xs tracking-wide uppercase sm:hidden">T</span>
             </button>
             <button 
               onClick={handleLogout}
-              className="px-4 py-2 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs tracking-wide uppercase"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs tracking-wide uppercase"
             >
-              <LogOut size={14} className="inline mr-2" />
-              Logout
+              <LogOut size={12} className="sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Logout</span>
+              <span className="sm:hidden">Out</span>
             </button>
           </div>
         </div>
@@ -125,10 +126,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </nav>
   );
 
-
   const Card = ({ children, className = "" }) => (
     <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden ${className}`}>
-      
       <div 
         className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
@@ -145,9 +144,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </div>
   );
 
-
   const StatCard = ({ title, value, icon: Icon, description, loading = false }) => (
-    <Card className="p-6">
+    <Card className="p-4 sm:p-6">
       {loading ? (
         <div className="animate-pulse">
           <div className="h-3 bg-gray-300 rounded mb-2 w-1/2"></div>
@@ -156,11 +154,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
               {title}
             </p>
-            <p className="text-2xl font-black text-black tracking-tight">
+            <p className="text-xl sm:text-2xl font-black text-black tracking-tight truncate">
               {value}
             </p>
             {description && (
@@ -169,8 +167,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               </p>
             )}
           </div>
-          <div className="p-3 bg-black text-white">
-            <Icon size={24} />
+          <div className="p-2 sm:p-3 bg-black text-white flex-shrink-0 ml-2">
+            <Icon size={20} className="sm:w-6 sm:h-6" />
           </div>
         </div>
       )}
@@ -181,12 +179,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <div className="h-8 bg-gray-300 rounded mb-4 w-1/3 animate-pulse"></div>
-            <div className="h-4 bg-gray-300 rounded w-1/4 animate-pulse"></div>
+        <div className="max-w-7xl mx-auto py-4 sm:py-8 px-3 sm:px-6 lg:px-8">
+          <div className="mb-6 sm:mb-8">
+            <div className="h-6 sm:h-8 bg-gray-300 rounded mb-4 w-1/2 animate-pulse"></div>
+            <div className="h-4 bg-gray-300 rounded w-1/3 animate-pulse"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {[1, 2, 3, 4].map(i => <LoadingCard key={i} />)}
           </div>
         </div>
@@ -198,23 +196,28 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-4 sm:py-8 px-3 sm:px-6 lg:px-8">
         
         {error && <ErrorMessage message={error} />}
 
-    
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-black mb-2 leading-tight">
-            Welcome, {userProfile.name ? userProfile.name.split(' ')[0] : 'User'}
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black mb-2 leading-tight">
+            Welcome, {
+              userProfile.name
+                ? userProfile.name
+                    .replace(/^(Mr\.?|Mrs\.?|Ms\.?|Dr\.?|Prof\.?)\s+/i, '') 
+                    .split(' ')[0]
+                : 'User'
+            }
           </h1>
-          <div className="w-16 h-1 bg-black mb-4"></div>
-          <p className="text-sm text-gray-700 font-medium tracking-wide">
+
+          <div className="w-12 sm:w-16 h-1 bg-black mb-3 sm:mb-4"></div>
+          <p className="text-xs sm:text-sm text-gray-700 font-medium tracking-wide">
             {userProfile.designation || 'No Designation'} • {userProfile.department || 'No Department'} Department • {userProfile.experience} years experience
           </p>
         </div>
 
-       
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <StatCard
             title="Designation"
             value={userProfile.designation || 'Not Set'}
@@ -241,31 +244,28 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           />
         </div>
 
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-         
-          <div className="lg:col-span-2 space-y-8">
-            
-            <Card className="p-6">
-              <div className="border-b-2 border-black mb-6 pb-4">
-                <h3 className="text-xl font-black tracking-tight text-black uppercase">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+            <Card className="p-4 sm:p-6">
+              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+                <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
                   Skills & Expertise
                 </h3>
               </div>
               
-              <div className="p-4 border border-black bg-gray-50">
+              <div className="p-3 sm:p-4 border border-black bg-gray-50">
                 <div className="flex flex-wrap gap-2">
                   {userProfile.skills ? (
                     userProfile.skills.split(',').map((skill, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                        className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
                       >
                         {skill.trim()}
                       </span>
                     ))
                   ) : (
-                    <span className="px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                    <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
                       No skills listed
                     </span>
                   )}
@@ -273,22 +273,20 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               </div>
             </Card>
 
-        
-            <Card className="p-6">
-              <div className="border-b-2 border-black mb-6 pb-4">
-                <h3 className="text-xl font-black tracking-tight text-black uppercase">
+            <Card className="p-4 sm:p-6">
+              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+                <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
                   Profile Information
                 </h3>
               </div>
               
               <div className="space-y-4">
-        
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-3 border border-black bg-gray-50">
                     <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
                       Username
                     </p>
-                    <p className="text-sm font-bold text-black">
+                    <p className="text-sm font-bold text-black break-words">
                       {userProfile.username || 'Not set'}
                     </p>
                   </div>
@@ -302,13 +300,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 </div>
                 
-               
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-3 border border-black bg-gray-50">
                     <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
                       Designation
                     </p>
-                    <p className="text-sm font-bold text-black">
+                    <p className="text-sm font-bold text-black break-words">
                       {userProfile.designation || 'Not set'}
                     </p>
                   </div>
@@ -316,18 +313,17 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                     <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
                       Department
                     </p>
-                    <p className="text-sm font-bold text-black">
+                    <p className="text-sm font-bold text-black break-words">
                       {userProfile.department || 'Not set'}
                     </p>
                   </div>
                 </div>
                 
-           
                 <div className="p-3 border border-black bg-gray-50">
                   <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
                     Full Name
                   </p>
-                  <p className="text-sm font-bold text-black">
+                  <p className="text-sm font-bold text-black break-words">
                     {userProfile.name || 'Not set'}
                   </p>
                 </div>
@@ -335,27 +331,24 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </Card>
           </div>
 
-        
-          <div className="space-y-8">
-            
-            <Card className="p-6">
-              <div className="border-b-2 border-black mb-6 pb-4">
-                <h3 className="text-lg font-black tracking-tight text-black uppercase flex items-center gap-2">
-                  <Award size={20} />
+          <div className="space-y-6 sm:space-y-8">
+            <Card className="p-4 sm:p-6">
+              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+                <h3 className="text-base sm:text-lg font-black tracking-tight text-black uppercase flex items-center gap-2">
+                  <Award size={18} className="sm:w-5 sm:h-5" />
                   Achievements
                 </h3>
               </div>
               
               <div className="space-y-4">
-                
-                <div className="p-4 border-2 border-black bg-gradient-to-r from-yellow-400 to-orange-500 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-8 h-8 bg-black transform rotate-45 translate-x-4 -translate-y-4"></div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-black text-lg">
+                <div className="p-3 sm:p-4 border-2 border-black bg-gradient-to-r from-yellow-400 to-orange-500 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-6 sm:w-8 h-6 sm:h-8 bg-black transform rotate-45 translate-x-3 sm:translate-x-4 -translate-y-3 sm:-translate-y-4"></div>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-black text-white flex items-center justify-center font-black text-base sm:text-lg">
                       🏆
                     </div>
-                    <div>
-                      <h4 className="text-sm font-black text-black tracking-tight uppercase">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-xs sm:text-sm font-black text-black tracking-tight uppercase">
                         ProfHack2025 Participant
                       </h4>
                       <p className="text-xs text-black font-medium">
@@ -365,14 +358,13 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 </div>
 
-   
                 {userProfile.skills && userProfile.skills.split(',').length >= 3 && (
                   <div className="p-3 border border-black bg-white">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-black text-white flex items-center justify-center text-sm font-black">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-8 sm:w-10 h-8 sm:h-10 bg-black text-white flex items-center justify-center text-sm font-black">
                         💻
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <h4 className="text-xs font-black text-black tracking-tight uppercase">
                           Skills Master
                         </h4>
@@ -384,14 +376,13 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   </div>
                 )}
 
-             
                 {userProfile.experience >= 5 && (
                   <div className="p-3 border border-black bg-white">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-black text-white flex items-center justify-center text-sm font-black">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-8 sm:w-10 h-8 sm:h-10 bg-black text-white flex items-center justify-center text-sm font-black">
                         ⭐
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <h4 className="text-xs font-black text-black tracking-tight uppercase">
                           Veteran Professional
                         </h4>

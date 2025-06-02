@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import bmsitLogo from './assets/bmsit.png';
 import ieeeLogo from './assets/stb.png';
 import iiclogo from './assets/iic.png';
+
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
     onClick={onClick}
@@ -34,7 +35,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
-      {/* Dynamic Grid Background */}
+
       <div className="fixed inset-0 opacity-10 pointer-events-none">
         <div 
           className="w-full h-full transition-transform duration-1000 ease-out"

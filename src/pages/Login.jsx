@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LogIn, Eye, EyeOff, Lock, User } from 'lucide-react';
-
+import { setAuthToken } from '../services/api';
 
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
@@ -15,7 +15,7 @@ const Button = ({ children, onClick, variant, className, type, disabled, ...prop
 )
 
 const FormInput = ({ label, error, type, ...props }) => (
-  <div className="space-y-2">
+  <div className="space-y-1.5">
     <label className="block text-xs font-medium text-black tracking-wide">
       {label}
     </label>
@@ -59,16 +59,13 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
     try {
       const response = await fetch('https://profhack-backend.onrender.com/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
       });
-
       const data = await response.json();
-
       if (response.ok) {
-        window.authToken = data.token;
+        setAuthToken(data.token);
+        console.log('Login successful:', data);
         setUser(data.user);
         setIsLoggedIn(true);
         setCurrentPage('dashboard');
@@ -85,7 +82,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-
+    
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div 
           className="w-full h-full"
@@ -99,41 +96,39 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
         />
       </div>
       
-    
-     
 
- 
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-6">
-        <div className="w-full max-w-xl border-2 border-black bg-white p-8 md:p-12 shadow-2xl backdrop-blur-sm">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-3 py-4">
+        <div className="w-full max-w-md border-2 border-black bg-white p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-sm">
           
-          <div className="mb-10 text-center">
-            <div className="w-20 h-20 bg-black mx-auto mb-6 flex items-center justify-center">
-              <LogIn className="text-white" size={36} />
+          
+          <div className="mb-6 text-center">
+            <div className="w-14 h-14 bg-black mx-auto mb-4 flex items-center justify-center">
+              <LogIn className="text-white" size={24} />
             </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-black mb-4 leading-none">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-black mb-3 leading-none">
               Welcome Back
             </h1>
-            <div className="w-20 h-1 bg-black mx-auto mb-4"></div>
-            <p className="text-sm text-gray-700 font-medium tracking-wide max-w-sm mx-auto leading-relaxed">
+            <div className="w-16 h-0.5 bg-black mx-auto mb-3"></div>
+            <p className="text-xs text-gray-700 font-medium tracking-wide max-w-xs mx-auto leading-relaxed">
               Sign in to your account and continue your journey
             </p>
           </div>
 
-        
+
           {error && (
-            <div className="mb-8">
-              <div className="p-4 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide bg-red-50">
+            <div className="mb-4">
+              <div className="p-3 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide bg-red-50">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
                   {error}
                 </div>
               </div>
             </div>
           )}
 
-          {/* Form */}
-          <div className="space-y-6">
-            <div className="space-y-5">
+         
+          <div className="space-y-4">
+            <div className="space-y-3">
               <div className="relative">
                 <FormInput
                   label="Username"
@@ -144,8 +139,8 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                   autoComplete="username"
                   error={!loginData.username && error === 'Please fill all fields' ? 'Username is required' : ''}
                 />
-                <div className="absolute right-3 top-8 text-gray-400">
-                  <User size={16} />
+                <div className="absolute right-3 top-7 text-gray-400">
+                  <User size={14} />
                 </div>
               </div>
 
@@ -162,21 +157,21 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-8 text-gray-400 hover:text-black transition-colors duration-200"
+                  className="absolute right-3 top-7 text-gray-400 hover:text-black transition-colors duration-200"
                 >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
               </div>
             </div>
 
             
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-1">
               <label className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 border-2 border-black rounded-none focus:ring-2 focus:ring-black text-black"
+                  className="w-3.5 h-3.5 border-2 border-black rounded-none focus:ring-2 focus:ring-black text-black"
                 />
-                <span className="ml-3 text-xs text-black font-medium tracking-wide">
+                <span className="ml-2 text-xs text-black font-medium tracking-wide">
                   Remember me
                 </span>
               </label>
@@ -188,15 +183,15 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </button>
             </div>
 
-           
-            <div className="pt-4">
+         
+            <div className="pt-3">
               <Button
                 onClick={handleSubmit}
                 disabled={loading}
                 className={`
                   w-full
                   border-2 border-black font-bold tracking-wide
-                  px-8 py-4 rounded-none uppercase text-sm
+                  px-6 py-3 rounded-none uppercase text-xs
                   transition-all duration-300 transform hover:scale-105
                   ${loading 
                     ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400' 
@@ -205,13 +200,13 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                 `}
               >
                 {loading ? (
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
                     <span>Signing In...</span>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center space-x-3">
-                    <LogIn size={18} />
+                  <div className="flex items-center justify-center space-x-2">
+                    <LogIn size={16} />
                     <span>Sign In</span>
                   </div>
                 )}
@@ -219,11 +214,11 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="mt-10 space-y-4">
-          
-            <div className="text-center border-t border-gray-200 pt-6">
-              <p className="text-sm text-black font-medium tracking-wide">
+
+          <div className="mt-6 space-y-3">
+       
+            <div className="text-center border-t border-gray-200 pt-4">
+              <p className="text-xs text-black font-medium tracking-wide">
                 Don't have an account?{' '}
                 <button
                   onClick={() => setCurrentPage('register')}
@@ -234,14 +229,14 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </p>
             </div>
 
-          
+            {/* Back to Home */}
             <div className="text-center">
               <Button
-                onClick={() => setCurrentPage('hero')}
+                onClick={() => setCurrentPage('home')}
                 className="
                   border-2 border-black text-black font-bold tracking-wide
                   bg-white hover:bg-black hover:text-white 
-                  px-6 py-2 rounded-none uppercase text-xs
+                  px-4 py-2 rounded-none uppercase text-xs
                   transition-all duration-300 transform hover:scale-105
                 "
               >
@@ -251,13 +246,6 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-      `}</style>
     </div>
   );
 };

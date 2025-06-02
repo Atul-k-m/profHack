@@ -1916,7 +1916,7 @@ const resendOtp = async () => {
           <div className="space-y-5">
             <div className="text-center space-y-2">
               <h2 className="text-2xl md:text-3xl font-black tracking-tight text-black leading-tight">
-                Personal Information
+                About Section
               </h2>
               <p className="text-sm text-gray-700 font-medium tracking-wide max-w-md mx-auto leading-relaxed">
                 Help us know you better
@@ -2045,7 +2045,7 @@ const resendOtp = async () => {
                     text-xs leading-relaxed shadow-sm font-medium tracking-wide
                     ${errors.skills ? 'border-red-600 focus:ring-red-600' : 'border-black hover:border-gray-800'}`}
                   rows="3"
-                  placeholder="e.g., React, Node.js, Project Management, UI/UX Design..."
+                  placeholder="Add comma to separate skills eg React, Node.js, Project Management, UI/UX Design..."
                 />
                 {errors.skills && (
                   <p className="text-xs text-red-600 flex items-center gap-1 font-medium">
@@ -2190,7 +2190,7 @@ const resendOtp = async () => {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Static Grid Background - Always Full Screen */}
+    
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div 
           className="w-full h-full"
@@ -2224,7 +2224,7 @@ const resendOtp = async () => {
 
       <div className="relative z-10 flex items-start justify-center min-h-screen px-4 py-6 pb-20">
     <div className="w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-2xl backdrop-blur-sm mt-4 mb-8 sm:mt-8 min-h-[calc(100vh-8rem)]">
-          {/* Header */}
+          
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-black mb-4 leading-none">
               Account Registration
@@ -2252,7 +2252,7 @@ const resendOtp = async () => {
               <Button
                 onClick={
                   currentStep === 1
-                    ? () => setCurrentPage('hero')
+                    ? () => setCurrentPage('home')
                     : handlePrevious
                 }
                 variant="outline"
