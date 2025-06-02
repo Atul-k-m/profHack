@@ -56,7 +56,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
           <div className="flex md:hidden justify-center items-center gap-8 mb-8">
            
             <div
-              className="h-14 px-4 bg-transparent flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="h-14 px-4 bg-transparent flex items-center justify-center shadow-lg"
               style={{
                 clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0% 100%)'
               }}
@@ -65,13 +65,13 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             </div>
             
      
-            <div className="w-14 h-14 bg-transparent flex items-center justify-center  hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-full">
+            <div className="w-14 h-14 bg-transparent flex items-center justify-center ">
               <img src={ieeeLogo} alt="IEEE Logo" className="w-12 h-12 object-contain" />
             </div>
             
             
             <div
-              className="w-14 h-14 bg-transparent flex items-center justify-center  hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="w-14 h-14 bg-transparent flex items-center justify-center"
               style={{
                 clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'
               }}
@@ -85,12 +85,12 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
            
             <div className="flex items-center">
               <div
-                className="group h-20 px-6 bg-transparent flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:rotate-1"
+                className="group h-20 px-6 bg-transparent flex items-center justify-center shadow-lg"
                 style={{
                   clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)'
                 }}
               >
-                <img src={bmsitLogo} alt="BMSIT Logo" className="h-18 object-contain group-hover:scale-105 transition-transform" />
+                <img src={bmsitLogo} alt="BMSIT Logo" className="h-18 object-contain" />
               </div>
             </div>
             
@@ -98,19 +98,19 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             <div className="flex items-center gap-8">
              
               <div
-                className="group w-20 h-20 bg-transparent flex items-center justify-center  hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-2 rounded-full"
+                className="group w-20 h-20 bg-transparent flex items-center justify-center  rounded-full"
               >
                 <img src={ieeeLogo} alt="IEEE Logo" className="w-18 h-18 object-contain group-hover:scale-105 transition-transform" />
               </div>
               
               
               <div
-                className="group w-20 h-20 bg-transparent flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-rotate-3"
+                className="group w-20 h-20 bg-transparent flex items-center justify-center shadow-lg"
                 style={{
                   clipPath: 'polygon(5% 0, 100% 0, 100% 100%, 0% 100%)'
                 }}
               >
-                <img src={iiclogo} alt="ProfHack Logo" className="w-16 h-16 object-contain group-hover:scale-105 transition-transform" />
+                <img src={iiclogo} alt="ProfHack Logo" className="w-16 h-16 object-contain" />
               </div>
             </div>
           </div>
