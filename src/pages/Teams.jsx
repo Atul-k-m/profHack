@@ -253,57 +253,86 @@ const Teams = ({ setCurrentPage, userProfile }) => {
     })
   }
 
-  const handleAcceptInvitation = async (invitation) => {
-    showConfirmation({
-      title: 'Accept Invitation',
-      message: `Accept invitation to join "${invitation.team?.name || 'this team'}"? This will make you a member of the team.`,
-      confirmText: 'Accept',
-      confirmVariant: 'primary',
-      onConfirm: async () => {
-        hideConfirmation()
-        setActionLoading(true)
-        
-        try {
-          await acceptInvitation(invitation._id)
-          await fetchAllData()
-          showToast('Invitation accepted! Welcome to the team! 🎉', 'success')
-          setError(null)
-        } catch (err) {
-          console.error('Failed to accept invitation:', err)
-          showToast(err.message || 'Failed to accept invitation', 'error')
-        } finally {
-          setActionLoading(false)
-        }
-      },
-      onCancel: hideConfirmation
-    })
-  }
+ // Key changes in the Teams component handleAcceptInvitation and handleDeclineInvitation methods:
 
-  const handleDeclineInvitation = async (invitation) => {
-    showConfirmation({
-      title: 'Decline Invitation',
-      message: `Decline invitation to join "${invitation.team?.name || 'this team'}"? This action cannot be undone.`,
-      confirmText: 'Decline',
-      confirmVariant: 'secondary',
-      onConfirm: async () => {
-        hideConfirmation()
-        setActionLoading(true)
+const handleAcceptInvitation = async (invitation) => {
+  // Prevent double execution
+  if (actionLoading) return;
+  
+  showConfirmation({
+    title: 'Accept Invitation',
+    message: `Accept invitation to join "${invitation.team?.name || 'this team'}"? This will make you a member of the team.`,
+    confirmText: 'Accept',
+    confirmVariant: 'primary',
+    onConfirm: async () => {
+      hideConfirmation();
+      setActionLoading(true);
+      
+      try {
+        await acceptInvitation(invitation._id);
         
-        try {
-          await declineInvitation(invitation._id)
-          setInvitations((prev) => prev.filter((inv) => inv._id !== invitation._id))
-          showToast('Invitation declined', 'info')
-          setError(null)
-        } catch (err) {
-          console.error('Failed to decline invitation:', err)
-          showToast(err.message || 'Failed to decline invitation', 'error')
-        } finally {
-          setActionLoading(false)
-        }
-      },
-      onCancel: hideConfirmation
-    })
-  }
+        // Remove the accepted invitation from state immediately
+        setInvitations(prev => prev.filter(inv => inv._id !== invitation._id));
+        
+        // Refresh all data to get updated team information
+        await fetchAllData();
+        
+        showToast('Invitation accepted! Welcome to the team! 🎉', 'success');
+        setError(null);
+      } catch (err) {
+        console.error('Failed to accept invitation:', err);
+        showToast(err.message || 'Failed to accept invitation', 'error');
+      } finally {
+        setActionLoading(false);
+      }
+    },
+    onCancel: hideConfirmation
+  });
+};
+
+const handleDeclineInvitation = async (invitation) => {
+  // Prevent double execution
+  if (actionLoading) return;
+  
+  showConfirmation({
+    title: 'Decline Invitation',
+    message: `Decline invitation to join "${invitation.team?.name || 'this team'}"? This action cannot be undone.`,
+    confirmText: 'Decline',
+    confirmVariant: 'secondary',
+    onConfirm: async () => {
+      hideConfirmation();
+      setActionLoading(true);
+      
+      try {
+        await declineInvitation(invitation._id);
+        
+        // Remove the declined invitation from state immediately
+        setInvitations(prev => prev.filter(inv => inv._id !== invitation._id));
+        
+        showToast('Invitation declined', 'info');
+        setError(null);
+      } catch (err) {
+        console.error('Failed to decline invitation:', err);
+        showToast(err.message || 'Failed to decline invitation', 'error');
+      } finally {
+        setActionLoading(false);
+      }
+    },
+    onCancel: hideConfirmation
+  });
+};
+
+// Update the Invitations component usage:
+{activeTab === 'invitations' && (
+  <Invitations
+    invitations={invitations}
+    onAccept={handleAcceptInvitation}
+    onDecline={handleDeclineInvitation}
+    onViewTeam={handleViewDetails}
+    loading={actionLoading}
+    onRefresh={fetchAllData}
+  />
+)}
 
   if (loading) {
     return (
@@ -492,16 +521,15 @@ const Teams = ({ setCurrentPage, userProfile }) => {
           />
         )}
 
-        {activeTab === 'invitations' && (
-          <Invitations
-            invitations={invitations}
-            onAccept={handleAcceptInvitation}
-            onDecline={handleDeclineInvitation}
-            onViewTeam={handleViewDetails}
-            setShowTeamDetails={setShowTeamDetails}
-            setSelectedTeam={setSelectedTeam}
-            loading={actionLoading}
-          />
+       {activeTab === 'invitations' && (
+  <Invitations
+    invitations={invitations}
+    onAccept={handleAcceptInvitation}
+    onDecline={handleDeclineInvitation}
+    onViewTeam={handleViewDetails}
+    loading={actionLoading}
+    onRefresh={fetchAllData}
+  />
         )}
 
         {showTeamDetails && (

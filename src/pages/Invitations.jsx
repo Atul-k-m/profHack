@@ -24,241 +24,53 @@ const Button = ({ children, variant = "primary", size = "md", onClick, disabled 
   );
 };
 
-const API_BASE_URL = 'https://profhack-backend.onrender.com/api';
-
-const getAuthToken = () => {
-  return localStorage.getItem('token') || localStorage.getItem('authToken');
-};
-
-const makeAuthenticatedRequest = async (url, options = {}) => {
-  const token = getAuthToken();
-  
-  if (!token) {
-    throw new Error('No authentication token found');
-  }
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-    ...options.headers,
-  };
-
-  const config = { ...options, headers };
-
-  try {
-    const response = await fetch(url, config);
-    
-    if (!response.ok) {
-      if (response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('authToken');
-        throw new Error('Authentication failed. Please login again.');
-      }
-      
-      let errorMessage;
-      try {
-        const error = await response.json();
-        errorMessage = error.message || `Request failed with status ${response.status}`;
-      } catch (parseError) {
-        errorMessage = `Request failed with status ${response.status}`;
-      }
-      
-      throw new Error(errorMessage);
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('API request error:', error);
-    throw error;
-  }
-};
-
-
-const getUserNotifications = async (userId, params = {}) => {
-  const queryParams = new URLSearchParams(params).toString();
-  const url = queryParams ? 
-    `${API_BASE_URL}/notifications/${userId}?${queryParams}` : 
-    `${API_BASE_URL}/notifications/${userId}`;
-  return makeAuthenticatedRequest(url);
-};
-
-const markNotificationAsRead = async (notificationId) => {
-  return makeAuthenticatedRequest(`${API_BASE_URL}/notifications/${notificationId}/read`, {
-    method: 'PUT',
-  });
-};
-
-const acceptInvitation = async (invitationId) => {
-  return makeAuthenticatedRequest(`${API_BASE_URL}/user/invitations/${invitationId}/accept`, {
-    method: 'POST',
-  });
-};
-
-const declineInvitation = async (invitationId) => {
-  return makeAuthenticatedRequest(`${API_BASE_URL}/user/invitations/${invitationId}/decline`, {
-    method: 'POST',
-  });
-};
-
-const getTeamDetails = async (teamId) => {
-  return makeAuthenticatedRequest(`${API_BASE_URL}/teams/${teamId}`);
-};
-
-
-const getCurrentUserId = () => {
-  const token = getAuthToken();
-  if (!token) return null;
-  
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.userId || payload.id || payload.sub;
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return null;
-  }
-};
-
-const Invitations = ({ onViewTeam }) => {
-  const [invitations, setInvitations] = useState([]);
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Use props from parent instead of managing its own API calls
+const Invitations = ({ 
+  invitations = [], 
+  onAccept, 
+  onDecline, 
+  onViewTeam, 
+  loading = false,
+  onRefresh 
+}) => {
   const [processingInvitation, setProcessingInvitation] = useState(null);
 
-  const currentUserId = getCurrentUserId();
-
-  // Load invitations from notifications
-  const loadInvitations = async () => {
-    if (!currentUserId) {
-      setError('User not authenticated');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-
-      
-      const response = await getUserNotifications(currentUserId, {
-        unreadOnly: false 
-      });
-
-  
-      const invitationNotifications = response.notifications.filter(
-        notification => notification.type === 'invitation'
-      );
-
-
-      const transformedInvitations = await Promise.all(
-        invitationNotifications.map(async (notification) => {
-          let teamName = 'Unknown Team';
-          let teamId = null;
-
-       
-          if (notification.data && notification.data.teamId) {
-            teamId = notification.data.teamId;
-            try {
-              const teamDetails = await getTeamDetails(teamId);
-              teamName = teamDetails.name;
-            } catch (err) {
-              console.warn('Could not fetch team details:', err);
-            }
-          }
-
-          return {
-            id: notification._id,
-            notificationId: notification._id,
-            teamId: teamId,
-            teamName: teamName,
-            from: notification.sender ? 
-              `${notification.sender.name} (@${notification.sender.username})` : 
-              'Unknown User',
-            message: notification.message,
-            timestamp: notification.createdAt,
-            isRead: notification.isRead,
-           
-            invitationId: notification.data?.invitationId || notification._id
-          };
-        })
-      );
-
-      setInvitations(transformedInvitations);
-    } catch (err) {
-      console.error('Error loading invitations:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadInvitations();
-  }, [currentUserId]);
-
   const handleAccept = async (invitation) => {
-    setProcessingInvitation(invitation.id);
+    if (processingInvitation === invitation._id) return; // Prevent double clicks
+    
+    setProcessingInvitation(invitation._id);
     try {
-      await acceptInvitation(invitation.invitationId);
-      
-      await markNotificationAsRead(invitation.notificationId);
-      
-      await loadInvitations();
-      
-      console.log('Invitation accepted successfully');
-    } catch (err) {
-      console.error('Error accepting invitation:', err);
-      setError(`Failed to accept invitation: ${err.message}`);
+      await onAccept(invitation);
+    } catch (error) {
+      console.error('Error accepting invitation:', error);
     } finally {
       setProcessingInvitation(null);
     }
   };
 
   const handleDecline = async (invitation) => {
-    setProcessingInvitation(invitation.id);
-    try {
-     
-      await declineInvitation(invitation.invitationId);
-
-      await markNotificationAsRead(invitation.notificationId);
+    if (processingInvitation === invitation._id) return; // Prevent double clicks
     
-      await loadInvitations();
-   
-      console.log('Invitation declined successfully');
-    } catch (err) {
-      console.error('Error declining invitation:', err);
-      setError(`Failed to decline invitation: ${err.message}`);
+    setProcessingInvitation(invitation._id);
+    try {
+      await onDecline(invitation);
+    } catch (error) {
+      console.error('Error declining invitation:', error);
     } finally {
       setProcessingInvitation(null);
     }
   };
 
   const handleViewTeam = async (invitation) => {
-    if (!invitation.teamId) {
-      setError('Team information not available');
-      return;
-    }
-
+    if (processingInvitation === invitation._id) return; // Prevent double clicks
+    
+    setProcessingInvitation(invitation._id);
     try {
-      const team = await getTeamDetails(invitation.teamId);
-      if (onViewTeam) {
-        onViewTeam(team);
-      }
-
-      if (!invitation.isRead) {
-        await markNotificationAsRead(invitation.notificationId);
-      
-        setInvitations(prev => 
-          prev.map(inv => 
-            inv.id === invitation.id 
-              ? { ...inv, isRead: true }
-              : inv
-          )
-        );
-      }
-    } catch (err) {
-      console.error('Error viewing team:', err);
-      setError(`Failed to load team details: ${err.message}`);
+      await onViewTeam(invitation);
+    } catch (error) {
+      console.error('Error viewing team:', error);
+    } finally {
+      setProcessingInvitation(null);
     }
   };
 
@@ -271,29 +83,10 @@ const Invitations = ({ onViewTeam }) => {
     );
   }
 
-  if (error) {
-    return (
-      <Card className="p-6 border-red-200 bg-red-50">
-        <div className="flex items-center gap-2 text-red-800 mb-2">
-          <AlertCircle size={20} />
-          <h3 className="font-medium">Error Loading Invitations</h3>
-        </div>
-        <p className="text-red-700 text-sm mb-4">{error}</p>
-        <Button 
-          variant="secondary" 
-          size="sm" 
-          onClick={loadInvitations}
-        >
-          Try Again
-        </Button>
-      </Card>
-    );
-  }
-
   return (
     <div className="space-y-6">
       {invitations.map(invitation => (
-        <Card key={invitation.id} className="p-6">
+        <Card key={invitation._id} className="p-6">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
@@ -302,58 +95,77 @@ const Invitations = ({ onViewTeam }) => {
                   Team Invitation
                 </h3>
                 <span className={`px-2 py-1 text-white text-xs font-bold tracking-wide uppercase ${
-                  invitation.isRead ? 'bg-gray-500' : 'bg-yellow-500'
+                  invitation.status === 'accepted' ? 'bg-green-500' :
+                  invitation.status === 'declined' ? 'bg-red-500' :
+                  'bg-yellow-500'
                 }`}>
-                  {invitation.isRead ? 'Read' : 'Pending'}
+                  {invitation.status || 'Pending'}
                 </span>
               </div>
               
               <div className="space-y-2 mb-4">
                 <p className="text-sm font-medium text-gray-700">
-                  <span className="font-bold">From:</span> {invitation.from}
+                  <span className="font-bold">From:</span> {invitation.from?.name} (@{invitation.from?.username})
                 </p>
                 <p className="text-sm font-medium text-gray-700">
-                  <span className="font-bold">Team:</span> {invitation.teamName}
+                  <span className="font-bold">Team:</span> {invitation.team?.name || 'Unknown Team'}
                 </p>
                 <p className="text-sm text-gray-600">
-                  {invitation.message}
+                  {invitation.team?.description || 'Join our team!'}
                 </p>
                 <p className="text-xs text-gray-500">
                   <Clock size={12} className="inline mr-1" />
-                  {new Date(invitation.timestamp).toLocaleString()}
+                  {new Date(invitation.createdAt).toLocaleString()}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex gap-3">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => handleAccept(invitation)}
-              disabled={processingInvitation === invitation.id}
-            >
-              <Check size={14} className="inline mr-1" />
-              {processingInvitation === invitation.id ? 'Processing...' : 'Accept'}
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => handleDecline(invitation)}
-              disabled={processingInvitation === invitation.id}
-            >
-              <X size={14} className="inline mr-1" />
-              {processingInvitation === invitation.id ? 'Processing...' : 'Decline'}
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => handleViewTeam(invitation)}
-            >
-              <Eye size={14} className="inline mr-1" />
-              View Team
-            </Button>
-          </div>
+          {invitation.status === 'pending' && (
+            <div className="flex gap-3">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => handleAccept(invitation)}
+                disabled={processingInvitation === invitation._id}
+              >
+                <Check size={14} className="inline mr-1" />
+                {processingInvitation === invitation._id ? 'Processing...' : 'Accept'}
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => handleDecline(invitation)}
+                disabled={processingInvitation === invitation._id}
+              >
+                <X size={14} className="inline mr-1" />
+                {processingInvitation === invitation._id ? 'Processing...' : 'Decline'}
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => handleViewTeam(invitation)}
+                disabled={processingInvitation === invitation._id}
+              >
+                <Eye size={14} className="inline mr-1" />
+                View Team
+              </Button>
+            </div>
+          )}
+
+          {invitation.status !== 'pending' && (
+            <div className="flex gap-3">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => handleViewTeam(invitation)}
+                disabled={processingInvitation === invitation._id}
+              >
+                <Eye size={14} className="inline mr-1" />
+                View Team
+              </Button>
+            </div>
+          )}
         </Card>
       ))}
 
@@ -364,7 +176,7 @@ const Invitations = ({ onViewTeam }) => {
             No Invitations
           </h3>
           <p className="text-sm text-gray-600 font-medium">
-            You don't have any pending team invitations
+            You don't have any team invitations
           </p>
         </Card>
       )}

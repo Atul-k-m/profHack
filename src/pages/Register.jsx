@@ -255,6 +255,21 @@ const mockEmployeeData = [
     "department": "Test"
   },
   {
+    "name": "Test8",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
+    "name": "Test7",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
+    "name": "Test6",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
     "name": "Test2",
     "designation": "Database Administrator",
     "department": "Test"
