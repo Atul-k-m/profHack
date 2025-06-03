@@ -191,36 +191,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes float-0 {
-          0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          33% { transform: translateY(-20px) rotate(120deg) scale(1.1); }
-          66% { transform: translateY(10px) rotate(240deg) scale(0.9); }
-        }
-        @keyframes float-1 {
-          0%, 100% { transform: translateX(0px) rotate(0deg) scale(1); }
-          50% { transform: translateX(15px) rotate(180deg) scale(1.2); }
-        }
-        @keyframes float-2 {
-          0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
-          25% { transform: translate(10px, -15px) rotate(90deg) scale(1.1); }
-          50% { transform: translate(-5px, -25px) rotate(180deg) scale(0.8); }
-          75% { transform: translate(-15px, -10px) rotate(270deg) scale(1.05); }
-        }
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-        }
-      `}</style>
+     
     </div>
   );
 };
