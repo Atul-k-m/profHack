@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Search, UserPlus, ArrowLeft } from 'lucide-react';
 import PropTypes from 'prop-types';
 
@@ -14,9 +13,7 @@ import {
   getCurrentUserId,
 } from '../services/api';
 
-const TeamWizard = ({ onBack = null }) => {
-  const navigate = useNavigate();
-
+const TeamWizard = ({ onBack = null, setCurrentPage = null }) => {
   // Team creation state
   const [teamName, setTeamName] = useState('');
   const [description, setDescription] = useState('');
@@ -155,9 +152,9 @@ const TeamWizard = ({ onBack = null }) => {
     setUserFetchError(null);
   };
 
-  // Improved navigation function
+  // Improved navigation function - FIXED to work without React Router
   const handleBackToTeams = () => {
-    console.log('Navigating back to Teams, onBack function:', onBack);
+    console.log('Navigating back to Teams');
     
     // First try the onBack prop (for when used as a modal/embedded component)
     if (onBack && typeof onBack === 'function') {
@@ -169,12 +166,14 @@ const TeamWizard = ({ onBack = null }) => {
       }
     }
     
-    // Use React Router navigation
-    try {
-      navigate('/teams');
-      return;
-    } catch (error) {
-      console.warn('React Router navigation failed:', error);
+    // Use setCurrentPage if available
+    if (setCurrentPage && typeof setCurrentPage === 'function') {
+      try {
+        setCurrentPage('teams');
+        return;
+      } catch (error) {
+        console.error('Error calling setCurrentPage:', error);
+      }
     }
     
     // Fallback navigation strategies
@@ -190,24 +189,11 @@ const TeamWizard = ({ onBack = null }) => {
       console.warn('History.back() failed:', error);
     }
     
-    try {
-      // Try to navigate to a known teams route
-      const currentPath = window.location.pathname;
-      if (currentPath.includes('/create-team') || currentPath.includes('/team-wizard')) {
-        window.location.pathname = '/teams';
-        return;
-      }
-    } catch (error) {
-      console.warn('Pathname navigation failed:', error);
-    }
-    
     // Last resort - reload to teams page
     try {
-      window.location.href = '/teams';
+      window.location.reload();
     } catch (error) {
       console.error('All navigation methods failed:', error);
-      // If everything fails, at least reload the page
-      window.location.reload();
     }
   };
 
@@ -504,14 +490,14 @@ const TeamWizard = ({ onBack = null }) => {
   );
 };
 
-
 TeamWizard.propTypes = {
-  onBack: PropTypes.func
+  onBack: PropTypes.func,
+  setCurrentPage: PropTypes.func
 };
 
-
 TeamWizard.defaultProps = {
-  onBack: null
+  onBack: null,
+  setCurrentPage: null
 };
 
 export default TeamWizard;

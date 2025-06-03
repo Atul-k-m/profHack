@@ -23,7 +23,7 @@ const App = () => {
       case 'dashboard':
         return <Dashboard setCurrentPage={setCurrentPage} setIsLoggedIn={setIsLoggedIn} user={user} />;
       case 'teams':
-        return <Teams setCurrentPage={setCurrentPage} etIsLoggedIn={setIsLoggedIn} user={user} />;
+        return <Teams setCurrentPage={setCurrentPage} setIsLoggedIn={setIsLoggedIn} user={user} />;
       default:
         return <Hero setCurrentPage={setCurrentPage} />;
     }
