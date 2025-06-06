@@ -26,7 +26,7 @@ const Footer = () => {
    
             <div className="text-center md:text-left">
               <h3 className="text-2xl sm:text-3xl font-black tracking-tight uppercase text-black mb-3 sm:mb-4">
-                ProfHack
+                ReBooT
               </h3>
               <p className="text-base sm:text-lg text-gray-700 font-medium tracking-wide leading-relaxed">
                 Where Ideas Transform
@@ -40,14 +40,17 @@ const Footer = () => {
                 Quick Links
               </h4>
               <div className="space-y-4">
-                <a href="#" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
+                <a href="#about" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
                   About
                 </a>
-                <a href="#" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
+                <a href="#timeline" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
                   Timeline
                 </a>
-                <a href="#" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
-                  Contact
+                <a href="#tracks" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
+                  Tracks
+                </a>
+                <a href="#prizes" className="block text-base text-gray-700 hover:text-black font-semibold tracking-wide transition-all duration-300 hover:transform hover:scale-105">
+                  Prizes
                 </a>
               </div>
             </div>
@@ -59,10 +62,10 @@ const Footer = () => {
               </h4>
               <div className="space-y-4">
                 <p className="text-base text-gray-700 font-semibold tracking-wide">
-                  profhack@bmsit.in
+                  reeboot@bmsit.in
                 </p>
                 <p className="text-base text-gray-700 font-semibold tracking-wide">
-                  +91 1111222222
+                  +91 9731382840
                 </p>
               </div>
             </div>
@@ -73,9 +76,9 @@ const Footer = () => {
           <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-black to-transparent mb-8"></div>
 
           
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col items-center gap-6">
             <p className="text-sm sm:text-base text-gray-600 font-medium tracking-wide">
-              © 2025 ProfHack. All rights reserved.
+              © 2025 ReBooT. All rights reserved.
             </p>
             
             <div className="flex items-center gap-4 text-sm sm:text-base text-gray-600 font-semibold">

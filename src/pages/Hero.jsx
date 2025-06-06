@@ -130,7 +130,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
 
           <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-black tracking-tighter text-black leading-none mb-6">
-               ProfHack 
+               ReBooT
             </h1>
           </div>
 

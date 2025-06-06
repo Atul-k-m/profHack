@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity } from 'lucide-react';
+import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
+  const [currentView, setCurrentView] = useState('dashboard');
   const [userProfile, setUserProfile] = useState({
     department: '',
     designation: '',
@@ -11,10 +12,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     experience: 0,
     username: ''
   });
+  const [editMode, setEditMode] = useState(false);
+  const [editedProfile, setEditedProfile] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [saving, setSaving] = useState(false);
 
-  
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -45,7 +48,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         }
 
         const userData = await response.json();
-        setUserProfile({
+        const profile = {
           department: userData.department || '',
           designation: userData.designation || '',
           name: userData.name || '',
@@ -53,7 +56,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           skills: userData.skills || '',
           experience: userData.experience || 0,
           username: userData.username || ''
-        });
+        };
+        setUserProfile(profile);
+        setEditedProfile(profile);
         setError(null);
       } catch (error) {
         console.error('Error fetching user profile:', error);
@@ -73,8 +78,57 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     setCurrentPage('home');
   };
 
+  const handleEditToggle = () => {
+    if (editMode) {
+      setEditedProfile(userProfile);
+    }
+    setEditMode(!editMode);
+  };
+
+  const handleSaveProfile = async () => {
+    try {
+      setSaving(true);
+      const token = window.authToken || localStorage.getItem('token');
+      
+      if (!token) {
+        setError('No authentication token found');
+        return;
+      }
+
+      const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedProfile)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const updatedData = await response.json();
+      setUserProfile(editedProfile);
+      setEditMode(false);
+      setError(null);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      setError('Failed to save profile changes. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditedProfile(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   const LoadingCard = () => (
-    <div className="bg-white border-2 border-black p-6 animate-pulse">
+    <div className="bg-white border-2 border-black p-4 sm:p-6 animate-pulse">
       <div className="h-4 bg-gray-300 rounded mb-4"></div>
       <div className="h-8 bg-gray-300 rounded mb-2"></div>
       <div className="h-3 bg-gray-300 rounded w-2/3"></div>
@@ -82,7 +136,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   );
 
   const ErrorMessage = ({ message }) => (
-    <div className="bg-red-50 border-2 border-red-500 p-4 mb-6">
+    <div className="bg-red-50 border-2 border-red-500 p-4 mb-4 sm:mb-6">
       <div className="flex items-center">
         <div className="text-red-500 mr-3">⚠️</div>
         <div>
@@ -94,31 +148,39 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   );
 
   const Navbar = () => (
-    <nav className="bg-white border-b-2 border-black">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          <div className="flex items-center flex-shrink-0">
-            <h1 className="text-lg sm:text-xl font-black tracking-tight text-black">
-              DASHBOARD
+    <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            {currentView === 'teams' && (
+              <button
+                onClick={() => setCurrentView('dashboard')}
+                className="mr-3 p-2 border border-black hover:bg-black hover:text-white transition-colors"
+              >
+                <ArrowLeft size={18} />
+              </button>
+            )}
+            <h1 className="text-xl font-black tracking-tight text-black">
+              {currentView === 'teams' ? 'TEAMS' : 'DASHBOARD'}
             </h1>
           </div>
           
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <button 
-              onClick={() => setCurrentPage('teams')}
-              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200"
-            >
-              <Users size={16} className="sm:w-5 sm:h-5" />
-              <span className="font-bold text-xs sm:text-sm tracking-wide uppercase hidden sm:inline">Teams</span>
-              <span className="font-bold text-xs tracking-wide uppercase sm:hidden">T</span>
-            </button>
+          <div className="flex items-center space-x-3">
+            {currentView === 'dashboard' && (
+              <button 
+                onClick={() => setCurrentView('teams')}
+                className="flex items-center gap-2 px-4 py-2 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+              >
+                <Users size={18} />
+                <span>Teams</span>
+              </button>
+            )}
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs tracking-wide uppercase"
+              className="flex items-center gap-2 px-3 py-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
             >
-              <LogOut size={12} className="sm:w-4 sm:h-4" />
+              <LogOut size={16} />
               <span className="hidden sm:inline">Logout</span>
-              <span className="sm:hidden">Out</span>
             </button>
           </div>
         </div>
@@ -175,16 +237,96 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
+  const EditableField = ({ label, value, field, type = 'text', options = null }) => (
+    <div className="p-3 border border-black bg-gray-50">
+      <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
+        {label}
+      </p>
+      {editMode ? (
+        type === 'select' ? (
+          <select
+            value={value}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+          >
+            {options?.map(option => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        ) : type === 'number' ? (
+          <input
+            type="number"
+            value={value}
+            onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+          />
+        ) : (
+          <input
+            type={type}
+            value={value}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+          />
+        )
+      ) : (
+        <p className="text-sm font-bold text-black break-words">
+          {value || 'Not set'}
+        </p>
+      )}
+    </div>
+  );
+
+  const TeamsPage = () => (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <Card className="p-8 sm:p-12">
+            <div className="mb-6">
+              <div className="w-24 h-24 bg-black text-white mx-auto flex items-center justify-center mb-6">
+                <Users size={48} />
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-black mb-4 uppercase">
+                Teams Page
+              </h1>
+              <div className="w-16 h-1 bg-black mx-auto mb-6"></div>
+            </div>
+            
+            <div className="space-y-4 text-center">
+              <p className="text-lg sm:text-xl font-bold text-gray-800 tracking-wide">
+                🚧 UNDER CONSTRUCTION 🚧
+              </p>
+              <p className="text-base text-gray-700 font-medium max-w-md mx-auto">
+                The Teams feature is currently being developed and will be available soon. 
+                Stay tuned for collaborative team management tools!
+              </p>
+              <div className="pt-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 border-2 border-black font-bold text-sm tracking-wide uppercase">
+                  <Clock size={16} />
+                  Coming Soon
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (currentView === 'teams') {
+    return <TeamsPage />;
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="max-w-7xl mx-auto py-4 sm:py-8 px-3 sm:px-6 lg:px-8">
-          <div className="mb-6 sm:mb-8">
-            <div className="h-6 sm:h-8 bg-gray-300 rounded mb-4 w-1/2 animate-pulse"></div>
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <div className="mb-6">
+            <div className="h-8 bg-gray-300 rounded mb-4 w-1/2 animate-pulse"></div>
             <div className="h-4 bg-gray-300 rounded w-1/3 animate-pulse"></div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
             {[1, 2, 3, 4].map(i => <LoadingCard key={i} />)}
           </div>
         </div>
@@ -196,28 +338,60 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto py-4 sm:py-8 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         
         {error && <ErrorMessage message={error} />}
 
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black mb-2 leading-tight">
-            Welcome, {
-              userProfile.name
-                ? userProfile.name
-                    .replace(/^(Mr\.?|Mrs\.?|Ms\.?|Dr\.?|Prof\.?)\s+/i, '') 
-                    .split(' ')[0]
-                : 'User'
-            }
-          </h1>
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
+              Welcome, {
+                userProfile.name
+                  ? userProfile.name
+                      .replace(/^(Mr\.?|Mrs\.?|Ms\.?|Dr\.?|Prof\.?)\s+/i, '') 
+                      .split(' ')[0]
+                  : 'User'
+              }
+            </h1>
+            
+            <div className="flex items-center gap-2">
+              {editMode ? (
+                <>
+                  <button
+                    onClick={handleSaveProfile}
+                    disabled={saving}
+                    className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase disabled:opacity-50"
+                  >
+                    <Save size={16} />
+                    {saving ? 'Saving...' : 'Save'}
+                  </button>
+                  <button
+                    onClick={handleEditToggle}
+                    className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase"
+                  >
+                    <X size={16} />
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={handleEditToggle}
+                  className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-600 font-bold text-sm tracking-wide uppercase"
+                >
+                  <Edit2 size={16} />
+                  Edit
+                </button>
+              )}
+            </div>
+          </div>
 
-          <div className="w-12 sm:w-16 h-1 bg-black mb-3 sm:mb-4"></div>
+          <div className="w-12 sm:w-16 h-1 bg-black mb-3"></div>
           <p className="text-xs sm:text-sm text-gray-700 font-medium tracking-wide">
             {userProfile.designation || 'No Designation'} • {userProfile.department || 'No Department'} Department • {userProfile.experience} years experience
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
           <StatCard
             title="Designation"
             value={userProfile.designation || 'Not Set'}
@@ -244,37 +418,46 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
             <Card className="p-4 sm:p-6">
-              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+              <div className="border-b-2 border-black mb-4 pb-3">
                 <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
                   Skills & Expertise
                 </h3>
               </div>
               
               <div className="p-3 sm:p-4 border border-black bg-gray-50">
-                <div className="flex flex-wrap gap-2">
-                  {userProfile.skills ? (
-                    userProfile.skills.split(',').map((skill, index) => (
-                      <span
-                        key={index}
-                        className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
-                      >
-                        {skill.trim()}
+                {editMode ? (
+                  <textarea
+                    value={editedProfile.skills}
+                    onChange={(e) => handleInputChange('skills', e.target.value)}
+                    placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
+                    className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {userProfile.skills ? (
+                      userProfile.skills.split(',').map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                        >
+                          {skill.trim()}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                        No skills listed
                       </span>
-                    ))
-                  ) : (
-                    <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
-                      No skills listed
-                    </span>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
               </div>
             </Card>
 
             <Card className="p-4 sm:p-6">
-              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+              <div className="border-b-2 border-black mb-4 pb-3">
                 <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
                   Profile Information
                 </h3>
@@ -282,58 +465,52 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-3 border border-black bg-gray-50">
-                    <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-                      Username
-                    </p>
-                    <p className="text-sm font-bold text-black break-words">
-                      {userProfile.username || 'Not set'}
-                    </p>
-                  </div>
-                  <div className="p-3 border border-black bg-gray-50">
-                    <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-                      Email
-                    </p>
-                    <p className="text-sm font-bold text-black break-all">
-                      {userProfile.email || 'Not set'}
-                    </p>
-                  </div>
+                  <EditableField
+                    label="Username"
+                    value={editMode ? editedProfile.username : userProfile.username}
+                    field="username"
+                  />
+                  <EditableField
+                    label="Email"
+                    value={editMode ? editedProfile.email : userProfile.email}
+                    field="email"
+                    type="email"
+                  />
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-3 border border-black bg-gray-50">
-                    <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-                      Designation
-                    </p>
-                    <p className="text-sm font-bold text-black break-words">
-                      {userProfile.designation || 'Not set'}
-                    </p>
-                  </div>
-                  <div className="p-3 border border-black bg-gray-50">
-                    <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-                      Department
-                    </p>
-                    <p className="text-sm font-bold text-black break-words">
-                      {userProfile.department || 'Not set'}
-                    </p>
-                  </div>
+                  <EditableField
+                    label="Designation"
+                    value={editMode ? editedProfile.designation : userProfile.designation}
+                    field="designation"
+                  />
+                  <EditableField
+                    label="Department"
+                    value={editMode ? editedProfile.department : userProfile.department}
+                    field="department"
+                  />
                 </div>
                 
-                <div className="p-3 border border-black bg-gray-50">
-                  <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-                    Full Name
-                  </p>
-                  <p className="text-sm font-bold text-black break-words">
-                    {userProfile.name || 'Not set'}
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <EditableField
+                    label="Full Name"
+                    value={editMode ? editedProfile.name : userProfile.name}
+                    field="name"
+                  />
+                  <EditableField
+                    label="Experience (Years)"
+                    value={editMode ? editedProfile.experience : userProfile.experience}
+                    field="experience"
+                    type="number"
+                  />
                 </div>
               </div>
             </Card>
           </div>
 
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-6">
             <Card className="p-4 sm:p-6">
-              <div className="border-b-2 border-black mb-4 sm:mb-6 pb-3 sm:pb-4">
+              <div className="border-b-2 border-black mb-4 pb-3">
                 <h3 className="text-base sm:text-lg font-black tracking-tight text-black uppercase flex items-center gap-2">
                   <Award size={18} className="sm:w-5 sm:h-5" />
                   Achievements
@@ -349,7 +526,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                     </div>
                     <div className="min-w-0 flex-1">
                       <h4 className="text-xs sm:text-sm font-black text-black tracking-tight uppercase">
-                        ProfHack2025 Participant
+                        ReBooT2025 Participant
                       </h4>
                       <p className="text-xs text-black font-medium">
                         Professional Hackathon 2025

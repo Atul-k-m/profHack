@@ -8,50 +8,50 @@ const Timeline = () => {
     {
       phase: "01",
       title: "Skill Collection",
-      date: "02.06.2025 - 06.06.2025",
-      action: "Faculty enter their skill and competencies"
+      date: "09.06.2025 - 14.06.2025",
+      action: "Faculty enter their skills and competencies in the hackathon portal"
     },
     {
       phase: "02",
       title: "Team Formation",
-      date: "06.06.2025 - 09.06.2025", 
-      action: "Identify the team leader and form the team"
+      date: "15.06.2025 - 18.06.2025", 
+      action: "Identify the team leader and form the team and enter in the hackathon portal"
     },
     {
       phase: "03",
-      title: "Idea Pitching",
-      date: "13.06.2025",
+      title: "Idea Problem Pitching",
+      date: "27.06.2025",
       action: "Submission of the idea"
     },
     {
       phase: "04",
-      title: "Brainstorming",
-      date: "14.06.2025 (Saturday)",
+      title: "Brainstorming Sessions by Industry Experts",
+      date: "28.06.2025 (Saturday)",
       action: "Teams present ideas and receive mentor feedback"
     },
     {
       phase: "05",
       title: "Implementation",
-      date: "Four weeks",
+      date: "Seven weeks",
       action: "Implementation of the idea and interaction with mentors"
     },
     {
       phase: "06",
       title: "Final Evaluation",
-      date: "11.07.2025",
+      date: "12.08.2025",
       action: "Final assessment and judging"
     },
     {
       phase: "07",
       title: "Demonstration",
-      date: "12.07.2025",
+      date: "13.08.2025",
       action: "Project demonstrations and presentations"
     },
     {
       phase: "08",
       title: "Winners",
       date: "Post Event",
-      action: "Top three winners announcement & Seed money Grants"
+      action: "Top three winners announcement"
     }
   ];
 

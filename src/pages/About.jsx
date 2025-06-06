@@ -61,7 +61,7 @@ const About = () => {
           <div className="text-center mb-12 sm:mb-16 md:mb-24">
             <div className="mb-6 sm:mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold tracking-[0.2em] sm:tracking-[0.4em] text-black uppercase mb-4 sm:mb-6">
-                About ProfHack
+                About ReeBooT
               </h2>
               <div className="w-16 sm:w-20 md:w-24 h-0.5 bg-black mx-auto"></div>
             </div>
