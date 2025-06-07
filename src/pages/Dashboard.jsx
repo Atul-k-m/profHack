@@ -22,7 +22,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     const fetchUserProfile = async () => {
       try {
         setLoading(true);
-        const token = window.authToken || localStorage.getItem('authToken')
+        // Try multiple token sources for compatibility
+        const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token')
         
         if (!token) {
           setError('No authentication token found');
@@ -73,7 +74,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const handleLogout = () => {
     window.authToken = null;
+    // Clear both possible token storage keys
     localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     setCurrentPage('home');
   };
@@ -88,7 +91,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const handleSaveProfile = async () => {
     try {
       setSaving(true);
-      const token = window.authToken || localStorage.getItem('authToken');
+      // Try multiple token sources for compatibility
+      const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token');
       
       if (!token) {
         setError('No authentication token found');
