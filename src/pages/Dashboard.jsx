@@ -326,66 +326,44 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     );
   };
 
-  const SkillsSection = () => {
-    const skillsRef = useRef(null);
+  const EditableTextArea = ({ label, field, placeholder, rows = 3 }) => {
+    const textareaRef = useRef(null);
+    const displayValue = userProfile[field];
+    const editValue = editedProfile[field];
     
-    useEffect(() => {
-      if (editMode && skillsRef.current) {
-        
-        const handleFocus = () => {
-          skillsRef.current.focus();
-        };
-       
-      }
-    }, [editMode]);
-
     return (
-      <Card className="p-4 sm:p-6">
-        <div className="border-b-2 border-black mb-4 pb-3">
-          <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
-            Skills & Expertise
-          </h3>
-        </div>
-        
-        <div className="p-3 sm:p-4 border border-black bg-gray-50">
-          {editMode ? (
-            <div>
-              <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
-                Skills (comma-separated)
-              </p>
-              <textarea
-                ref={skillsRef}
-                value={editedProfile.skills || ''}
-                onChange={(e) => handleInputChange('skills', e.target.value)}
-                placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
-                className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
-              />
-            </div>
-          ) : (
-            <div>
-              <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
-                Skills
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {userProfile.skills ? (
-                  userProfile.skills.split(',').map((skill, index) => (
-                    <span
-                      key={index}
-                      className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
-                    >
-                      {skill.trim()}
-                    </span>
-                  ))
-                ) : (
-                  <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
-                    No skills listed
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </Card>
+      <div className="p-3 border border-black bg-gray-50">
+        <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
+          {label}
+        </p>
+        {editMode ? (
+          <textarea
+            ref={textareaRef}
+            value={editValue || ''}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            placeholder={placeholder}
+            rows={rows}
+            className="w-full text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+          />
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {displayValue ? (
+              displayValue.split(',').map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                >
+                  {skill.trim()}
+                </span>
+              ))
+            ) : (
+              <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                No skills listed
+              </span>
+            )}
+          </div>
+        )}
+      </div>
     );
   };
 
@@ -533,7 +511,20 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <SkillsSection />
+            <Card className="p-4 sm:p-6">
+              <div className="border-b-2 border-black mb-4 pb-3">
+                <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
+                  Skills & Expertise
+                </h3>
+              </div>
+              
+              <EditableTextArea
+                label="Skills (comma-separated)"
+                field="skills"
+                placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
+                rows={3}
+              />
+            </Card>
 
             <Card className="p-4 sm:p-6">
               <div className="border-b-2 border-black mb-4 pb-3">
