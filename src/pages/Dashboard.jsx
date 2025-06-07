@@ -307,7 +307,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             
             <div className="space-y-4 text-center">
               <p className="text-lg sm:text-xl font-bold text-gray-800 tracking-wide">
-                🚧 UNDER CONSTRUCTION 🚧
+               Teams are coming soon!
               </p>
               <p className="text-base text-gray-700 font-medium max-w-md mx-auto">
                 Team formation page will be enabled after all faculty members have been onboarded. 
