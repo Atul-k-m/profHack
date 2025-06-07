@@ -22,7 +22,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     const fetchUserProfile = async () => {
       try {
         setLoading(true);
-        const token = window.authToken || localStorage.getItem('token')
+        const token = window.authToken || localStorage.getItem('authToken')
         
         if (!token) {
           setError('No authentication token found');
@@ -88,7 +88,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const handleSaveProfile = async () => {
     try {
       setSaving(true);
-      const token = window.authToken || localStorage.getItem('token');
+      const token = window.authToken || localStorage.getItem('authToken');
       
       if (!token) {
         setError('No authentication token found');
@@ -165,22 +165,22 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </h1>
           </div>
           
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             {currentView === 'dashboard' && (
               <button 
                 onClick={() => setCurrentView('teams')}
-                className="flex items-center gap-2 px-4 py-2 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+                className="flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
               >
                 <Users size={18} />
-                <span>Teams</span>
+                <span>TEAMS</span>
               </button>
             )}
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-black hover:bg-black hover:text-white border border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
             >
               <LogOut size={16} />
-              <span className="hidden sm:inline">Logout</span>
+              <span>LOGOUT</span>
             </button>
           </div>
         </div>
@@ -215,22 +215,22 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           <div className="h-2 bg-gray-300 rounded w-2/3"></div>
         </div>
       ) : (
-        <div className="flex items-center justify-between">
-          <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between">
+          <div className="flex-1 min-w-0 pr-2">
             <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
               {title}
             </p>
-            <p className="text-xl sm:text-2xl font-black text-black tracking-tight truncate">
+            <p className="text-lg sm:text-xl font-black text-black tracking-tight leading-tight break-words">
               {value}
             </p>
             {description && (
-              <p className="text-xs text-gray-600 font-medium tracking-wide mt-1">
+              <p className="text-xs text-gray-600 font-medium tracking-wide mt-2">
                 {description}
               </p>
             )}
           </div>
-          <div className="p-2 sm:p-3 bg-black text-white flex-shrink-0 ml-2">
-            <Icon size={20} className="sm:w-6 sm:h-6" />
+          <div className="p-2 sm:p-3 bg-black text-white flex-shrink-0">
+            <Icon size={18} className="sm:w-5 sm:h-5" />
           </div>
         </div>
       )}
@@ -297,13 +297,13 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 🚧 UNDER CONSTRUCTION 🚧
               </p>
               <p className="text-base text-gray-700 font-medium max-w-md mx-auto">
-                The Teams feature is currently being developed and will be available soon. 
+                Team formation page will be enabled after all faculty members have been onboarded. 
                 Stay tuned for collaborative team management tools!
               </p>
               <div className="pt-4">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 border-2 border-black font-bold text-sm tracking-wide uppercase">
                   <Clock size={16} />
-                  Coming Soon
+                  Stay Tuned
                 </div>
               </div>
             </div>
