@@ -245,44 +245,49 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
-  const EditableField = ({ label, value, field, type = 'text', options = null }) => (
-    <div className="p-3 border border-black bg-gray-50">
-      <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-        {label}
-      </p>
-      {editMode ? (
-        type === 'select' ? (
-          <select
-            value={value}
-            onChange={(e) => handleInputChange(field, e.target.value)}
-            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
-          >
-            {options?.map(option => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
-        ) : type === 'number' ? (
-          <input
-            type="number"
-            value={value}
-            onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
-            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
-          />
-        ) : (
-          <input
-            type={type}
-            value={value}
-            onChange={(e) => handleInputChange(field, e.target.value)}
-            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
-          />
-        )
-      ) : (
-        <p className="text-sm font-bold text-black break-words">
-          {value || 'Not set'}
+  const EditableField = ({ label, field, type = 'text', options = null }) => {
+    const displayValue = userProfile[field];
+    const editValue = editedProfile[field];
+    
+    return (
+      <div className="p-3 border border-black bg-gray-50">
+        <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
+          {label}
         </p>
-      )}
-    </div>
-  );
+        {editMode ? (
+          type === 'select' ? (
+            <select
+              value={editValue || ''}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            >
+              {options?.map(option => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          ) : type === 'number' ? (
+            <input
+              type="number"
+              value={editValue || 0}
+              onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            />
+          ) : (
+            <input
+              type={type}
+              value={editValue || ''}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            />
+          )
+        ) : (
+          <p className="text-sm font-bold text-black break-words">
+            {displayValue || 'Not set'}
+          </p>
+        )}
+      </div>
+    );
+  };
 
   const TeamsPage = () => (
     <div className="min-h-screen bg-gray-50">
@@ -475,12 +480,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Username"
-                    value={editedProfile.username || ''}
                     field="username"
                   />
                   <EditableField
                     label="Email"
-                    value={editedProfile.email || ''}
                     field="email"
                     type="email"
                   />
@@ -489,12 +492,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Designation"
-                    value={editedProfile.designation || ''}
                     field="designation"
                   />
                   <EditableField
                     label="Department"
-                    value={editedProfile.department || ''}
                     field="department"
                   />
                 </div>
@@ -502,12 +503,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Full Name"
-                    value={editedProfile.name || ''}
                     field="name"
                   />
                   <EditableField
                     label="Experience (Years)"
-                    value={editedProfile.experience || 0}
                     field="experience"
                     type="number"
                   />
