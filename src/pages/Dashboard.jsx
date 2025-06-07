@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
@@ -13,7 +13,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     username: ''
   });
   const [editMode, setEditMode] = useState(false);
-  const [editData, setEditData] = useState({});
+  const [editedProfile, setEditedProfile] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -22,6 +22,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     const fetchUserProfile = async () => {
       try {
         setLoading(true);
+        // Try multiple token sources for compatibility
         const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token')
         
         if (!token) {
@@ -58,6 +59,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           username: userData.username || ''
         };
         setUserProfile(profile);
+        setEditedProfile(profile);
         setError(null);
       } catch (error) {
         console.error('Error fetching user profile:', error);
@@ -70,31 +72,30 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     fetchUserProfile();
   }, []);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     window.authToken = null;
+    // Clear both possible token storage keys
     localStorage.removeItem('authToken');
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     setCurrentPage('home');
-  }, [setIsLoggedIn, setCurrentPage]);
+  };
 
-  const startEdit = useCallback(() => {
-    setEditData({ ...userProfile });
-    setEditMode(true);
-  }, [userProfile]);
+  const handleEditToggle = () => {
+    if (editMode) {
+      // Reset edited profile to original values when canceling
+      setEditedProfile(userProfile);
+    } else {
+      // Initialize edited profile when starting edit mode
+      setEditedProfile({...userProfile});
+    }
+    setEditMode(!editMode);
+  };
 
-  const cancelEdit = useCallback(() => {
-    setEditData({});
-    setEditMode(false);
-  }, []);
-
-  const updateField = useCallback((field, value) => {
-    setEditData(prev => ({ ...prev, [field]: value }));
-  }, []);
-
-  const saveProfile = async () => {
+  const handleSaveProfile = async () => {
     try {
       setSaving(true);
+      // Try multiple token sources for compatibility
       const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token');
       
       if (!token) {
@@ -102,28 +103,36 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         return;
       }
 
-      // Since PUT route doesn't exist, we'll simulate saving locally
-      // You'll need to add the PUT route to your backend
-      console.log('Profile data to save:', editData);
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For now, just update local state
-      setUserProfile(editData);
+      const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedProfile)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const updatedData = await response.json();
+      setUserProfile(editedProfile);
       setEditMode(false);
-      setEditData({});
       setError(null);
-      
-      // Show success message
-      alert('Profile saved successfully! (Note: Backend PUT route needed for persistence)');
-      
     } catch (error) {
       console.error('Error updating profile:', error);
       setError('Failed to save profile changes. Please try again.');
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditedProfile(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   const LoadingCard = () => (
@@ -148,38 +157,38 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const Navbar = () => (
     <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          <div className="flex items-center min-w-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
             {currentView === 'teams' && (
               <button
                 onClick={() => setCurrentView('dashboard')}
-                className="mr-2 sm:mr-3 p-1.5 sm:p-2 border border-black hover:bg-black hover:text-white transition-colors flex-shrink-0"
+                className="mr-3 p-2 border border-black hover:bg-black hover:text-white transition-colors"
               >
-                <ArrowLeft size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <ArrowLeft size={18} />
               </button>
             )}
-            <h1 className="text-lg sm:text-xl font-black tracking-tight text-black truncate">
+            <h1 className="text-xl font-black tracking-tight text-black">
               {currentView === 'teams' ? 'TEAMS' : 'DASHBOARD'}
             </h1>
           </div>
           
-          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+          <div className="flex items-center space-x-2">
             {currentView === 'dashboard' && (
               <button 
                 onClick={() => setCurrentView('teams')}
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-2 sm:py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs sm:text-sm tracking-wide uppercase shadow-lg"
+                className="flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
               >
-                <Users size={14} className="sm:w-[18px] sm:h-[18px]" />
-                <span className="hidden sm:inline">TEAMS</span>
+                <Users size={18} />
+                <span>TEAMS</span>
               </button>
             )}
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-xs sm:text-sm tracking-wide uppercase"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
             >
-              <LogOut size={14} className="sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">LOGOUT</span>
+              <LogOut size={16} />
+              <span>LOGOUT</span>
             </button>
           </div>
         </div>
@@ -236,9 +245,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
-  const EditableField = ({ label, field, type = 'text', placeholder = '' }) => {
-    const currentValue = userProfile[field];
-    const editValue = editData[field];
+  const EditableField = ({ label, field, type = 'text', options = null }) => {
+    const displayValue = userProfile[field];
+    const editValue = editedProfile[field];
     
     return (
       <div className="p-3 border border-black bg-gray-50">
@@ -246,51 +255,39 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           {label}
         </p>
         {editMode ? (
-          <input
-            type={type}
-            value={editValue || ''}
-            placeholder={placeholder}
-            onChange={(e) => updateField(field, type === 'number' ? parseInt(e.target.value) || 0 : e.target.value)}
-            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
-          />
+          type === 'select' ? (
+            <select
+              value={editValue || ''}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            >
+              {options?.map(option => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          ) : type === 'number' ? (
+            <input
+              type="number"
+              value={editValue || 0}
+              onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            />
+          ) : (
+            <input
+              type={type}
+              value={editValue || ''}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+            />
+          )
         ) : (
           <p className="text-sm font-bold text-black break-words">
-            {currentValue || 'Not set'}
+            {displayValue || 'Not set'}
           </p>
         )}
       </div>
     );
   };
-
-  const SkillsField = () => (
-    <div className="p-3 sm:p-4 border border-black bg-gray-50">
-      {editMode ? (
-        <textarea
-          value={editData.skills || ''}
-          onChange={(e) => updateField('skills', e.target.value)}
-          placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
-          className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
-        />
-      ) : (
-        <div className="flex flex-wrap gap-2">
-          {userProfile.skills ? (
-            userProfile.skills.split(',').map((skill, index) => (
-              <span
-                key={index}
-                className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
-              >
-                {skill.trim()}
-              </span>
-            ))
-          ) : (
-            <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
-              No skills listed
-            </span>
-          )}
-        </div>
-      )}
-    </div>
-  );
 
   const TeamsPage = () => (
     <div className="min-h-screen bg-gray-50">
@@ -358,9 +355,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         
         {error && <ErrorMessage message={error} />}
 
-        {/* Header Section */}
         <div className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+          <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
               Welcome, {
                 userProfile.name
@@ -371,19 +367,19 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               }
             </h1>
             
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2">
               {editMode ? (
                 <>
                   <button
-                    onClick={saveProfile}
+                    onClick={handleSaveProfile}
                     disabled={saving}
-                    className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase disabled:opacity-50"
                   >
                     <Save size={16} />
                     {saving ? 'Saving...' : 'Save'}
                   </button>
                   <button
-                    onClick={cancelEdit}
+                    onClick={handleEditToggle}
                     className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase"
                   >
                     <X size={16} />
@@ -392,7 +388,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 </>
               ) : (
                 <button
-                  onClick={startEdit}
+                  onClick={handleEditToggle}
                   className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-600 font-bold text-sm tracking-wide uppercase"
                 >
                   <Edit2 size={16} />
@@ -408,7 +404,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
           <StatCard
             title="Designation"
@@ -436,20 +431,44 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           />
         </div>
 
-        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            {/* Skills Section */}
             <Card className="p-4 sm:p-6">
               <div className="border-b-2 border-black mb-4 pb-3">
                 <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
                   Skills & Expertise
                 </h3>
               </div>
-              <SkillsField />
+              
+              <div className="p-3 sm:p-4 border border-black bg-gray-50">
+                {editMode ? (
+                  <textarea
+                    value={editedProfile.skills || ''}
+                    onChange={(e) => handleInputChange('skills', e.target.value)}
+                    placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
+                    className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {userProfile.skills ? (
+                      userProfile.skills.split(',').map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                        >
+                          {skill.trim()}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                        No skills listed
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
             </Card>
 
-            {/* Profile Information */}
             <Card className="p-4 sm:p-6">
               <div className="border-b-2 border-black mb-4 pb-3">
                 <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
@@ -462,13 +481,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Username"
                     field="username"
-                    placeholder="Enter username"
                   />
                   <EditableField
                     label="Email"
                     field="email"
                     type="email"
-                    placeholder="Enter email address"
                   />
                 </div>
                 
@@ -476,12 +493,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Designation"
                     field="designation"
-                    placeholder="Enter designation"
                   />
                   <EditableField
                     label="Department"
                     field="department"
-                    placeholder="Enter department"
                   />
                 </div>
                 
@@ -489,20 +504,17 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Full Name"
                     field="name"
-                    placeholder="Enter full name"
                   />
                   <EditableField
                     label="Experience (Years)"
                     field="experience"
                     type="number"
-                    placeholder="Enter years of experience"
                   />
                 </div>
               </div>
             </Card>
           </div>
 
-          {/* Achievements Sidebar */}
           <div className="space-y-6">
             <Card className="p-4 sm:p-6">
               <div className="border-b-2 border-black mb-4 pb-3">
