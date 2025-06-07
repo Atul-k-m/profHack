@@ -30,13 +30,13 @@ const Navbar = React.memo(({ currentView, setCurrentView, handleLogout }) => (
               <span>TEAMS</span>
             </button>
           )}
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
-          >
-            <LogOut size={16} />
-            <span>LOGOUT</span>
-          </button>
+        <button 
+  onClick={handleLogout}
+  className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+>
+  <LogOut size={16} />
+  <span className="hidden md:inline">LOGOUT</span>
+</button>
         </div>
       </div>
     </div>
