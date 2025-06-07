@@ -174,21 +174,44 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           </div>
           
           <div className="flex items-center space-x-2">
+            {/* Desktop Teams Button */}
             {currentView === 'dashboard' && (
               <button 
                 onClick={() => setCurrentView('teams')}
-                className="flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
+                className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
               >
                 <Users size={18} />
                 <span>TEAMS</span>
               </button>
             )}
+            
+            {/* Mobile Teams Button - Icon Only */}
+            {currentView === 'dashboard' && (
+              <button 
+                onClick={() => setCurrentView('teams')}
+                className="sm:hidden p-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200"
+                title="Teams"
+              >
+                <Users size={18} />
+              </button>
+            )}
+            
+            {/* Desktop Logout Button */}
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+              className="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
             >
               <LogOut size={16} />
               <span>LOGOUT</span>
+            </button>
+            
+            {/* Mobile Logout Button - Icon Only */}
+            <button 
+              onClick={handleLogout}
+              className="sm:hidden p-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200"
+              title="Logout"
+            >
+              <LogOut size={16} />
             </button>
           </div>
         </div>
@@ -303,6 +326,69 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     );
   };
 
+  const SkillsSection = () => {
+    const skillsRef = useRef(null);
+    
+    useEffect(() => {
+      if (editMode && skillsRef.current) {
+        
+        const handleFocus = () => {
+          skillsRef.current.focus();
+        };
+       
+      }
+    }, [editMode]);
+
+    return (
+      <Card className="p-4 sm:p-6">
+        <div className="border-b-2 border-black mb-4 pb-3">
+          <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
+            Skills & Expertise
+          </h3>
+        </div>
+        
+        <div className="p-3 sm:p-4 border border-black bg-gray-50">
+          {editMode ? (
+            <div>
+              <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
+                Skills (comma-separated)
+              </p>
+              <textarea
+                ref={skillsRef}
+                value={editedProfile.skills || ''}
+                onChange={(e) => handleInputChange('skills', e.target.value)}
+                placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
+                className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+              />
+            </div>
+          ) : (
+            <div>
+              <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-2">
+                Skills
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {userProfile.skills ? (
+                  userProfile.skills.split(',').map((skill, index) => (
+                    <span
+                      key={index}
+                      className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                    >
+                      {skill.trim()}
+                    </span>
+                  ))
+                ) : (
+                  <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                    No skills listed
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </Card>
+    );
+  };
+
   const TeamsPage = () => (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -370,7 +456,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         {error && <ErrorMessage message={error} />}
 
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
               Welcome, {
                 userProfile.name
@@ -390,14 +476,14 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                     className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase disabled:opacity-50"
                   >
                     <Save size={16} />
-                    {saving ? 'Saving...' : 'Save'}
+                    <span className="hidden sm:inline">{saving ? 'Saving...' : 'Save'}</span>
                   </button>
                   <button
                     onClick={handleEditToggle}
                     className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase"
                   >
                     <X size={16} />
-                    Cancel
+                    <span className="hidden sm:inline">Cancel</span>
                   </button>
                 </>
               ) : (
@@ -406,7 +492,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-600 font-bold text-sm tracking-wide uppercase"
                 >
                   <Edit2 size={16} />
-                  Edit
+                  <span className="hidden sm:inline">Edit</span>
                 </button>
               )}
             </div>
@@ -447,41 +533,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <Card className="p-4 sm:p-6">
-              <div className="border-b-2 border-black mb-4 pb-3">
-                <h3 className="text-lg sm:text-xl font-black tracking-tight text-black uppercase">
-                  Skills & Expertise
-                </h3>
-              </div>
-              
-              <div className="p-3 sm:p-4 border border-black bg-gray-50">
-                {editMode ? (
-                  <textarea
-                    value={editedProfile.skills || ''}
-                    onChange={(e) => handleInputChange('skills', e.target.value)}
-                    placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
-                    className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
-                  />
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {userProfile.skills ? (
-                      userProfile.skills.split(',').map((skill, index) => (
-                        <span
-                          key={index}
-                          className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
-                        >
-                          {skill.trim()}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
-                        No skills listed
-                      </span>
-                    )}
-                  </div>
-                )}
-              </div>
-            </Card>
+            <SkillsSection />
 
             <Card className="p-4 sm:p-6">
               <div className="border-b-2 border-black mb-4 pb-3">
