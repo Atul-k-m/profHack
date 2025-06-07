@@ -128,15 +128,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     }
   };
 
+  // Fixed input change handler with proper state management
   const handleInputChange = (field, value) => {
-    setEditedProfile(prev => {
-      const newProfile = {
-        ...prev,
-        [field]: value
-      };
-      console.log('Updated field:', field, 'to:', value); // Debug log
-      return newProfile;
-    });
+    setEditedProfile(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   const LoadingCard = () => (
@@ -249,11 +246,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
+  // Fixed EditableField component with proper value handling
   const EditableField = ({ label, field, type = 'text', options = null }) => {
     const displayValue = userProfile[field];
     const editValue = editedProfile[field];
-    
-    console.log(`Field ${field}:`, { displayValue, editValue, editMode }); // Debug log
     
     return (
       <div className="p-3 border border-black bg-gray-50">
@@ -265,7 +261,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             <select
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
             >
               {options?.map(option => (
                 <option key={option} value={option}>{option}</option>
@@ -274,16 +270,17 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           ) : type === 'number' ? (
             <input
               type="number"
-              value={editValue !== undefined ? editValue : 0}
+              value={editValue || 0}
               onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
             />
           ) : (
             <input
               type={type}
-              value={editValue !== undefined ? editValue : ''}
+              value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
+              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
+              autoComplete="off"
             />
           )
         ) : (
@@ -453,6 +450,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                     onChange={(e) => handleInputChange('skills', e.target.value)}
                     placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
                     className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+                    autoComplete="off"
                   />
                 ) : (
                   <div className="flex flex-wrap gap-2">
