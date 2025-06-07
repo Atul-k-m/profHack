@@ -479,10 +479,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                    autoFocus
                     label="Username"
                     field="username"
                   />
                   <EditableField
+                    autoFocus
                     label="Email"
                     field="email"
                     type="email"
@@ -491,10 +493,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                  autoFocus
                     label="Designation"
                     field="designation"
                   />
                   <EditableField
+                  autoFocus
                     label="Department"
                     field="department"
                   />
@@ -502,10 +506,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                   autoFocus
                     label="Full Name"
                     field="name"
                   />
                   <EditableField
+                   autoFocus
                     label="Experience (Years)"
                     field="experience"
                     type="number"
