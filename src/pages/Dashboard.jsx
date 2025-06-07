@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
@@ -17,6 +17,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
+  
+  // Ref for autofocus on first field when entering edit mode
+  const firstFieldRef = useRef(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -71,6 +74,13 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
     fetchUserProfile();
   }, []);
+
+  // Auto-focus first field when entering edit mode
+  useEffect(() => {
+    if (editMode && firstFieldRef.current) {
+      firstFieldRef.current.focus();
+    }
+  }, [editMode]);
 
   const handleLogout = () => {
     window.authToken = null;
@@ -198,16 +208,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const Card = ({ children, className = "" }) => (
     <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden ${className}`}>
-      <div 
-        className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, black 1px, transparent 1px),
-            linear-gradient(to bottom, black 1px, transparent 1px)
-          `,
-          backgroundSize: '20px 20px'
-        }}
-      />
+      <div className="absolute inset-0 opacity-5 pointer-events-none bg-grid-pattern"></div>
       <div className="relative z-10">
         {children}
       </div>
@@ -245,7 +246,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
-  const EditableField = ({ label, field, type = 'text', options = null }) => {
+  const EditableField = ({ label, field, type = 'text', options = null, isFirstField = false }) => {
     const displayValue = userProfile[field];
     const editValue = editedProfile[field];
     
@@ -257,6 +258,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         {editMode ? (
           type === 'select' ? (
             <select
+              ref={isFirstField ? firstFieldRef : null}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
               className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
@@ -267,6 +269,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </select>
           ) : type === 'number' ? (
             <input
+              ref={isFirstField ? firstFieldRef : null}
               type="number"
               value={editValue || 0}
               onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
@@ -274,6 +277,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             />
           ) : (
             <input
+              ref={isFirstField ? firstFieldRef : null}
               type={type}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
@@ -479,12 +483,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                    autoFocus
                     label="Username"
                     field="username"
+                    isFirstField={true}
                   />
                   <EditableField
-                    autoFocus
                     label="Email"
                     field="email"
                     type="email"
@@ -493,12 +496,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                  autoFocus
                     label="Designation"
                     field="designation"
                   />
                   <EditableField
-                  autoFocus
                     label="Department"
                     field="department"
                   />
@@ -506,12 +507,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                   autoFocus
                     label="Full Name"
                     field="name"
                   />
                   <EditableField
-                   autoFocus
                     label="Experience (Years)"
                     field="experience"
                     type="number"
