@@ -83,7 +83,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const handleEditToggle = () => {
     if (editMode) {
+      // Reset edited profile to original values when canceling
       setEditedProfile(userProfile);
+    } else {
+      // Initialize edited profile when starting edit mode
+      setEditedProfile({...userProfile});
     }
     setEditMode(!editMode);
   };
@@ -434,7 +438,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               <div className="p-3 sm:p-4 border border-black bg-gray-50">
                 {editMode ? (
                   <textarea
-                    value={editedProfile.skills}
+                    value={editedProfile.skills || ''}
                     onChange={(e) => handleInputChange('skills', e.target.value)}
                     placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
                     className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
@@ -471,12 +475,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Username"
-                    value={editMode ? editedProfile.username : userProfile.username}
+                    value={editedProfile.username || ''}
                     field="username"
                   />
                   <EditableField
                     label="Email"
-                    value={editMode ? editedProfile.email : userProfile.email}
+                    value={editedProfile.email || ''}
                     field="email"
                     type="email"
                   />
@@ -485,12 +489,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Designation"
-                    value={editMode ? editedProfile.designation : userProfile.designation}
+                    value={editedProfile.designation || ''}
                     field="designation"
                   />
                   <EditableField
                     label="Department"
-                    value={editMode ? editedProfile.department : userProfile.department}
+                    value={editedProfile.department || ''}
                     field="department"
                   />
                 </div>
@@ -498,12 +502,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
                     label="Full Name"
-                    value={editMode ? editedProfile.name : userProfile.name}
+                    value={editedProfile.name || ''}
                     field="name"
                   />
                   <EditableField
                     label="Experience (Years)"
-                    value={editMode ? editedProfile.experience : userProfile.experience}
+                    value={editedProfile.experience || 0}
                     field="experience"
                     type="number"
                   />
