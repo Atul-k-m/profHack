@@ -1,6 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
+// Move EditableField outside the main component to prevent re-creation
+const EditableField = ({ label, field, type = 'text', options = null, editMode, userProfile, editedProfile, handleInputChange }) => {
+  const displayValue = userProfile[field];
+  const editValue = editedProfile[field];
+  
+  return (
+    <div className="p-3 border border-black bg-gray-50">
+      <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
+        {label}
+      </p>
+      {editMode ? (
+        type === 'select' ? (
+          <select
+            value={editValue || ''}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
+          >
+            {options?.map(option => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        ) : type === 'number' ? (
+          <input
+            type="number"
+            value={editValue || 0}
+            onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
+          />
+        ) : (
+          <input
+            type={type}
+            value={editValue || ''}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
+            autoComplete="off"
+          />
+        )
+      ) : (
+        <p className="text-sm font-bold text-black break-words">
+          {displayValue || 'Not set'}
+        </p>
+      )}
+    </div>
+  );
+};
+
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [userProfile, setUserProfile] = useState({
@@ -128,13 +174,13 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     }
   };
 
-  // Fixed input change handler with proper state management
-  const handleInputChange = (field, value) => {
+  // Use useCallback to prevent function recreation on every render
+  const handleInputChange = React.useCallback((field, value) => {
     setEditedProfile(prev => ({
       ...prev,
       [field]: value
     }));
-  };
+  }, []);
 
   const LoadingCard = () => (
     <div className="bg-white border-2 border-black p-4 sm:p-6 animate-pulse">
@@ -245,52 +291,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
       )}
     </Card>
   );
-
-  // Fixed EditableField component with proper value handling
-  const EditableField = ({ label, field, type = 'text', options = null }) => {
-    const displayValue = userProfile[field];
-    const editValue = editedProfile[field];
-    
-    return (
-      <div className="p-3 border border-black bg-gray-50">
-        <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-          {label}
-        </p>
-        {editMode ? (
-          type === 'select' ? (
-            <select
-              value={editValue || ''}
-              onChange={(e) => handleInputChange(field, e.target.value)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
-            >
-              {options?.map(option => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
-          ) : type === 'number' ? (
-            <input
-              type="number"
-              value={editValue || 0}
-              onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
-            />
-          ) : (
-            <input
-              type={type}
-              value={editValue || ''}
-              onChange={(e) => handleInputChange(field, e.target.value)}
-              className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black"
-              autoComplete="off"
-            />
-          )
-        ) : (
-          <p className="text-sm font-bold text-black break-words">
-            {displayValue || 'Not set'}
-          </p>
-        )}
-      </div>
-    );
-  };
 
   const TeamsPage = () => (
     <div className="min-h-screen bg-gray-50">
@@ -485,11 +485,19 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Username"
                     field="username"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                   <EditableField
                     label="Email"
                     field="email"
                     type="email"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                 </div>
                 
@@ -497,10 +505,18 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Designation"
                     field="designation"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                   <EditableField
                     label="Department"
                     field="department"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                 </div>
                 
@@ -508,11 +524,19 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   <EditableField
                     label="Full Name"
                     field="name"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                   <EditableField
                     label="Experience (Years)"
                     field="experience"
                     type="number"
+                    editMode={editMode}
+                    userProfile={userProfile}
+                    editedProfile={editedProfile}
+                    handleInputChange={handleInputChange}
                   />
                 </div>
               </div>
