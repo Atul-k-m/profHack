@@ -84,7 +84,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const handleEditToggle = () => {
     if (editMode) {
       // Reset edited profile to original values when canceling
-      setEditedProfile(userProfile);
+      setEditedProfile({...userProfile});
     } else {
       // Initialize edited profile when starting edit mode
       setEditedProfile({...userProfile});
@@ -129,10 +129,14 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   };
 
   const handleInputChange = (field, value) => {
-    setEditedProfile(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    setEditedProfile(prev => {
+      const newProfile = {
+        ...prev,
+        [field]: value
+      };
+      console.log('Updated field:', field, 'to:', value); // Debug log
+      return newProfile;
+    });
   };
 
   const LoadingCard = () => (
@@ -249,6 +253,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     const displayValue = userProfile[field];
     const editValue = editedProfile[field];
     
+    console.log(`Field ${field}:`, { displayValue, editValue, editMode }); // Debug log
+    
     return (
       <div className="p-3 border border-black bg-gray-50">
         <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
@@ -268,14 +274,14 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           ) : type === 'number' ? (
             <input
               type="number"
-              value={editValue || 0}
+              value={editValue !== undefined ? editValue : 0}
               onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
               className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
             />
           ) : (
             <input
               type={type}
-              value={editValue || ''}
+              value={editValue !== undefined ? editValue : ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
               className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
             />
