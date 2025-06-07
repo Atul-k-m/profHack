@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
@@ -174,44 +174,21 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           </div>
           
           <div className="flex items-center space-x-2">
-            {/* Desktop Teams Button */}
             {currentView === 'dashboard' && (
               <button 
                 onClick={() => setCurrentView('teams')}
-                className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
+                className="flex items-center gap-2 px-6 py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase shadow-lg"
               >
                 <Users size={18} />
                 <span>TEAMS</span>
               </button>
             )}
-            
-            {/* Mobile Teams Button - Icon Only */}
-            {currentView === 'dashboard' && (
-              <button 
-                onClick={() => setCurrentView('teams')}
-                className="sm:hidden p-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200"
-                title="Teams"
-              >
-                <Users size={18} />
-              </button>
-            )}
-            
-            {/* Desktop Logout Button */}
             <button 
               onClick={handleLogout}
-              className="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-sm tracking-wide uppercase"
             >
               <LogOut size={16} />
               <span>LOGOUT</span>
-            </button>
-            
-            {/* Mobile Logout Button - Icon Only */}
-            <button 
-              onClick={handleLogout}
-              className="sm:hidden p-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200"
-              title="Logout"
-            >
-              <LogOut size={16} />
             </button>
           </div>
         </div>
@@ -268,20 +245,9 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
-  const EditableField = ({ label, field, type = 'text', options = null, shouldFocus = false }) => {
-    const inputRef = useRef(null);
+  const EditableField = ({ label, field, type = 'text', options = null }) => {
     const displayValue = userProfile[field];
     const editValue = editedProfile[field];
-    
-    // Focus management - only focus when entering edit mode and shouldFocus is true
-    useEffect(() => {
-      if (editMode && shouldFocus && inputRef.current) {
-        // Use setTimeout to ensure the input is rendered before focusing
-        setTimeout(() => {
-          inputRef.current.focus();
-        }, 100);
-      }
-    }, [editMode, shouldFocus]);
     
     return (
       <div className="p-3 border border-black bg-gray-50">
@@ -291,7 +257,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         {editMode ? (
           type === 'select' ? (
             <select
-              ref={inputRef}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
               className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
@@ -302,7 +267,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </select>
           ) : type === 'number' ? (
             <input
-              ref={inputRef}
               type="number"
               value={editValue || 0}
               onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
@@ -310,7 +274,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             />
           ) : (
             <input
-              ref={inputRef}
               type={type}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
@@ -321,47 +284,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           <p className="text-sm font-bold text-black break-words">
             {displayValue || 'Not set'}
           </p>
-        )}
-      </div>
-    );
-  };
-
-  const EditableTextArea = ({ label, field, placeholder, rows = 3 }) => {
-    const textareaRef = useRef(null);
-    const displayValue = userProfile[field];
-    const editValue = editedProfile[field];
-    
-    return (
-      <div className="p-3 border border-black bg-gray-50">
-        <p className="text-xs font-bold tracking-wider uppercase text-gray-600 mb-1">
-          {label}
-        </p>
-        {editMode ? (
-          <textarea
-            ref={textareaRef}
-            value={editValue || ''}
-            onChange={(e) => handleInputChange(field, e.target.value)}
-            placeholder={placeholder}
-            rows={rows}
-            className="w-full text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
-          />
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {displayValue ? (
-              displayValue.split(',').map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
-                >
-                  {skill.trim()}
-                </span>
-              ))
-            ) : (
-              <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
-                No skills listed
-              </span>
-            )}
-          </div>
         )}
       </div>
     );
@@ -434,7 +356,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         {error && <ErrorMessage message={error} />}
 
         <div className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+          <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
               Welcome, {
                 userProfile.name
@@ -454,14 +376,14 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                     className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase disabled:opacity-50"
                   >
                     <Save size={16} />
-                    <span className="hidden sm:inline">{saving ? 'Saving...' : 'Save'}</span>
+                    {saving ? 'Saving...' : 'Save'}
                   </button>
                   <button
                     onClick={handleEditToggle}
                     className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase"
                   >
                     <X size={16} />
-                    <span className="hidden sm:inline">Cancel</span>
+                    Cancel
                   </button>
                 </>
               ) : (
@@ -470,7 +392,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                   className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-600 font-bold text-sm tracking-wide uppercase"
                 >
                   <Edit2 size={16} />
-                  <span className="hidden sm:inline">Edit</span>
+                  Edit
                 </button>
               )}
             </div>
@@ -518,12 +440,33 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 </h3>
               </div>
               
-              <EditableTextArea
-                label="Skills (comma-separated)"
-                field="skills"
-                placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
-                rows={3}
-              />
+              <div className="p-3 sm:p-4 border border-black bg-gray-50">
+                {editMode ? (
+                  <textarea
+                    value={editedProfile.skills || ''}
+                    onChange={(e) => handleInputChange('skills', e.target.value)}
+                    placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"
+                    className="w-full h-20 text-sm font-medium text-black bg-white border border-gray-300 p-2 focus:outline-none focus:border-black resize-none"
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {userProfile.skills ? (
+                      userProfile.skills.split(',').map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-2 sm:px-3 py-1 bg-black text-white text-xs font-bold tracking-wide uppercase"
+                        >
+                          {skill.trim()}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="px-2 sm:px-3 py-1 bg-gray-500 text-white text-xs font-bold tracking-wide uppercase">
+                        No skills listed
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
             </Card>
 
             <Card className="p-4 sm:p-6">
@@ -536,11 +479,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                    autoFocus
                     label="Username"
                     field="username"
-                    shouldFocus={true}
                   />
                   <EditableField
+                    autoFocus
                     label="Email"
                     field="email"
                     type="email"
@@ -549,10 +493,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                  autoFocus
                     label="Designation"
                     field="designation"
                   />
                   <EditableField
+                  autoFocus
                     label="Department"
                     field="department"
                   />
@@ -560,10 +506,12 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
+                   autoFocus
                     label="Full Name"
                     field="name"
                   />
                   <EditableField
+                   autoFocus
                     label="Experience (Years)"
                     field="experience"
                     type="number"
