@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
@@ -245,9 +245,20 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     </Card>
   );
 
-  const EditableField = ({ label, field, type = 'text', options = null }) => {
+  const EditableField = ({ label, field, type = 'text', options = null, shouldFocus = false }) => {
+    const inputRef = useRef(null);
     const displayValue = userProfile[field];
     const editValue = editedProfile[field];
+    
+    // Focus management - only focus when entering edit mode and shouldFocus is true
+    useEffect(() => {
+      if (editMode && shouldFocus && inputRef.current) {
+        // Use setTimeout to ensure the input is rendered before focusing
+        setTimeout(() => {
+          inputRef.current.focus();
+        }, 100);
+      }
+    }, [editMode, shouldFocus]);
     
     return (
       <div className="p-3 border border-black bg-gray-50">
@@ -257,6 +268,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         {editMode ? (
           type === 'select' ? (
             <select
+              ref={inputRef}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
               className="w-full text-sm font-bold text-black bg-white border border-gray-300 p-1 focus:outline-none focus:border-black"
@@ -267,6 +279,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             </select>
           ) : type === 'number' ? (
             <input
+              ref={inputRef}
               type="number"
               value={editValue || 0}
               onChange={(e) => handleInputChange(field, parseInt(e.target.value) || 0)}
@@ -274,6 +287,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
             />
           ) : (
             <input
+              ref={inputRef}
               type={type}
               value={editValue || ''}
               onChange={(e) => handleInputChange(field, e.target.value)}
@@ -479,12 +493,11 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                    autoFocus
                     label="Username"
                     field="username"
+                    shouldFocus={true}
                   />
                   <EditableField
-                    autoFocus
                     label="Email"
                     field="email"
                     type="email"
@@ -493,12 +506,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                  autoFocus
                     label="Designation"
                     field="designation"
                   />
                   <EditableField
-                  autoFocus
                     label="Department"
                     field="department"
                   />
@@ -506,12 +517,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <EditableField
-                   autoFocus
                     label="Full Name"
                     field="name"
                   />
                   <EditableField
-                   autoFocus
                     label="Experience (Years)"
                     field="experience"
                     type="number"
