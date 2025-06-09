@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 
-// Memoized components to prevent unnecessary re-renders
 const Navbar = React.memo(({ currentView, setCurrentView, handleLogout }) => (
   <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +83,7 @@ const StatCard = React.memo(({ title, value, icon: Icon, description, loading = 
   </Card>
 ));
 
-// Optimized EditableField component with stable refs and focus management
+
 const EditableField = React.memo(({ label, field, type = 'text', options = null, value, editMode, onChange, fieldRef }) => {
   const handleChange = useCallback((e) => {
     onChange(field, e.target.value);
@@ -206,7 +205,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   
-  // Stable refs for each field to prevent focus loss
+
   const fieldRefs = useRef({
     username: null,
     email: null,
@@ -217,7 +216,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     skills: null
   });
 
-  // Memoized callbacks to prevent unnecessary re-renders
+ 
   const handleLogout = useCallback(() => {
     window.authToken = null;
     localStorage.removeItem('authToken');
@@ -235,10 +234,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const handleEditToggle = useCallback(() => {
     if (editMode) {
-      // Reset edited profile to original values when canceling
+     
       setEditedProfile(userProfile);
     } else {
-      // Initialize edited profile when starting edit mode
+   
       setEditedProfile({...userProfile});
     }
     setEditMode(!editMode);
@@ -279,10 +278,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     }
   }, [editedProfile]);
 
-  // Focus first field when entering edit mode
+  
   useEffect(() => {
     if (editMode && fieldRefs.current.username) {
-      // Small delay to ensure DOM is ready
+   
       setTimeout(() => {
         fieldRefs.current.username?.focus();
       }, 100);
@@ -342,14 +341,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     fetchUserProfile();
   }, [handleLogout]);
 
-  // Memoized values to prevent unnecessary re-calculations
-  const displayName = useMemo(() => {
-    return userProfile.name
-      ? userProfile.name
-          .replace(/^(Mr\.?|Mrs\.?|Ms\.?|Dr\.?|Prof\.?)\s+/i, '') 
-          .split(' ')[0]
-      : 'User';
-  }, [userProfile.name]);
+
+  
 
   const skillsArray = useMemo(() => {
     return userProfile.skills ? userProfile.skills.split(',') : [];
@@ -359,7 +352,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     return skillsArray.length;
   }, [skillsArray]);
 
-  // Memoized stat cards data
   const statCards = useMemo(() => [
     {
       title: "Designation",
@@ -426,7 +418,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
-              Welcome, {displayName}
+              Welcome, Professor
             </h1>
             
             <div className="flex items-center gap-2">

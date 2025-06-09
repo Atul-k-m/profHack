@@ -38,7 +38,7 @@ const FormInput = ({ label, error, type, ...props }) => (
 
 const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = () => {} }) => {
   const [loginData, setLoginData] = useState({
-    username: '',
+    email: '', // Changed from username to email
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -48,7 +48,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!loginData.username || !loginData.password) {
+    if (!loginData.email || !loginData.password) {
       setError('Please fill all fields');
       return;
     }
@@ -131,13 +131,13 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
             <div className="space-y-3">
               <div className="relative">
                 <FormInput
-                  label="Username"
+                  label="Username or Email"
                   type="text"
-                  value={loginData.username}
-                  onChange={(e) => setLoginData({...loginData, username: e.target.value})}
-                  placeholder="Enter your username"
-                  autoComplete="username"
-                  error={!loginData.username && error === 'Please fill all fields' ? 'Username is required' : ''}
+                  value={loginData.email}
+                  onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                  placeholder="Enter your username or email"
+                  autoComplete="email"
+                  error={!loginData.email && error === 'Please fill all fields' ? 'Username or email is required' : ''}
                 />
                 <div className="absolute right-3 top-7 text-gray-400">
                   <User size={14} />

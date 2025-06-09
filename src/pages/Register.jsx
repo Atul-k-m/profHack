@@ -260,6 +260,16 @@ const mockEmployeeData = [
     "department": "Test"
   },
   {
+    "name": "Test12",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
+    "name": "Test13",
+    "designation": "Database Administrator",
+    "department": "Test"
+  },
+  {
     "name": "Test7",
     "designation": "Database Administrator",
     "department": "Test"
@@ -1655,8 +1665,9 @@ const Register = ({ setCurrentPage = () => {} }) => {
     experience: '',
     username: '',
     password: '',
+    confirmPassword: '',
   })
-  const [otpSent, setOtpSent] = useState(false)
+  const [otpSent, setOtpSent] = useState(true)
 const [otpVerified, setOtpVerified] = useState(false)
 const [otpCode, setOtpCode] = useState('')
 const [otpTimer, setOtpTimer] = useState(0)
@@ -1875,6 +1886,7 @@ const resendOtp = async () => {
     }
   }
 
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -2086,7 +2098,7 @@ const resendOtp = async () => {
           </div>
         )
 
-      case 3:
+   case 3:
         return (
           <div className="space-y-5">
             <div className="text-center space-y-2">
@@ -2119,6 +2131,17 @@ const resendOtp = async () => {
                 }
                 placeholder="Create a secure password"
                 error={errors.password}
+              />
+
+              <FormInput
+                label="Confirm Password"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
+                placeholder="Re-enter your password"
+                error={errors.confirmPassword}
               />
 
               <div className="border border-black p-4 rounded-none bg-gray-50">
@@ -2192,6 +2215,28 @@ const resendOtp = async () => {
                       One number
                     </span>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-4 h-4 rounded-none flex items-center justify-center transition-all duration-200 ${
+                        formData.password && formData.confirmPassword && formData.password === formData.confirmPassword
+                          ? 'bg-black text-white'
+                          : 'bg-gray-200 text-gray-400'
+                      }`}
+                    >
+                      {formData.password && formData.confirmPassword && formData.password === formData.confirmPassword && (
+                        <Check className="w-2 h-2" />
+                      )}
+                    </div>
+                    <span
+                      className={`font-medium tracking-wide ${
+                        formData.password && formData.confirmPassword && formData.password === formData.confirmPassword
+                          ? 'text-black'
+                          : 'text-gray-500'
+                      }`}
+                    >
+                      Passwords match
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2204,7 +2249,8 @@ const resendOtp = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+
+<div className="min-h-screen bg-white relative overflow-hidden">
     
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div 
@@ -2226,8 +2272,8 @@ const resendOtp = async () => {
             key={i}
             className="absolute border border-black opacity-15"
             style={{
-              width: '40px',
-              height: '40px',
+              width: '30px',
+              height: '30px',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animation: `float ${8 + i * 2}s ease-in-out infinite`,
@@ -2237,21 +2283,21 @@ const resendOtp = async () => {
         ))}
       </div>
 
-      <div className="relative z-10 flex items-start justify-center min-h-screen px-4 py-6 pb-20">
-    <div className="w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-2xl backdrop-blur-sm mt-4 mb-8 sm:mt-8 min-h-[calc(100vh-8rem)]">
+      <div className="relative z-10 flex items-start justify-center min-h-screen px-3 py-4 pb-16">
+        <div className="w-full max-w-xl border-2 border-black bg-white p-4 md:p-6 shadow-2xl backdrop-blur-sm mt-2 mb-4 sm:mt-4 min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-6rem)]">
           
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-black mb-4 leading-none">
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl md:text-3xl font-black tracking-tighter text-black mb-3 leading-none">
               Account Registration
             </h1>
-            <div className="w-16 h-1 bg-black mx-auto mb-4"></div>
+            <div className="w-12 h-1 bg-black mx-auto mb-3"></div>
           </div>
 
           <StepIndicator steps={steps} currentStep={currentStep} />
 
         
           {errors.submit && (
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="p-3 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide">
                 {errors.submit}
               </div>
@@ -2260,10 +2306,10 @@ const resendOtp = async () => {
 
           
           <div>
-            <div className="mb-8">{renderStepContent()}</div>
+            <div className="mb-6">{renderStepContent()}</div>
 
            
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <Button
                 onClick={
                   currentStep === 1
@@ -2272,10 +2318,10 @@ const resendOtp = async () => {
                 }
                 variant="outline"
                 className="
-                  w-full sm:w-auto min-w-[140px]
+                  w-full sm:w-auto min-w-[120px]
                   border-2 border-black text-black font-bold tracking-wide
                   bg-white hover:bg-black hover:text-white 
-                  px-6 py-3 rounded-none uppercase text-xs
+                  px-4 py-2.5 rounded-none uppercase text-xs
                   transition-all duration-300 transform hover:scale-105
                 "
               >
@@ -2286,10 +2332,10 @@ const resendOtp = async () => {
                 <Button
                   onClick={handleNext}
                   className="
-                    w-full sm:w-auto min-w-[140px]
+                    w-full sm:w-auto min-w-[120px]
                     border-2 border-black text-white font-bold tracking-wide
                     bg-black hover:bg-white hover:text-black 
-                    px-6 py-3 rounded-none uppercase text-xs
+                    px-4 py-2.5 rounded-none uppercase text-xs
                     transition-all duration-300 transform hover:scale-105
                   "
                 >
@@ -2300,9 +2346,9 @@ const resendOtp = async () => {
                   onClick={handleSubmit}
                   disabled={loading}
                   className={`
-                    w-full sm:w-auto min-w-[140px]
+                    w-full sm:w-auto min-w-[120px]
                     border-2 border-black font-bold tracking-wide
-                    px-6 py-3 rounded-none uppercase text-xs
+                    px-4 py-2.5 rounded-none uppercase text-xs
                     transition-all duration-300 transform hover:scale-105
                     ${loading 
                       ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400' 
@@ -2324,7 +2370,7 @@ const resendOtp = async () => {
           </div>
 
         
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center">
             <p className="text-sm text-black font-medium tracking-wide">
               Already have an account?{' '}
               <button
@@ -2341,7 +2387,7 @@ const resendOtp = async () => {
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(180deg); }
+          50% { transform: translateY(-10px) rotate(180deg); }
         }
       `}</style>
     </div>
