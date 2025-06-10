@@ -8,7 +8,7 @@ const Timeline = () => {
     {
       phase: "01",
       title: "Skill Collection",
-      date: "09.06.2025 - 14.06.2025",
+      date: "10.06.2025 - 14.06.2025",
       action: "Faculty enter their skills and competencies in the hackathon portal"
     },
     {
