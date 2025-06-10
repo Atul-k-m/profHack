@@ -62,7 +62,7 @@ const Footer = () => {
               </h4>
               <div className="space-y-4">
                 <p className="text-base text-gray-700 font-semibold tracking-wide">
-                  reeboot@bmsit.in
+                  reboot@bmsit.in
                 </p>
                 <p className="text-base text-gray-700 font-semibold tracking-wide">
                   +91 9731382840
