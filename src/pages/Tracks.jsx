@@ -88,7 +88,7 @@ const Tracks = () => {
       <div className="relative z-10 pt-20 pb-24 px-4">
         <div className="max-w-7xl mx-auto">
           
-          {/* Header Section */}
+         
           <div className="text-center mb-20">
             <div className="mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-lg md:text-xl font-bold tracking-[0.4em] text-black uppercase mb-6">
@@ -115,7 +115,7 @@ const Tracks = () => {
             </div>
           </div>
 
-          {/* Cards Grid */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-20">
             {trackCards.map((card, index) => (
               <div
@@ -125,12 +125,12 @@ const Tracks = () => {
               >
                 <div className="group relative h-full bg-white border-2 border-black hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1 min-h-[280px]">
                   
-                  {/* Card Number */}
+               
                   <div className="absolute -top-4 -left-4 w-12 h-12 bg-black text-white flex items-center justify-center font-black text-lg tracking-wider">
                     {card.number}
                   </div>
 
-                  {/* Card Content */}
+                
                   <div className="p-6 pt-10 h-full flex flex-col">
                     <h3 className="text-xl font-black tracking-wide uppercase mb-4 text-black leading-tight">
                       {card.title}
@@ -140,14 +140,14 @@ const Tracks = () => {
                     </p>
                   </div>
 
-                  {/* Bottom Border Accent */}
+                  
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-black via-gray-600 to-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Bottom CTA */}
+   
           <div className="text-center mt-20 opacity-0 animate-fade-in-up" style={{ animationDelay: '1.8s' }}>
             <div className="flex items-center justify-center gap-6 text-sm text-gray-600 font-medium">
               <div className="w-12 h-px bg-gray-400"></div>
