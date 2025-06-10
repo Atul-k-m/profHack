@@ -30,7 +30,7 @@ const Navbar = ({ setCurrentPage, currentPage }) => {
     { name: 'Contact', id: 'contact', delay: '0.6s' }
   ];
 
-  // Prevent body scroll when menu is open
+  
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
