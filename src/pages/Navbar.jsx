@@ -81,7 +81,7 @@ const Navbar = () => {
             
             <div className="mb-6 sm:mb-8 md:mb-10 text-center">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-2 sm:mb-3 md:mb-4 text-gray-900">
-                eBooT
+                ReBooT
               </h1>
               <div className="w-20 sm:w-24 md:w-32 h-1 bg-gray-900 mx-auto mb-2 sm:mb-3 md:mb-4"></div>
               <p className="text-xs sm:text-sm md:text-base tracking-[0.1em] sm:tracking-[0.15em] md:tracking-[0.25em] text-gray-700 uppercase font-semibold">
