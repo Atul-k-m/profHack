@@ -1,6 +1,6 @@
 import React, { useState,useEffect,useRef } from 'react'
 import { User, Lock, Briefcase, Check, X } from 'lucide-react'
-
+import { useNavigate,Link } from 'react-router-dom';
 
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
@@ -18,7 +18,6 @@ const FormInput = ({ label, error, onFocus, ...props }) => {
   const inputRef = useRef(null)
   
   const handleFocus = (e) => {
-    // Scroll into view on mobile when keyboard appears
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.scrollIntoView({ 
@@ -27,7 +26,7 @@ const FormInput = ({ label, error, onFocus, ...props }) => {
           inline: 'nearest'
         })
       }
-    }, 300) // Delay for keyboard animation
+    }, 300) 
     
     if (onFocus) onFocus(e)
   }
@@ -40,7 +39,6 @@ const FormInput = ({ label, error, onFocus, ...props }) => {
       <input
         ref={inputRef}
         onFocus={handleFocus}
-        // Prevent iOS zoom on focus
         style={{ fontSize: '16px' }}
         className={`w-full px-3 py-2 border border-black rounded-none text-black placeholder-gray-500
           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
@@ -98,7 +96,6 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     option.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  // Improved mobile handling
   useEffect(() => {
     const handleResize = () => {
       if (isOpen && window.visualViewport) {
@@ -109,7 +106,7 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
           const spaceBelow = viewport.height - rect.bottom
           const spaceAbove = rect.top
           
-          // If keyboard is up and no space below, position dropdown above
+          
           if (spaceBelow < 200 && spaceAbove > 200) {
             dropdown.style.bottom = '100%'
             dropdown.style.top = 'auto'
@@ -131,7 +128,6 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     onChange(option)
     setSearchTerm('')
     setIsOpen(false)
-    // Blur input to hide keyboard on mobile
     if (inputRef.current) {
       inputRef.current.blur()
     }
@@ -142,7 +138,6 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
     onChange('')
     setSearchTerm('')
     setIsOpen(false)
-    // Blur input to hide keyboard on mobile
     if (inputRef.current) {
       inputRef.current.blur()
     }
@@ -151,7 +146,6 @@ const SearchableDropdown = ({ label, options = [], value, onChange, placeholder,
   const handleInputFocus = () => {
     setIsOpen(true)
     setSearchTerm('')
-    // Scroll input into view on mobile
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.scrollIntoView({ 
@@ -1654,7 +1648,8 @@ const getEmployeeDetails = (name) => {
   return mockEmployeeData.find(emp => emp.name === name)
 }
 
-const Register = ({ setCurrentPage = () => {} }) => {
+const Register = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
     department: '',
@@ -1874,7 +1869,7 @@ const resendOtp = async () => {
 
       if (response.ok) {
         alert('Registration successful! Please login.')
-        setCurrentPage('login')
+        navigate('/login');
       } else {
         setErrors({ submit: data.message || 'Registration failed' })
       }
@@ -2313,7 +2308,7 @@ const resendOtp = async () => {
               <Button
                 onClick={
                   currentStep === 1
-                    ? () => setCurrentPage('home')
+                    ? () => navigate('/')
                     : handlePrevious
                 }
                 variant="outline"
@@ -2374,7 +2369,7 @@ const resendOtp = async () => {
             <p className="text-sm text-black font-medium tracking-wide">
               Already have an account?{' '}
               <button
-                onClick={() => setCurrentPage('login')}
+                onClick={() => navigate('/login')}
                 className="underline hover:text-gray-700 transition-colors duration-200 font-bold"
               >
                 Sign in here

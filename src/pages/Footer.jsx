@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-amber-50 border-t-4 border-black relative overflow-hidden">
       {/* Subtle Grid Background */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
         <div 
           className="w-full h-full"
           style={{

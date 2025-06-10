@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff, Lock, User } from 'lucide-react';
 import { setAuthToken } from '../services/api';
 
-const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
+const Button = ({ children, onClick, className, type, disabled, ...props }) => (
   <button
     onClick={onClick}
     type={type}
@@ -12,7 +13,7 @@ const Button = ({ children, onClick, variant, className, type, disabled, ...prop
   >
     {children}
   </button>
-)
+);
 
 const FormInput = ({ label, error, type, ...props }) => (
   <div className="space-y-1.5">
@@ -34,11 +35,13 @@ const FormInput = ({ label, error, type, ...props }) => (
       </p>
     )}
   </div>
-)
+);
 
-const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = () => {} }) => {
+const Login = ({ setUser = () => {} }) => {
+  const navigate = useNavigate();
+
   const [loginData, setLoginData] = useState({
-    email: '', // Changed from username to email
+    email: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -47,7 +50,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!loginData.email || !loginData.password) {
       setError('Please fill all fields');
       return;
@@ -63,17 +66,17 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
         body: JSON.stringify(loginData),
       });
       const data = await response.json();
+
       if (response.ok) {
         setAuthToken(data.token);
         console.log('Login successful:', data);
         setUser(data.user);
-        setIsLoggedIn(true);
-        setCurrentPage('dashboard');
+        navigate('/dashboard');
       } else {
         setError(data.message || 'Login failed');
       }
-    } catch (error) {
-      console.error('Login error:', error);
+    } catch (err) {
+      console.error('Login error:', err);
       setError('Network error. Please check if the server is running.');
     } finally {
       setLoading(false);
@@ -82,7 +85,6 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-    
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div 
           className="w-full h-full"
@@ -95,12 +97,11 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
           }}
         />
       </div>
-      
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-3 py-4">
         <div className="w-full max-w-md border-2 border-black bg-white p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-sm">
           
-          
+          {/* Title */}
           <div className="mb-6 text-center">
             <div className="w-14 h-14 bg-black mx-auto mb-4 flex items-center justify-center">
               <LogIn className="text-white" size={24} />
@@ -114,7 +115,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
             </p>
           </div>
 
-
+          {/* Error Display */}
           {error && (
             <div className="mb-4">
               <div className="p-3 border-2 border-red-600 text-red-600 text-xs font-medium tracking-wide bg-red-50">
@@ -126,15 +127,16 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
             </div>
           )}
 
-         
-          <div className="space-y-4">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-3">
+              {/* Email Input */}
               <div className="relative">
                 <FormInput
                   label="Username or Email"
                   type="text"
                   value={loginData.email}
-                  onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                   placeholder="Enter your username or email"
                   autoComplete="email"
                   error={!loginData.email && error === 'Please fill all fields' ? 'Username or email is required' : ''}
@@ -149,7 +151,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                   label="Password"
                   type={showPassword ? "text" : "password"}
                   value={loginData.password}
-                  onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                  onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   error={!loginData.password && error === 'Please fill all fields' ? 'Password is required' : ''}
@@ -164,7 +166,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </div>
             </div>
 
-            
+            {/* Remember me and Forgot */}
             <div className="flex items-center justify-between pt-1">
               <label className="flex items-center cursor-pointer">
                 <input
@@ -175,7 +177,7 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                   Remember me
                 </span>
               </label>
-              <button 
+              <button
                 type="button"
                 className="text-xs text-black hover:text-gray-700 transition-colors duration-200 font-medium tracking-wide underline"
               >
@@ -183,21 +185,16 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </button>
             </div>
 
-         
+            {/* Submit Button */}
             <div className="pt-3">
               <Button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={loading}
-                className={`
-                  w-full
-                  border-2 border-black font-bold tracking-wide
-                  px-6 py-3 rounded-none uppercase text-xs
-                  transition-all duration-300 transform hover:scale-105
-                  ${loading 
-                    ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400' 
+                className={`w-full border-2 border-black font-bold tracking-wide px-6 py-3 rounded-none uppercase text-xs transition-all duration-300 transform hover:scale-105 ${
+                  loading
+                    ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400'
                     : 'text-white bg-black hover:bg-white hover:text-black'
-                  }
-                `}
+                }`}
               >
                 {loading ? (
                   <div className="flex items-center justify-center space-x-2">
@@ -212,16 +209,15 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
                 )}
               </Button>
             </div>
-          </div>
+          </form>
 
-
+          {/* Footer Actions */}
           <div className="mt-6 space-y-3">
-       
             <div className="text-center border-t border-gray-200 pt-4">
               <p className="text-xs text-black font-medium tracking-wide">
                 Don't have an account?{' '}
                 <button
-                  onClick={() => setCurrentPage('register')}
+                  onClick={() => navigate('/register')}
                   className="underline hover:text-gray-700 transition-colors duration-200 font-bold"
                 >
                   Create one here
@@ -229,16 +225,10 @@ const Login = ({ setCurrentPage = () => {}, setIsLoggedIn = () => {}, setUser = 
               </p>
             </div>
 
-            {/* Back to Home */}
             <div className="text-center">
               <Button
-                onClick={() => setCurrentPage('home')}
-                className="
-                  border-2 border-black text-black font-bold tracking-wide
-                  bg-white hover:bg-black hover:text-white 
-                  px-4 py-2 rounded-none uppercase text-xs
-                  transition-all duration-300 transform hover:scale-105
-                "
+                onClick={() => navigate('/')}
+                className="border-2 border-black text-black font-bold tracking-wide bg-white hover:bg-black hover:text-white px-4 py-2 rounded-none uppercase text-xs transition-all duration-300 transform hover:scale-105"
               >
                 Back to Home
               </Button>

@@ -1,199 +1,154 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
-const Navbar = ({ setCurrentPage, currentPage }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    if (isMenuOpen) {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setIsMenuOpen(false);
-        setIsAnimating(false);
-      }, 600);
-    } else {
-      setIsMenuOpen(true);
-    }
-  };
-
-  const handleNavigation = (page) => {
-    setCurrentPage(page);
-    toggleMenu();
-  };
-
-  const navigationItems = [
-    { name: 'Home', id: 'home', delay: '0.1s' },
-    { name: 'About', id: 'about', delay: '0.2s' },
-    { name: 'Timeline', id: 'timeline', delay: '0.3s' },
-    { name: 'Tracks', id: 'tracks', delay: '0.4s' },
-    { name: 'Prizes', id: 'prizes', delay: '0.5s' },
-    { name: 'Contact', id: 'contact', delay: '0.6s' }
+  const navItems = [
+    { name: 'HOME', href: '#hero' },
+    { name: 'Organizers', href: '#hero' },
+    { name: 'ABOUT', href: '#about' },
+    { name: 'TIMELINE', href: '#timeline' },
+    { name: 'TRACKS', href: '#tracks' }
   ];
 
-  
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+  const handleNavClick = (href) => {
+    setIsOpen(false);
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
+  };
 
   return (
     <>
-      {/* Floating Menu Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-6 right-6 z-50">
         <button
-          onClick={toggleMenu}
+          onClick={() => setIsOpen(!isOpen)}
           className={`
-            relative w-16 h-16 bg-black text-white rounded-full shadow-2xl
-            hover:scale-110 transition-all duration-300 ease-out
-            flex items-center justify-center font-black text-lg tracking-wider
-            ${isMenuOpen ? 'scale-110 bg-white text-black border-2 border-black' : ''}
+            w-16 h-16 bg-black text-white rounded-full shadow-lg
+            hover:bg-gray-900 hover:shadow-xl
+            transition-all duration-300 transform hover:scale-110
+            flex items-center justify-center
+            ${isOpen ? 'opacity-0 pointer-events-none scale-75' : 'opacity-100 scale-100'}
           `}
+          style={{ fontFamily: 'Sora, sans-serif' }}
         >
-          <span className={`transition-all duration-300 ${isMenuOpen ? 'rotate-45' : ''}`}>
-            {isMenuOpen ? '✕' : '☰'}
-          </span>
-          
-          {/* Ripple Effect */}
-          <div className={`
-            absolute inset-0 rounded-full border-2 border-black
-            ${isMenuOpen ? 'animate-ping opacity-20' : 'opacity-0'}
-          `}></div>
+          <Menu size={24} strokeWidth={2} />
         </button>
       </div>
 
-      {/* Full Screen Menu Overlay */}
-      {isMenuOpen && (
-        <div className={`
-          fixed inset-0 z-40 bg-amber-50
-          ${isAnimating ? 'animate-menu-close' : 'animate-menu-open'}
-        `}>
+      <div
+        className={`
+          fixed inset-0 z-40 bg-amber-50 text-gray-900
+          transition-all duration-700 ease-in-out
+          ${isOpen 
+            ? 'opacity-100 visible' 
+            : 'opacity-0 invisible'
+          }
+        `}
+        style={{ fontFamily: 'Sora, sans-serif' }}
+      >
+        <div className="absolute inset-0 opacity-[0.06]">
+          <div 
+            className="w-full h-full"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, #374151 0.5px),
+                linear-gradient(to bottom, #374151 )
+              `,
+              backgroundSize: '50px 50px'
+            }}
+          />
+        </div>
+
+        <button
+          onClick={() => setIsOpen(false)}
+          className="
+            absolute top-4 right-4 sm:top-6 sm:right-6 w-12 h-12 sm:w-16 sm:h-16
+            bg-black text-white rounded-full shadow-lg
+            hover:bg-gray-900 hover:shadow-xl
+            transition-all duration-300 transform hover:scale-110
+            flex items-center justify-center z-50
+          "
+        >
+          <X size={20} strokeWidth={2} className="sm:w-6 sm:h-6" />
+        </button>
+
+        <div className="relative z-10 flex flex-col h-screen">
           
-          {/* Animated Background Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="w-full h-full animate-pulse"
-              style={{
-                backgroundImage: `
-                  radial-gradient(circle at 20% 20%, #000 2px, transparent 2px),
-                  radial-gradient(circle at 80% 80%, #000 2px, transparent 2px)
-                `,
-                backgroundSize: '100px 100px',
-                animation: 'float 20s ease-in-out infinite'
-              }}
-            />
-          </div>
-
-          {/* Header Section */}
-          <div className={`
-            relative pt-12 pb-8 px-8 text-center border-b-2 border-black
-            ${isAnimating ? 'animate-slide-up-out' : 'animate-slide-down-in'}
-          `}>
-            {/* Close Button */}
-            <button
-              onClick={toggleMenu}
-              className="absolute top-8 right-8 w-12 h-12 bg-black text-white rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center font-black text-xl"
-            >
-              ✕
-            </button>
-
-            {/* Event Logo/Name */}
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-6">
-                <div className="w-16 h-16 bg-black mx-auto rounded-full flex items-center justify-center mb-4">
-                  <span className="text-white font-black text-2xl">I</span>
-                </div>
-                <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-black leading-tight">
-                  INNOVATION
-                  <br />
-                  <span className="text-3xl md:text-5xl">CHALLENGE</span>
-                </h1>
-              </div>
-              <p className="text-lg text-gray-700 font-medium tracking-wide">
-                Faculty Innovation Competition 2025
+          <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-8 sm:py-12">
+            
+            <div className="mb-6 sm:mb-8 md:mb-10 text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-2 sm:mb-3 md:mb-4 text-gray-900">
+                eBooT
+              </h1>
+              <div className="w-20 sm:w-24 md:w-32 h-1 bg-gray-900 mx-auto mb-2 sm:mb-3 md:mb-4"></div>
+              <p className="text-xs sm:text-sm md:text-base tracking-[0.1em] sm:tracking-[0.15em] md:tracking-[0.25em] text-gray-700 uppercase font-semibold">
+                Faculty Hackathon
               </p>
             </div>
-          </div>
 
-          {/* Navigation Links */}
-          <div className="flex-1 flex items-center justify-center px-8">
-            <nav className="max-w-2xl w-full">
-              <ul className="space-y-6">
-                {navigationItems.map((item, index) => (
-                  <li
-                    key={item.id}
-                    className={`
-                      ${isAnimating ? 'animate-fade-out' : 'animate-fade-in-up'}
-                    `}
-                    style={{ 
-                      animationDelay: isAnimating ? `${0.1 * index}s` : item.delay 
-                    }}
+            <nav className="flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-4 w-full max-w-xs sm:max-w-sm md:max-w-md">
+              {navItems.map((item, index) => (
+                <div
+                  key={index}
+                  className={`
+                    w-full opacity-0 transform translate-y-8
+                    ${isOpen ? 'animate-fade-in-up' : ''}
+                  `}
+                  style={{ 
+                    animationDelay: `${index * 0.1 + 0.4}s`,
+                    animationFillMode: 'forwards'
+                  }}
+                >
+                  <button
+                    onClick={() => handleNavClick(item.href)}
+                    className="
+                      group relative w-full text-base sm:text-lg md:text-xl lg:text-2xl font-semibold tracking-wide
+                      py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-6 bg-transparent border-2 border-gray-900
+                      hover:bg-gray-900 hover:text-white
+                      transition-all duration-400 transform hover:scale-105
+                      uppercase text-center
+                      focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2
+                    "
                   >
-                    <button
-                      onClick={() => handleNavigation(item.id)}
-                      className={`
-                        block w-full text-left py-4 px-6 rounded-none border-b-2 border-transparent
-                        hover:border-black hover:bg-white hover:shadow-lg
-                        transition-all duration-300 ease-out group
-                        ${currentPage === item.id ? 'border-black bg-white shadow-lg' : ''}
-                      `}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl md:text-4xl font-black tracking-wider text-black group-hover:translate-x-2 transition-transform duration-300">
-                          {item.name}
-                        </span>
-                        <span className="text-4xl font-black text-gray-400 group-hover:text-black group-hover:translate-x-2 transition-all duration-300">
-                          →
-                        </span>
-                      </div>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                    <span className="relative z-10">{item.name}</span>
+                    
+                    <div className="
+                      absolute bottom-0 left-0 w-full h-1 bg-gray-900
+                      transform scale-x-0 group-hover:scale-x-100
+                      transition-transform duration-500 origin-left
+                    "></div>
+                    
+                    <span className="
+                      absolute -top-1 sm:-top-2 -right-1 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 bg-gray-900 text-white rounded-full
+                      flex items-center justify-center font-bold text-xs
+                      opacity-0 group-hover:opacity-100 transition-all duration-300
+                      transform scale-75 group-hover:scale-100
+                    ">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </button>
+                </div>
+              ))}
             </nav>
           </div>
 
-          {/* Footer */}
-          <div className={`
-            px-8 py-6 text-center border-t-2 border-black
-            ${isAnimating ? 'animate-slide-down-out' : 'animate-slide-up-in'}
-          `}>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-600 font-medium">
-              <div className="w-12 h-px bg-gray-400"></div>
-              <span className="tracking-wider uppercase">Navigate Innovation</span>
-              <div className="w-12 h-px bg-gray-400"></div>
+          <div className="w-full text-center pb-3 sm:pb-4 md:pb-6 px-4">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 text-xs text-gray-600 font-medium">
+              <div className="w-6 sm:w-8 md:w-12 h-px bg-gray-500"></div>
+              <span className="tracking-[0.15em] sm:tracking-[0.2em] uppercase whitespace-nowrap text-center">Innovation Awaits</span>
+              <div className="w-6 sm:w-8 md:w-12 h-px bg-gray-500"></div>
             </div>
           </div>
+
         </div>
-      )}
+      </div>
 
       <style jsx>{`
-        @keyframes menu-open {
-          from {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
         
-        @keyframes menu-close {
-          from {
-            opacity: 1;
-            transform: scale(1);
-          }
-          to {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-        }
-
         @keyframes fade-in-up {
           from {
             opacity: 0;
@@ -204,100 +159,18 @@ const Navbar = ({ setCurrentPage, currentPage }) => {
             transform: translateY(0);
           }
         }
-
-        @keyframes fade-out {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-        }
-
-        @keyframes slide-down-in {
-          from {
-            opacity: 0;
-            transform: translateY(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slide-up-out {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(-50px);
-          }
-        }
-
-        @keyframes slide-up-in {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slide-down-out {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .animate-menu-open {
-          animation: menu-open 0.6s ease-out forwards;
+        
+        .animate-fade-in-up {
+          animation: fade-in-up 0.7s ease-out forwards;
         }
         
-        .animate-menu-close {
-          animation: menu-close 0.6s ease-out forwards;
+        * {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-
-        .animate-fade-out {
-          animation: fade-out 0.4s ease-out forwards;
-        }
-
-        .animate-slide-down-in {
-          animation: slide-down-in 0.6s ease-out forwards;
-          opacity: 0;
-        }
-
-        .animate-slide-up-out {
-          animation: slide-up-out 0.6s ease-out forwards;
-        }
-
-        .animate-slide-up-in {
-          animation: slide-up-in 0.6s ease-out forwards;
-          opacity: 0;
-        }
-
-        .animate-slide-down-out {
-          animation: slide-down-out 0.6s ease-out forwards;
+        
+        button:focus {
+          outline: none;
         }
       `}</style>
     </>

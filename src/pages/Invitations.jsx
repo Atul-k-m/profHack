@@ -49,7 +49,7 @@ const Invitations = ({
   };
 
   const handleDecline = async (invitation) => {
-    if (processingInvitation === invitation._id) return; // Prevent double clicks
+    if (processingInvitation === invitation._id) return; 
     
     setProcessingInvitation(invitation._id);
     try {

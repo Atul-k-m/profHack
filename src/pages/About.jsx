@@ -50,7 +50,7 @@ const About = () => {
               linear-gradient(to bottom, #000 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
-            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+            
           }}
         />
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import bmsitLogo from './assets/bmsit.png';
 import ieeeLogo from './assets/stb.png';
 import iiclogo from './assets/iic.png';
+import { useNavigate,Link } from 'react-router-dom';
 
 const Button = ({ children, onClick, variant, className, type, disabled, ...props }) => (
   <button
@@ -15,9 +16,9 @@ const Button = ({ children, onClick, variant, className, type, disabled, ...prop
   </button>
 );
 
-const OptimizedHero = ({ setCurrentPage = () => {} }) => {
+const OptimizedHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -45,7 +46,6 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
               linear-gradient(to bottom, #000 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
-            transform: `translate(${mousePosition.x * 0.05}px, ${mousePosition.y * 0.05}px)`
           }}
         />
       </div>
@@ -145,7 +145,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <Button
-              onClick={() => setCurrentPage('register')}
+              onClick={() => navigate('/register')}
               className="
                 group relative overflow-hidden
                 w-full sm:w-auto min-w-[200px]
@@ -163,7 +163,7 @@ const OptimizedHero = ({ setCurrentPage = () => {} }) => {
             </Button>
             
             <Button
-              onClick={() => setCurrentPage('login')}
+              onClick={() => navigate('/login')}
               className="
                 group relative overflow-hidden
                 w-full sm:w-auto min-w-[200px]
