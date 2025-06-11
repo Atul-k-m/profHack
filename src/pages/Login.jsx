@@ -166,7 +166,7 @@ const Login = ({ setUser = () => {} }) => {
               </div>
             </div>
 
-            {/* Remember me and Forgot */}
+         
             <div className="flex items-center justify-between pt-1">
               <label className="flex items-center cursor-pointer">
                 <input
@@ -177,15 +177,10 @@ const Login = ({ setUser = () => {} }) => {
                   Remember me
                 </span>
               </label>
-              <button
-                type="button"
-                className="text-xs text-black hover:text-gray-700 transition-colors duration-200 font-medium tracking-wide underline"
-              >
-                Forgot password?
-              </button>
+             
             </div>
 
-            {/* Submit Button */}
+         
             <div className="pt-3">
               <Button
                 type="submit"

@@ -12,7 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Teams from './pages/Teams';
 import Home from './pages/Home';
 import './App.css';
-
+import Organizers  from './pages/Organizers';   
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -22,6 +22,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hero" element={<Hero />} />
+          <Route path="/organizers" element={<Organizers />} />
+       
           <Route path="/register" element={<Register />} />
           <Route
             path="/login"
