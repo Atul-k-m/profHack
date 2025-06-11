@@ -69,7 +69,7 @@ const Login = ({ setUser = () => {} }) => {
 
       if (response.ok) {
         setAuthToken(data.token);
-        console.log('Login successful:', data);
+        //console.log('Login successful:', data);
         setUser(data.user);
         navigate('/dashboard');
       } else {

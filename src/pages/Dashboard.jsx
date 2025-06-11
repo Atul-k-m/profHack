@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 const Navbar = React.memo(({ currentView, setCurrentView, handleLogout }) => (
   <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -189,6 +189,7 @@ const ErrorMessage = React.memo(({ message }) => (
 ));
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
+   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('dashboard');
   const [userProfile, setUserProfile] = useState({
     department: '',
@@ -218,12 +219,25 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
  
   const handleLogout = useCallback(() => {
+
     window.authToken = null;
     localStorage.removeItem('authToken');
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    setCurrentPage('home');
-  }, [setIsLoggedIn, setCurrentPage]);
+    
+    if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
+      setIsLoggedIn(false);
+    }
+    
+    if (setCurrentPage && typeof setCurrentPage === 'function') {
+      setCurrentPage('login');
+    }
+    
+    if (navigate) {
+      navigate('/');
+    } else {
+      window.location.href = '/';
+    }
+  }, [setIsLoggedIn, setCurrentPage, navigate])
 
   const handleInputChange = useCallback((field, value) => {
     setEditedProfile(prev => ({
