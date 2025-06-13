@@ -569,6 +569,51 @@ const mockEmployeeData = [
     "department": "Electronics & Communication Engineering"
   },
   {
+    "name": "Mrs. Manjula S D",
+    "designation": "Associate Professor",
+    "department": "Computer Science & Engineering"
+  },
+  {
+    "name": "Mrs. Simi Sara Mani",
+    "designation": "Associate Professor",
+    "department": "Computer Science & Engineering"
+  },
+  {
+    "name": "Ms. Renita Blossom Monteiro",
+    "designation": "Associate Professor",
+    "department": "Computer Science & Engineering"
+  },
+  {
+    "name": "Dr. Biswaranjan Barik",
+    "designation": "Associate Professor",
+    "department": "Electronics & Communication Engineering"
+  },
+  {
+    "name": "Dr. Babu Naik Gugulothu",
+    "designation": "Associate Professor",
+    "department": "Electrical & Electronics Engineering"
+  },
+  {
+    "name": "Mrs. Pragathi M",
+    "designation": "Associate Professor",
+    "department": "Artificial Intelligence and Machine Learning"
+  },
+  {
+    "name": "Mrs. Manasa K",
+    "designation": "Associate Professor",
+    "department": "Artificial Intelligence and Machine Learning"
+  },
+  {
+    "name": "Dr. Vishnuvardhana S V",
+    "designation": "Associate Professor",
+    "department": "Mathematics"
+  },
+  {
+    "name": "Dr. Rakesh Bharati",
+    "designation": "Associate Professor",
+    "department": "Mathematics"
+  },
+  {
     "name": "Dr. Surekha r Gondkar",
     "designation": "Associate Professor",
     "department": "Electronics & Communication Engineering"
