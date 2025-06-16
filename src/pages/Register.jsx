@@ -24,7 +24,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-amber-50 relative overflow-hidden">
-      {/* faint grid backdrop */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none">
         <div
           className="w-full h-full transition-transform duration-1000 ease-out"
@@ -39,7 +38,6 @@ const Register = () => {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto py-12 px-4 sm:px-6">
-        {/* Heading */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-sm md:text-base font-bold uppercase tracking-widest mb-2">
             Registration Status
@@ -63,7 +61,7 @@ const Register = () => {
             </h3>
             <p className="text-base text-gray-700 mb-4">
               As we move forward to the hackathon phase, we want to express our gratitude to all faculty members who have registered for 
-              <span className="font-bold"> ReeBooT</span>.
+              <span className="font-bold"> ReBooT</span>.
             </p>
             <p className="text-base text-gray-700 font-semibold">
               <span className="font-bold">Thank you for registering!</span> Your participation will contribute to making this event a tremendous success.
