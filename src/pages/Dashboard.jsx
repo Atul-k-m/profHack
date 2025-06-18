@@ -1,43 +1,34 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { User, Briefcase, Users, TrendingUp, Calendar, MessageSquare, Settings, LogOut, Bell, Target, Award, Clock, BookOpen, ChevronRight, BarChart3, PieChart, Activity, Edit2, Save, X, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-const Navbar = React.memo(({ currentView, setCurrentView, handleLogout }) => (
+
+const Navbar = React.memo(({ handleLogout, navigate }) => (
   <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center h-16">
         <div className="flex items-center">
-          {currentView === 'teams' && (
-            <button
-              onClick={() => setCurrentView('dashboard')}
-              className="mr-3 p-2 border border-black hover:bg-black hover:text-white transition-colors"
-            >
-              <ArrowLeft size={18} />
-            </button>
-          )}
           <h1 className="text-xl font-black tracking-tight text-black">
-            {currentView === 'teams' ? 'TEAMS' : 'DASHBOARD'}
+            DASHBOARD
           </h1>
         </div>
         
-       <div className="flex items-center space-x-2">
-  {currentView === 'dashboard' && (
-    <button 
-      onClick={() => setCurrentView('teams')}
-      className="flex items-center gap-2 md:gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs md:text-sm tracking-wide uppercase shadow-lg"
-    >
-      <Users size={16} />
-      <span>TEAMS</span>
-    </button>
-  )}
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={() => navigate('/teams')}
+            className="flex items-center gap-2 md:gap-2 px-3 py-2 md:px-6 md:py-2.5 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-200 font-bold text-xs md:text-sm tracking-wide uppercase shadow-lg"
+          >
+            <Users size={16} />
+            <span>TEAMS</span>
+          </button>
 
-  <button 
-    onClick={handleLogout}
-    className="flex items-center gap-2 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-xs md:text-sm tracking-wide uppercase"
-  >
-    <LogOut size={16} />
-    <span className="hidden md:inline">LOGOUT</span>
-  </button>
-</div>
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-200 font-bold text-xs md:text-sm tracking-wide uppercase"
+          >
+            <LogOut size={16} />
+            <span className="hidden md:inline">LOGOUT</span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -82,7 +73,6 @@ const StatCard = React.memo(({ title, value, icon: Icon, description, loading = 
     )}
   </Card>
 ));
-
 
 const EditableField = React.memo(({ label, field, type = 'text', options = null, value, editMode, onChange, fieldRef }) => {
   const handleChange = useCallback((e) => {
@@ -136,38 +126,6 @@ const EditableField = React.memo(({ label, field, type = 'text', options = null,
   );
 });
 
-const TeamsPage = React.memo(() => (
-  <div className="text-center">
-    <Card className="p-8 sm:p-12">
-      <div className="mb-6">
-        <div className="w-24 h-24 bg-black text-white mx-auto flex items-center justify-center mb-6">
-          <Users size={48} />
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-black mb-4 uppercase">
-          Teams Page
-        </h1>
-        <div className="w-16 h-1 bg-black mx-auto mb-6"></div>
-      </div>
-      
-      <div className="space-y-4 text-center">
-        <p className="text-lg sm:text-xl font-bold text-gray-800 tracking-wide">
-         Teams are coming soon!
-        </p>
-        <p className="text-base text-gray-700 font-medium max-w-md mx-auto">
-          Team formation page will be enabled after all faculty members have been onboarded. 
-          Stay tuned for collaborative team management tools!
-        </p>
-        <div className="pt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 border-2 border-black font-bold text-sm tracking-wide uppercase">
-            <Clock size={16} />
-            Stay Tuned
-          </div>
-        </div>
-      </div>
-    </Card>
-  </div>
-));
-
 const LoadingCard = React.memo(() => (
   <div className="bg-white border-2 border-black p-4 sm:p-6 animate-pulse">
     <div className="h-4 bg-gray-300 rounded mb-4"></div>
@@ -190,7 +148,6 @@ const ErrorMessage = React.memo(({ message }) => (
 
 const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
    const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState('dashboard');
   const [userProfile, setUserProfile] = useState({
     department: '',
     designation: '',
@@ -206,7 +163,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   
-
   const fieldRefs = useRef({
     username: null,
     email: null,
@@ -217,9 +173,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     skills: null
   });
 
- 
   const handleLogout = useCallback(() => {
-
     window.authToken = null;
     localStorage.removeItem('authToken');
     localStorage.removeItem('token');
@@ -248,10 +202,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   const handleEditToggle = useCallback(() => {
     if (editMode) {
-     
       setEditedProfile(userProfile);
     } else {
-   
       setEditedProfile({...userProfile});
     }
     setEditMode(!editMode);
@@ -292,10 +244,8 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     }
   }, [editedProfile]);
 
-  
   useEffect(() => {
     if (editMode && fieldRefs.current.username) {
-   
       setTimeout(() => {
         fieldRefs.current.username?.focus();
       }, 100);
@@ -355,9 +305,6 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     fetchUserProfile();
   }, [handleLogout]);
 
-
-  
-
   const skillsArray = useMemo(() => {
     return userProfile.skills ? userProfile.skills.split(',') : [];
   }, [userProfile.skills]);
@@ -393,21 +340,10 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
     }
   ], [userProfile.designation, userProfile.department, userProfile.experience, skillsCount]);
 
-  if (currentView === 'teams') {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar currentView={currentView} setCurrentView={setCurrentView} handleLogout={handleLogout} />
-        <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <TeamsPage />
-        </div>
-      </div>
-    );
-  }
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar currentView={currentView} setCurrentView={setCurrentView} handleLogout={handleLogout} />
+        <Navbar handleLogout={handleLogout} navigate={navigate} />
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
             <div className="h-8 bg-gray-300 rounded mb-4 w-1/2 animate-pulse"></div>
@@ -423,7 +359,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar currentView={currentView} setCurrentView={setCurrentView} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} navigate={navigate} />
 
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         

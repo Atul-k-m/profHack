@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Teams from './pages/Teams';
 import Home from './pages/Home';
+import CreateTeam from './pages/CreateTeam';
 import './App.css';
 import Organizers  from './pages/Organizers';   
 const App = () => {
@@ -41,6 +42,16 @@ const App = () => {
               )
             }
           />
+          <Route
+  path="/create-team"
+  element={
+    user ? (
+      <CreateTeam user={user} />
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
           <Route
             path="/teams"
             element={
