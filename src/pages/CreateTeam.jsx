@@ -30,25 +30,34 @@ const DEPARTMENTS = {
   ]
 };
 
-const Navbar = React.memo(({ onBack }) => (
-  <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center h-16">
-        <div className="flex items-center">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 transition-colors mr-4"
-          >
-            <ArrowLeft size={20} className="text-black" />
-          </button>
-          <h1 className="text-xl font-black tracking-tight text-black">
-            CREATE TEAM
-          </h1>
+const Navbar = React.memo(() => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/teams');
+  };
+
+  return (
+    <nav className="bg-white border-b-2 border-black sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <button
+              onClick={handleBack}
+              className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 transition-colors mr-4"
+            >
+              <ArrowLeft size={20} className="text-black" />
+            </button>
+            <h1 className="text-xl font-black tracking-tight text-black">
+              CREATE TEAM
+            </h1>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-));
+    </nav>
+  );
+});
+
 
 const Card = React.memo(({ children, className = "" }) => (
   <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden ${className}`}>
