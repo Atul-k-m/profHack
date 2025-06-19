@@ -71,7 +71,7 @@ const ResetPassword = () => {
 
     const validateToken = async () => {
       try {
-        const response = await fetch('https://rebootbackend.onrender.com/api/auth/verify-reset-token', {
+        const response = await fetch('https://profhack-backend.onrender.com/api/auth/verify-reset-token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token }),
@@ -140,7 +140,7 @@ const ResetPassword = () => {
     setError('');
 
     try {
-      const response = await fetch('https://rebootbackend.onrender.com/api/auth/reset-password', {
+      const response = await fetch('https://profhack-backend.onrender.com/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
