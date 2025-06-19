@@ -678,8 +678,8 @@ const getFilteredGroupedFaculty = () => {
                   {Object.entries(getFilteredGroupedFaculty()).map(([groupKey, facultyList]) => {
                     const groupDisplayNames = {
                       'foundation': 'Foundation Layer',
-                      'foundation': 'foundation Layer',
-                      'innovation': 'Innovation Layer (Computer Science & Technology)'
+                      'Structural': 'Structural Layer',
+                      'innovation': 'Innovation Layer' 
                     };
                     
                     const displayName = groupDisplayNames[groupKey] || groupKey.toUpperCase();
