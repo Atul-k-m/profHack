@@ -81,9 +81,9 @@ const RulesCard = React.memo(() => (
         <div className="text-sm font-medium text-gray-700">
           <p className="mb-1">Group constraints:</p>
           <ul className="ml-4 space-y-1 text-xs">
-            <li>• Max <strong>3 from innovation group</strong> (CSE, ISE, AI&ML, CSBS, MCA)</li>
-            <li>• Max <strong>2 from foundation group</strong> (Mechanical, Civil, EEE, ECE, ETC)</li>
-            <li>• Max <strong>1 from foundation group</strong> (Physics, Chemistry, Mathematics, MBA, HSS)</li>
+            <li>• Min 2 and Max 3 <strong> from innovation layer</strong> (CSE, ISE, AI&ML, CSBS, MCA)</li>
+            <li>• Min 1 and Max 2<strong> from structural layer</strong> (Mechanical, Civil, EEE, ECE, ETC)</li>
+            <li>• Mandatory <strong>1 from foundation layer</strong> (Physics, Chemistry, Mathematics, MBA, HSS)</li>
           </ul>
         </div>
       </div>
