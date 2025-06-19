@@ -318,28 +318,26 @@ const getFilteredGroupedFaculty = () => {
     }
   });
   
-  console.log('Grouped faculty:', grouped); // Debug log
+  console.log('Grouped faculty:', grouped); 
   return grouped;
 }, [allFaculty]);
-  // Validation logic
+
   const validateTeamComposition = useCallback(() => {
     const errors = [];
     const selectedMembers = [...teamData.members];
     if (teamData.leader) selectedMembers.push(teamData.leader);
 
-    // Check total count
     if (selectedMembers.length !== 5) {
       errors.push(`Team must have exactly 5 members (currently ${selectedMembers.length})`);
     }
 
-    // Check unique departments
     const departments = selectedMembers.map(m => m.department);
     const uniqueDepartments = new Set(departments);
     if (uniqueDepartments.size !== departments.length) {
       errors.push('All team members must be from different departments');
     }
 
-    // Check group constraints
+  
     const innovationCount = selectedMembers.filter(m => DEPARTMENTS.innovation.includes(m.department)).length;
     const structuralCount = selectedMembers.filter(m => DEPARTMENTS.structural.includes(m.department)).length;
     const foundationCount = selectedMembers.filter(m => DEPARTMENTS.foundation.includes(m.department)).length;
@@ -352,28 +350,26 @@ const getFilteredGroupedFaculty = () => {
     return errors.length === 0;
   }, [teamData.members, teamData.leader]);
 
-  // Check if faculty can be selected
   const canSelectFaculty = useCallback((faculty) => {
     if (!teamData.leader) return { canSelect: false, reason: 'Leader not set' };
     
     const currentMembers = [...teamData.members, teamData.leader];
     
-    // Check if already selected
+
     if (currentMembers.some(m => m._id === faculty._id)) {
       return { canSelect: false, reason: 'Already selected' };
     }
 
-    // Check if would exceed 5 members
+   
     if (currentMembers.length >= 5) {
       return { canSelect: false, reason: 'Team is full (5 members max)' };
     }
 
-    // Check department uniqueness
+
     if (currentMembers.some(m => m.department === faculty.department)) {
       return { canSelect: false, reason: 'Department already represented' };
     }
 
-    // Check group constraints
     const testMembers = [...currentMembers, faculty];
     const innovationCount = testMembers.filter(m => DEPARTMENTS.innovation.includes(m.department)).length;
     const structuralCount = testMembers.filter(m => DEPARTMENTS.structural.includes(m.department)).length;
@@ -631,7 +627,7 @@ const getFilteredGroupedFaculty = () => {
                   ))}
                 </div>
 
-                {/* Validation Messages */}
+               
                 {validationErrors.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {validationErrors.map((error, index) => (
@@ -678,8 +674,8 @@ const getFilteredGroupedFaculty = () => {
                   {Object.entries(getFilteredGroupedFaculty()).map(([groupKey, facultyList]) => {
                     const groupDisplayNames = {
                       'foundation': 'Foundation Layer',
-                      'foundation': 'foundation Layer',
-                      'innovation': 'Innovation Layer (Computer Science & Technology)'
+                      'structural': 'Structural Layer',
+                      'innovation': 'Innovation Layer'
                     };
                     
                     const displayName = groupDisplayNames[groupKey] || groupKey.toUpperCase();
