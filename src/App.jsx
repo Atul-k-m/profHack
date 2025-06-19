@@ -12,8 +12,10 @@ import Dashboard from './pages/Dashboard';
 import Teams from './pages/Teams';
 import Home from './pages/Home';
 import CreateTeam from './pages/CreateTeam';
+import ResetPassword from './pages/ResetPassword'; // Import the ResetPassword component
 import './App.css';
-import Organizers  from './pages/Organizers';   
+import Organizers from './pages/Organizers';   
+
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -24,13 +26,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/hero" element={<Hero />} />
           <Route path="/organizers" element={<Organizers />} />
-       
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/login"
-            element={<Login setUser={setUser} />}
-          />
-
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          
+          {/* Add the reset password route */}
+          <Route path="/reset-password" element={<ResetPassword />} />
           
           <Route
             path="/dashboard"
@@ -43,15 +43,15 @@ const App = () => {
             }
           />
           <Route
-  path="/create-team"
-  element={
-    user ? (
-      <CreateTeam user={user} />
-    ) : (
-      <Navigate to="/login" replace />
-    )
-  }
-/>
+            path="/create-team"
+            element={
+              user ? (
+                <CreateTeam user={user} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
           <Route
             path="/teams"
             element={
