@@ -289,7 +289,7 @@ const getFilteredGroupedFaculty = () => {
   
   allFaculty.forEach(faculty => {
     const dept = faculty.department;
-    console.log('Processing faculty:', faculty.name, 'Department:', dept); // Debug log
+    console.log('Processing faculty:', faculty.name, 'Department:', dept); 
     
     if (DEPARTMENTS.foundation.some(foundationDept => 
       foundationDept.toLowerCase() === dept?.toLowerCase() || 
@@ -322,71 +322,151 @@ const getFilteredGroupedFaculty = () => {
   return grouped;
 }, [allFaculty]);
 
-  const validateTeamComposition = useCallback(() => {
-    const errors = [];
-    const selectedMembers = [...teamData.members];
-    if (teamData.leader) selectedMembers.push(teamData.leader);
+ const validateTeamComposition = useCallback(() => {
+  const errors = [];
+  const selectedMembers = [...teamData.members];
+  if (teamData.leader) selectedMembers.push(teamData.leader);
 
-    if (selectedMembers.length !== 5) {
-      errors.push(`Team must have exactly 5 members (currently ${selectedMembers.length})`);
-    }
+  if (selectedMembers.length !== 5) {
+    errors.push(`Team must have exactly 5 members (currently ${selectedMembers.length})`);
+  }
 
-    const departments = selectedMembers.map(m => m.department);
-    const uniqueDepartments = new Set(departments);
-    if (uniqueDepartments.size !== departments.length) {
-      errors.push('All team members must be from different departments');
-    }
+  const departments = selectedMembers.map(m => m.department);
+  const uniqueDepartments = new Set(departments);
+  if (uniqueDepartments.size !== departments.length) {
+    errors.push('All team members must be from different departments');
+  }
 
+  // Count members by group using the department classification logic
+  const innovationCount = selectedMembers.filter(m => 
+    DEPARTMENTS.innovation.some(innovationDept => 
+      innovationDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
+      (innovationDept === 'Computer Science & Engineering' && m.department?.includes('innovation')) ||
+      (innovationDept === 'Information Science & Engineering' && m.department?.includes('ISE'))
+    )
+  ).length;
+
+  const structuralCount = selectedMembers.filter(m => 
+    DEPARTMENTS.structural.some(engDept => 
+      engDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(engDept.toLowerCase()) ||
+      (engDept === 'Electrical & Electronics Engineering' && m.department?.includes('EEE')) ||
+      (engDept === 'Electronics & Communication Engineering' && m.department?.includes('ECE'))
+    )
+  ).length;
+
+  const foundationCount = selectedMembers.filter(m => 
+    DEPARTMENTS.foundation.some(foundationDept => 
+      foundationDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(foundationDept.toLowerCase())
+    )
+  ).length;
+
+  // Updated validation rules
+  if (foundationCount !== 1) {
+    errors.push(`Must have exactly 1 foundation group member (currently ${foundationCount})`);
+  }
   
-    const innovationCount = selectedMembers.filter(m => DEPARTMENTS.innovation.includes(m.department)).length;
-    const structuralCount = selectedMembers.filter(m => DEPARTMENTS.structural.includes(m.department)).length;
-    const foundationCount = selectedMembers.filter(m => DEPARTMENTS.foundation.includes(m.department)).length;
+  if (structuralCount < 1) {
+    errors.push(`Must have at least 1 structural group member (currently ${structuralCount})`);
+  }
+  if (structuralCount > 2) {
+    errors.push(`Too many structural group members (${structuralCount}/2 max)`);
+  }
+  
+  if (innovationCount < 2) {
+    errors.push(`Must have at least 2 innovation group members (currently ${innovationCount})`);
+  }
+  if (innovationCount > 3) {
+    errors.push(`Too many innovation group members (${innovationCount}/3 max)`);
+  }
 
-    if (innovationCount > 2) errors.push(`Too many innovation group members (${innovationCount}/2 max)`);
-    if (structuralCount > 2) errors.push(`Too many structural group members (${structuralCount}/2 max)`);
-    if (foundationCount > 1) errors.push(`Too many foundation group members (${foundationCount}/1 max)`);
+  setValidationErrors(errors);
+  return errors.length === 0;
+}, [teamData.members, teamData.leader]);
 
-    setValidationErrors(errors);
-    return errors.length === 0;
-  }, [teamData.members, teamData.leader]);
+const canSelectFaculty = useCallback((faculty) => {
+  if (!teamData.leader) return { canSelect: false, reason: 'Leader not set' };
+  
+  const currentMembers = [...teamData.members, teamData.leader];
+  
+  if (currentMembers.some(m => m._id === faculty._id)) {
+    return { canSelect: false, reason: 'Already selected' };
+  }
 
-  const canSelectFaculty = useCallback((faculty) => {
-    if (!teamData.leader) return { canSelect: false, reason: 'Leader not set' };
-    
-    const currentMembers = [...teamData.members, teamData.leader];
-    
+  if (currentMembers.length >= 5) {
+    return { canSelect: false, reason: 'Team is full (5 members max)' };
+  }
 
-    if (currentMembers.some(m => m._id === faculty._id)) {
-      return { canSelect: false, reason: 'Already selected' };
-    }
+  if (currentMembers.some(m => m.department === faculty.department)) {
+    return { canSelect: false, reason: 'Department already represented' };
+  }
 
-   
-    if (currentMembers.length >= 5) {
-      return { canSelect: false, reason: 'Team is full (5 members max)' };
-    }
+  // Determine which group this faculty belongs to
+  const isInnovation = DEPARTMENTS.innovation.some(innovationDept => 
+    innovationDept.toLowerCase() === faculty.department?.toLowerCase() || 
+    faculty.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
+    (innovationDept === 'Computer Science & Engineering' && faculty.department?.includes('innovation')) ||
+    (innovationDept === 'Information Science & Engineering' && faculty.department?.includes('ISE'))
+  );
 
+  const isStructural = DEPARTMENTS.structural.some(engDept => 
+    engDept.toLowerCase() === faculty.department?.toLowerCase() || 
+    faculty.department?.toLowerCase().includes(engDept.toLowerCase()) ||
+    (engDept === 'Electrical & Electronics Engineering' && faculty.department?.includes('EEE')) ||
+    (engDept === 'Electronics & Communication Engineering' && faculty.department?.includes('ECE'))
+  );
 
-    if (currentMembers.some(m => m.department === faculty.department)) {
-      return { canSelect: false, reason: 'Department already represented' };
-    }
+  const isFoundation = DEPARTMENTS.foundation.some(foundationDept => 
+    foundationDept.toLowerCase() === faculty.department?.toLowerCase() || 
+    faculty.department?.toLowerCase().includes(foundationDept.toLowerCase())
+  );
 
-    const testMembers = [...currentMembers, faculty];
-    const innovationCount = testMembers.filter(m => DEPARTMENTS.innovation.includes(m.department)).length;
-    const structuralCount = testMembers.filter(m => DEPARTMENTS.structural.includes(m.department)).length;
-    const foundationCount = testMembers.filter(m => DEPARTMENTS.foundation.includes(m.department)).length;
+  // Count current members by group
+  const testMembers = [...currentMembers, faculty];
+  
+  const innovationCount = testMembers.filter(m => 
+    DEPARTMENTS.innovation.some(innovationDept => 
+      innovationDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
+      (innovationDept === 'Computer Science & Engineering' && m.department?.includes('innovation')) ||
+      (innovationDept === 'Information Science & Engineering' && m.department?.includes('ISE'))
+    )
+  ).length;
 
-    if (DEPARTMENTS.innovation.includes(faculty.department) && innovationCount > 2) {
-      return { canSelect: false, reason: 'innovation group limit reached (2 max)' };
-    }
-    if (DEPARTMENTS.structural.includes(faculty.department) && structuralCount > 2) {
-      return { canSelect: false, reason: 'structural group limit reached (2 max)' };
-    }
-    if (DEPARTMENTS.foundation.includes(faculty.department) && foundationCount > 1) {
-      return { canSelect: false, reason: 'foundation group limit reached (1 max)' };
-    }
+  const structuralCount = testMembers.filter(m => 
+    DEPARTMENTS.structural.some(engDept => 
+      engDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(engDept.toLowerCase()) ||
+      (engDept === 'Electrical & Electronics Engineering' && m.department?.includes('EEE')) ||
+      (engDept === 'Electronics & Communication Engineering' && m.department?.includes('ECE'))
+    )
+  ).length;
 
-    return { canSelect: true, reason: '' };
-  }, [teamData.members, teamData.leader]);
+  const foundationCount = testMembers.filter(m => 
+    DEPARTMENTS.foundation.some(foundationDept => 
+      foundationDept.toLowerCase() === m.department?.toLowerCase() || 
+      m.department?.toLowerCase().includes(foundationDept.toLowerCase())
+    )
+  ).length;
+
+  // Check group limits
+  if (isFoundation && foundationCount > 1) {
+    return { canSelect: false, reason: 'Foundation group limit reached (1 max)' };
+  }
+  
+  if (isStructural && structuralCount > 2) {
+    return { canSelect: false, reason: 'Structural group limit reached (2 max)' };
+  }
+  
+  if (isInnovation && innovationCount > 3) {
+    return { canSelect: false, reason: 'Innovation group limit reached (3 max)' };
+  }
+
+  return { canSelect: true, reason: '' };
+}, [teamData.members, teamData.leader]);
+
 
   const handleInputChange = useCallback((field, value) => {
     setTeamData(prev => ({ ...prev, [field]: value }));
