@@ -219,7 +219,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
         return;
       }
 
-      const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/user/profile', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -264,7 +264,7 @@ const Dashboard = ({ setCurrentPage, setIsLoggedIn, user }) => {
           return;
         }
 
-        const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+        const response = await fetch('https://profhack-backend-npqc.onrender.com/api/user/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

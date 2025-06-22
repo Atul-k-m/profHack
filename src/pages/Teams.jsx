@@ -332,7 +332,7 @@ const [selectedMember, setSelectedMember] = useState(null);
       const token = getAuthToken();
       if (!token) throw new Error('No authentication token found');
 
-      const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/user/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -355,7 +355,7 @@ const [selectedMember, setSelectedMember] = useState(null);
       const token = getAuthToken();
       if (!token) throw new Error('No authentication token found');
 
-      const response = await fetch('https://profhack-backend.onrender.com/api/teams/me', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/me', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -383,7 +383,7 @@ const [selectedMember, setSelectedMember] = useState(null);
       const token = getAuthToken();
       if (!token) throw new Error('No authentication token found');
 
-      const response = await fetch('https://profhack-backend.onrender.com/api/teams/all', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -407,7 +407,7 @@ const [selectedMember, setSelectedMember] = useState(null);
 const fetchAvailableFaculty = useCallback(async (teamId) => {
   try {
     const token = getAuthToken();
-    const response = await fetch(`https://profhack-backend.onrender.com/api/teams/${teamId}/available-faculty`, {
+    const response = await fetch(`https://profhack-backend-npqc.onrender.com/api/teams/${teamId}/available-faculty`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -425,7 +425,7 @@ const handleAddMember = async (memberId) => {
   try {
     setActionLoading(true);
     const token = getAuthToken();
-    const response = await fetch(`https://profhack-backend.onrender.com/api/teams/${userTeam._id}/members`, {
+    const response = await fetch(`https://profhack-backend-npqc.onrender.com/api/teams/${userTeam._id}/members`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -454,7 +454,7 @@ const handleRemoveMember = async (memberId) => {
   try {
     setActionLoading(true);
     const token = getAuthToken();
-    const response = await fetch(`https://profhack-backend.onrender.com/api/teams/${userTeam._id}/members/${memberId}`, {
+    const response = await fetch(`https://profhack-backend-npqc.onrender.com/api/teams/${userTeam._id}/members/${memberId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -504,7 +504,7 @@ const handleRemoveMember = async (memberId) => {
       setActionLoading(true);
       const token = getAuthToken();
       
-      const response = await fetch(`https://profhack-backend.onrender.com/api/teams/${userTeam._id}/leave`, {
+      const response = await fetch(`https://profhack-backend-npqc.onrender.com/api/teams/${userTeam._id}/leave`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -539,7 +539,7 @@ const handleRemoveMember = async (memberId) => {
       setActionLoading(true);
       const token = getAuthToken();
       
-      const response = await fetch(`https://profhack-backend.onrender.com/api/teams/${userTeam._id}`, {
+      const response = await fetch(`https://profhack-backend-npqc.onrender.com/api/teams/${userTeam._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -192,7 +192,7 @@ const TeamFormation = ({ onBack }) => {
         const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch('https://profhack-backend.onrender.com/api/user/profile', {
+        const response = await fetch('https://profhack-backend-npqc.onrender.com/api/user/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -251,7 +251,7 @@ const getFilteredGroupedFaculty = () => {
     let response;
     try {
       // First try the teams endpoint
-      response = await fetch('https://profhack-backend.onrender.com/api/teams/faculty/all', {
+      response = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/faculty/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -259,7 +259,7 @@ const getFilteredGroupedFaculty = () => {
       });
     } catch (error) {
       // Fallback to faculty endpoint if teams endpoint doesn't exist
-      response = await fetch('https://profhack-backend.onrender.com/api/faculty/all', {
+      response = await fetch('https://profhack-backend-npqc.onrender.com/api/faculty/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -528,7 +528,7 @@ const canSelectFaculty = useCallback((faculty) => {
         members: teamData.members.map(m => m._id)
       };
 
-      const response = await fetch('https://profhack-backend.onrender.com/api/teams/create', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/create', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

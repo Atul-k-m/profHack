@@ -119,7 +119,7 @@ const ForgotPasswordForm = ({ onBack, onSuccess }) => {
     setError('');
 
     try {
-      const response = await fetch('https://profhack-backend.onrender.com/api/auth/forgot-password', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -250,7 +250,7 @@ const LoginForm = ({ setUser, onForgotPassword }) => {
     setError('');
 
     try {
-      const response = await fetch('https://profhack-backend.onrender.com/api/auth/login', {
+      const response = await fetch('https://profhack-backend-npqc.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
