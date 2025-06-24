@@ -341,10 +341,7 @@ const getFilteredGroupedFaculty = () => {
   }
 
   const departments = selectedMembers.map(m => m.department);
-  const uniqueDepartments = new Set(departments);
-  if (uniqueDepartments.size !== departments.length) {
-    errors.push('All team members must be from different departments');
-  }
+  
 
   // Count members by group using the department classification logic
   const innovationCount = selectedMembers.filter(m => 
@@ -408,9 +405,7 @@ const canSelectFaculty = useCallback((faculty) => {
     return { canSelect: false, reason: 'Team is full (5 members max)' };
   }
 
-  if (currentMembers.some(m => m.department === faculty.department)) {
-    return { canSelect: false, reason: 'Department already represented' };
-  }
+  
 
   // Determine which group this faculty belongs to
   const isInnovation = DEPARTMENTS.innovation.some(innovationDept => 
