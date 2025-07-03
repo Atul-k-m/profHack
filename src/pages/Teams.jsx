@@ -663,7 +663,7 @@ const handleConfirmAction = () => {
   onLeaveTeam={() => openConfirmModal('leave')}
   onDeleteTeam={() => openConfirmModal('delete')}
   onRemoveMember={(memberId) => openConfirmModal('removeMember', memberId)}
-  onIdeaSubmission={() => navigate('/idea-submission')}
+  onIdeaSubmission={() => navigate('/submission')}
 />
 
         {/* Other Teams Section */}
