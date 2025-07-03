@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Users, Crown, User, MapPin, AlertCircle, Plus, Eye, ChevronRight, ArrowLeft, LogOut, Trash2, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+import MyTeamSection from '../components/MyTeam'; 
 const Card = React.memo(({ children, className = "" }) => (
   <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden hover:shadow-2xl transition-all duration-300 ${className}`}>
     <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -95,41 +95,6 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message, confirm
   );
 };
 
-const MemberBadge = ({ member, isCurrentUser, isLeader, onRemove, canRemove }) => (
-  <div className={`group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:scale-[1.02] ${
-    isCurrentUser 
-      ? 'bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-500 shadow-md' 
-      : 'bg-gray-50 hover:bg-gray-100 border-2 border-gray-200'
-  }`}>
-    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black transition-all duration-200 group-hover:scale-110 ${
-      isLeader 
-        ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-lg' 
-        : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white'
-    }`}>
-      {isLeader ? <Crown size={16} /> : member.name.charAt(0)}
-    </div>
-    <div className="flex-1 min-w-0">
-      <p className={`text-sm font-bold truncate ${isCurrentUser ? 'text-blue-800' : 'text-gray-800'}`}>
-        {member.name} {isCurrentUser && '(You)'}
-      </p>
-      <p className="text-xs text-gray-600 truncate font-medium">{member.department}</p>
-    </div>
-    {isLeader && (
-      <div className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-black uppercase rounded-full border border-yellow-300">
-        Leader
-      </div>
-    )}
-    {canRemove && !isLeader && (
-      <button
-        onClick={() => onRemove(member._id)}
-        className="p-2 hover:bg-red-100 rounded-full transition-all duration-200 hover:scale-110 text-red-600"
-        title="Remove Member"
-      >
-        <Trash2 size={14} />
-      </button>
-    )}
-  </div>
-);
 
 const TeamCard = ({ team, onViewDetails, isCompact = false }) => {
   if (isCompact) {
@@ -646,29 +611,30 @@ const handleConfirmAction = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        {/* Header with Back Button */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
+      <div className="relative z-10 max-w-7xl mx-auto py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+        {/* Header with Back Button - Mobile Responsive */}
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
               <button
                 onClick={handleBackToDashboard}
-                className="group flex items-center gap-3 px-6 py-3 bg-white border-2 border-black hover:bg-black hover:text-white font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg"
+                className="group flex items-center justify-center sm:justify-start gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white border-2 border-black hover:bg-black hover:text-white font-bold text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg"
               >
-                <ArrowLeft size={18} className="group-hover:scale-110 transition-transform duration-200" />
-                Back to Dashboard
+                <ArrowLeft size={16} className="sm:w-[18px] sm:h-[18px] group-hover:scale-110 transition-transform duration-200" />
+                <span className="hidden sm:inline">Back to Dashboard</span>
+                <span className="sm:hidden">Back</span>
               </button>
-              <div>
-                <h1 className="text-4xl font-black tracking-tight text-black uppercase mb-2">Teams</h1>
-                <p className="text-gray-600 font-medium">Manage and explore team collaborations</p>
+              <div className="text-center sm:text-left">
+                <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-black uppercase mb-1 sm:mb-2">Teams</h1>
+                <p className="text-sm sm:text-base text-gray-600 font-medium">Manage and explore team collaborations</p>
               </div>
             </div>
             {!userTeam && (
               <button
                 onClick={handleCreateTeam}
-                className="group flex items-center gap-3 px-8 py-4 bg-black text-white hover:bg-gray-800 border-2 border-black font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-xl"
+                className="group flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-black text-white hover:bg-gray-800 border-2 border-black font-bold text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-xl w-full sm:w-auto"
               >
-                <Plus size={18} className="group-hover:rotate-90 transition-transform duration-300" />
+                <Plus size={16} className="sm:w-[18px] sm:h-[18px] group-hover:rotate-90 transition-transform duration-300" />
                 Create Team
               </button>
             )}
@@ -677,120 +643,47 @@ const handleConfirmAction = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <ErrorMessage message={error} onRetry={loadData} />
           </div>
         )}
 
         {/* Your Team Section */}
-        {userTeam && (
-          <div className="mb-12">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-black tracking-tight text-black uppercase flex items-center gap-3">
-                <div className="w-2 h-8 bg-blue-500"></div>
-                Your Team
-              </h2>
-              
-              {/* Team Action Buttons */}
-              {/* Team Action Buttons */}
-<div className="flex gap-3">
-  {isTeamLeader && userTeam.members.length < 4 && (
-    <button
-      onClick={async () => {
-        await fetchAvailableFaculty(userTeam._id);
-        setShowAddMemberModal(true);
-      }}
-      disabled={actionLoading}
-      className="group flex items-center gap-2 px-6 py-3 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <Plus size={16} className="group-hover:scale-110 transition-transform duration-200" />
-      Add Member
-    </button>
-  )}
-  
-  {isTeamMember && !isTeamLeader && (
-    <button
-      onClick={() => openConfirmModal('leave')}
-      disabled={actionLoading}
-      className="group flex items-center gap-2 px-6 py-3 bg-yellow-600 text-white hover:bg-yellow-700 border-2 border-yellow-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <LogOut size={16} className="group-hover:scale-110 transition-transform duration-200" />
-      Leave Team
-    </button>
-  )}
-  
-  {isTeamLeader && (
-    <button
-      onClick={() => openConfirmModal('delete')}
-      disabled={actionLoading}
-      className="group flex items-center gap-2 px-6 py-3 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <Trash2 size={16} className="group-hover:scale-110 transition-transform duration-200" />
-      Delete Team
-    </button>
-  )}
-</div>
-            </div>
-            
-            <Card className="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-500">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex-1">
-                  <h3 className="text-3xl font-black text-black mb-3">{userTeam.teamName}</h3>
-                  <p className="text-gray-700 mb-6 font-medium leading-relaxed text-lg">{userTeam.description}</p>
-                </div>
-              </div>
-
-              <div className="grid lg:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-sm font-black text-gray-600 uppercase tracking-wider mb-4">Team Leader</h4>
-                  <MemberBadge 
-                    member={userTeam.leader} 
-                    isCurrentUser={userTeam.leader._id === currentUser?._id}
-                    isLeader={true}
-                  />
-                </div>
-
-               <div>
-  <h4 className="text-sm font-black text-gray-600 uppercase tracking-wider mb-4">
-    Team Members ({userTeam.members.length})
-  </h4>
-  <div className="space-y-3 max-h-60 overflow-y-auto">
-    {userTeam.members.map(member => (
-      <MemberBadge 
-        key={member._id}
-        member={member} 
-        isCurrentUser={member._id === currentUser?._id}
-        isLeader={false}
-        canRemove={isTeamLeader}
-        onRemove={(memberId) => openConfirmModal('removeMember', memberId)}
-      />
-    ))}
-  </div>
-</div>
-              </div>
-            </Card>
-          </div>
-        )}
+        {/* Your Team Section */}
+        <MyTeamSection
+          userTeam={userTeam}
+          currentUser={currentUser}
+          isTeamLeader={isTeamLeader}
+          isTeamMember={isTeamMember}
+          actionLoading={actionLoading}
+          onAddMember={async () => {
+            await fetchAvailableFaculty(userTeam._id);
+            setShowAddMemberModal(true);
+          }}
+          onLeaveTeam={() => openConfirmModal('leave')}
+          onDeleteTeam={() => openConfirmModal('delete')}
+          onRemoveMember={(memberId) => openConfirmModal('removeMember', memberId)}
+        />
 
         {/* Other Teams Section */}
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-black uppercase mb-6 flex items-center gap-3">
-            <div className="w-2 h-8 bg-gray-500"></div>
+          <h2 className="text-xl sm:text-2xl font-black tracking-tight text-black uppercase mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+            <div className="w-1.5 sm:w-2 h-6 sm:h-8 bg-gray-500"></div>
             {userTeam ? 'Other Teams' : 'All Teams'} ({allTeams.length})
           </h2>
           
           {allTeams.length === 0 ? (
-            <Card className="p-12 text-center bg-gradient-to-br from-gray-50 to-gray-100">
+            <Card className="p-6 sm:p-12 text-center bg-gradient-to-br from-gray-50 to-gray-100">
               <div className="max-w-md mx-auto">
-                <Users size={64} className="text-gray-400 mx-auto mb-6" />
-                <h3 className="text-xl font-black text-gray-600 mb-3 uppercase tracking-wide">No Teams Found</h3>
-                <p className="text-gray-500 font-medium leading-relaxed">
+                <Users size={48} className="sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4 sm:mb-6" />
+                <h3 className="text-lg sm:text-xl font-black text-gray-600 mb-2 sm:mb-3 uppercase tracking-wide">No Teams Found</h3>
+                <p className="text-sm sm:text-base text-gray-500 font-medium leading-relaxed">
                   {userTeam ? 'No other teams have been created yet.' : 'Be the first to create a team and start collaborating!'}
                 </p>
               </div>
             </Card>
           ) : (
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-8">
               {allTeams.map(team => (
                 <TeamCard
                   key={team._id}
@@ -812,38 +705,37 @@ const handleConfirmAction = () => {
         )}
 
         <ConfirmationModal
-  isOpen={confirmModal.isOpen}
-  onClose={closeConfirmModal}
-  onConfirm={handleConfirmAction}
-  title={
-    confirmModal.type === 'leave' ? 'Leave Team' : 
-    confirmModal.type === 'delete' ? 'Delete Team' : 
-    'Remove Member'
-  }
-  message={
-    confirmModal.type === 'leave' 
-      ? 'Are you sure you want to leave this team? You will no longer have access to team resources and activities.'
-      : confirmModal.type === 'delete'
-      ? 'Are you sure you want to delete this team? This action cannot be undone and will remove all team members from the team.'
-      : 'Are you sure you want to remove this member from the team?'
-  }
-  confirmText={
-    confirmModal.type === 'leave' ? 'Leave Team' : 
-    confirmModal.type === 'delete' ? 'Delete Team' : 
-    'Remove Member'
-  }
-  isDestructive={confirmModal.type === 'delete' || confirmModal.type === 'removeMember'}
-/>
-<AddMemberModal
-  isOpen={showAddMemberModal}
-  onClose={() => setShowAddMemberModal(false)}
-  availableFaculty={availableFaculty}
-  onAddMember={handleAddMember}
-  loading={actionLoading}
-/>
+          isOpen={confirmModal.isOpen}
+          onClose={closeConfirmModal}
+          onConfirm={handleConfirmAction}
+          title={
+            confirmModal.type === 'leave' ? 'Leave Team' : 
+            confirmModal.type === 'delete' ? 'Delete Team' : 
+            'Remove Member'
+          }
+          message={
+            confirmModal.type === 'leave' 
+              ? 'Are you sure you want to leave this team? You will no longer have access to team resources and activities.'
+              : confirmModal.type === 'delete'
+              ? 'Are you sure you want to delete this team? This action cannot be undone and will remove all team members from the team.'
+              : 'Are you sure you want to remove this member from the team?'
+          }
+          confirmText={
+            confirmModal.type === 'leave' ? 'Leave Team' : 
+            confirmModal.type === 'delete' ? 'Delete Team' : 
+            'Remove Member'
+          }
+          isDestructive={confirmModal.type === 'delete' || confirmModal.type === 'removeMember'}
+        />
+        <AddMemberModal
+          isOpen={showAddMemberModal}
+          onClose={() => setShowAddMemberModal(false)}
+          availableFaculty={availableFaculty}
+          onAddMember={handleAddMember}
+          loading={actionLoading}
+        />
       </div>
     </div>
-    
   );
 };
 
