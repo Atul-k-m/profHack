@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Teams from './pages/Teams';
 import Home from './pages/Home';
 import CreateTeam from './pages/CreateTeam';
+import Submission from './pages/Submission'; // Import the Submission component
 import ResetPassword from './pages/ResetPassword'; // Import the ResetPassword component
 import './App.css';
 import Organizers from './pages/Organizers';   
@@ -37,6 +38,16 @@ const App = () => {
             element={
               user ? (
                 <Dashboard user={user} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/submission"
+            element={
+              user ? (
+                <Submission user = {user} />
               ) : (
                 <Navigate to="/login" replace />
               )
