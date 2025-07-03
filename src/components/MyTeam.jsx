@@ -133,7 +133,7 @@ const MyTeamSection = ({
               <h4 className="text-lg font-semibold text-gray-900">Team Members</h4>
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <Target size={14} />
-                {totalMembers} of 4 members
+                {totalMembers} of 5 members
               </div>
             </div>
             
