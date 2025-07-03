@@ -650,20 +650,21 @@ const handleConfirmAction = () => {
 
         {/* Your Team Section */}
         {/* Your Team Section */}
-        <MyTeamSection
-          userTeam={userTeam}
-          currentUser={currentUser}
-          isTeamLeader={isTeamLeader}
-          isTeamMember={isTeamMember}
-          actionLoading={actionLoading}
-          onAddMember={async () => {
-            await fetchAvailableFaculty(userTeam._id);
-            setShowAddMemberModal(true);
-          }}
-          onLeaveTeam={() => openConfirmModal('leave')}
-          onDeleteTeam={() => openConfirmModal('delete')}
-          onRemoveMember={(memberId) => openConfirmModal('removeMember', memberId)}
-        />
+     <MyTeamSection
+  userTeam={userTeam}
+  currentUser={currentUser}
+  isTeamLeader={isTeamLeader}
+  isTeamMember={isTeamMember}
+  actionLoading={actionLoading}
+  onAddMember={async () => {
+    await fetchAvailableFaculty(userTeam._id);
+    setShowAddMemberModal(true);
+  }}
+  onLeaveTeam={() => openConfirmModal('leave')}
+  onDeleteTeam={() => openConfirmModal('delete')}
+  onRemoveMember={(memberId) => openConfirmModal('removeMember', memberId)}
+  onIdeaSubmission={() => navigate('/idea-submission')}
+/>
 
         {/* Other Teams Section */}
         <div>

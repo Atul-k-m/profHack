@@ -1,60 +1,64 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Plus, LogOut, Trash2, Lightbulb, Crown } from 'lucide-react';
+import { Plus, LogOut, Trash2, Lightbulb, Crown, Users, Target } from 'lucide-react';
 
 const Card = React.memo(({ children, className = "" }) => (
-  <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden hover:shadow-2xl transition-all duration-300 ${className}`}>
-    <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-      <div 
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #000 1px, transparent 1px),
-            linear-gradient(to bottom, #000 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-        }}
-        className="w-full h-full"
-      />
-    </div>
-    <div className="relative z-10">
-      {children}
-    </div>
+  <div className={`bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 ${className}`}>
+    {children}
   </div>
 ));
 
-const MemberBadge = ({ member, isCurrentUser, isLeader, onRemove, canRemove }) => (
-  <div className={`group flex items-center gap-3 p-4 rounded-lg transition-all duration-200 hover:scale-[1.02] ${
-    isCurrentUser 
-      ? 'bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-500 shadow-md' 
-      : 'bg-gray-50 hover:bg-gray-100 border-2 border-gray-200'
+const MemberCard = ({ member, isCurrentUser, isLeader, onRemove, canRemove, isCompact = false }) => (
+  <div className={`group relative flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
+    isCurrentUser ? 'bg-blue-50 border border-blue-200' : 'border border-gray-100'
   }`}>
-    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-black transition-all duration-200 group-hover:scale-110 ${
+    <div className={`relative ${isCompact ? 'w-8 h-8' : 'w-10 h-10'} rounded-full flex items-center justify-center text-sm font-bold ${
       isLeader 
-        ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-lg' 
-        : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white'
+        ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white' 
+        : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
     }`}>
-      {isLeader ? <Crown size={18} /> : member.name.charAt(0)}
+      {isLeader ? <Crown size={isCompact ? 14 : 16} /> : member.name.charAt(0)}
     </div>
+    
     <div className="flex-1 min-w-0">
-      <p className={`text-base font-bold truncate ${isCurrentUser ? 'text-blue-800' : 'text-gray-800'}`}>
-        {member.name} {isCurrentUser && '(You)'}
-      </p>
-      <p className="text-sm text-gray-600 truncate font-medium mt-1">{member.department}</p>
-    </div>
-    {isLeader && (
-      <div className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-black uppercase rounded-full border border-yellow-300">
-        Leader
+      <div className="flex items-center gap-2 mb-1">
+        <p className={`text-sm font-semibold truncate ${isCurrentUser ? 'text-blue-700' : 'text-gray-900'}`}>
+          {member.name}
+        </p>
+        {isCurrentUser && (
+          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
+            You
+          </span>
+        )}
+        {isLeader && (
+          <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">
+            Leader
+          </span>
+        )}
       </div>
-    )}
+      <p className="text-xs text-gray-600 truncate">{member.department}</p>
+    </div>
+    
     {canRemove && !isLeader && (
       <button
         onClick={() => onRemove(member._id)}
-        className="p-2 hover:bg-red-100 rounded-full transition-all duration-200 hover:scale-110 text-red-600"
+        className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-100 rounded-full transition-all duration-200 text-red-500 hover:text-red-700"
         title="Remove Member"
       >
-        <Trash2 size={16} />
+        <Trash2 size={14} />
       </button>
     )}
+  </div>
+);
+
+const EmptySlot = ({ index }) => (
+  <div className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-gray-200 bg-gray-50">
+    <div className="w-10 h-10 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center">
+      <Plus size={14} className="text-gray-400" />
+    </div>
+    <div className="flex-1">
+      <p className="text-sm font-medium text-gray-400">Open Position</p>
+      <p className="text-xs text-gray-400">Available slot</p>
+    </div>
   </div>
 );
 
@@ -67,136 +71,155 @@ const MyTeamSection = ({
   onAddMember,
   onLeaveTeam,
   onDeleteTeam,
-  onRemoveMember
+  onRemoveMember,
+  onIdeaSubmission
 }) => {
-  const navigate = useNavigate();
-
   if (!userTeam) return null;
 
   const handleIdeaSubmission = () => {
-    navigate('/idea-submission');
+    if (onIdeaSubmission) {
+      onIdeaSubmission();
+    }
   };
 
+  const allMembers = [userTeam.leader, ...userTeam.members];
+  const totalMembers = allMembers.length;
+  const emptySlots = 4 - totalMembers;
+
   return (
-    <div className="mb-12 px-4 sm:px-6 lg:px-8">
-      {/* Header Section */}
-      <div className="mb-8">
-        <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-black uppercase flex items-center gap-4 mb-6">
-          <div className="w-2 h-8 sm:h-10 bg-blue-500"></div>
-          Your Team
-        </h2>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Header with Primary CTA */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-1 h-8 bg-blue-500 rounded-full"></div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Your Team</h2>
+            <p className="text-gray-600 text-sm">Collaborate and innovate together</p>
+          </div>
+        </div>
         
-        {/* Action Buttons - Better Mobile Layout */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          {/* Idea Submission Button - Primary Action */}
-          <button
-            onClick={handleIdeaSubmission}
-            className="group flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 border-2 border-purple-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg rounded-lg"
-          >
-            <Lightbulb size={16} className="group-hover:scale-110 transition-transform duration-200" />
-            Submit Team Idea
-          </button>
-          
-          {/* Team Management Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            {isTeamLeader && userTeam.members.length < 4 && (
-              <button
-                onClick={onAddMember}
-                disabled={actionLoading}
-                className="group flex items-center justify-center gap-3 px-6 py-4 bg-green-600 text-white hover:bg-green-700 border-2 border-green-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
-              >
-                <Plus size={16} className="group-hover:scale-110 transition-transform duration-200" />
-                Add Member
-              </button>
-            )}
-            
-            {isTeamMember && !isTeamLeader && (
-              <button
-                onClick={onLeaveTeam}
-                disabled={actionLoading}
-                className="group flex items-center justify-center gap-3 px-6 py-4 bg-yellow-600 text-white hover:bg-yellow-700 border-2 border-yellow-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
-              >
-                <LogOut size={16} className="group-hover:scale-110 transition-transform duration-200" />
-                Leave Team
-              </button>
-            )}
-            
-            {isTeamLeader && (
-              <button
-                onClick={onDeleteTeam}
-                disabled={actionLoading}
-                className="group flex items-center justify-center gap-3 px-6 py-4 bg-red-600 text-white hover:bg-red-700 border-2 border-red-600 font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
-              >
-                <Trash2 size={16} className="group-hover:scale-110 transition-transform duration-200" />
-                Delete Team
-              </button>
-            )}
-          </div>
-        </div>
+        {/* Primary CTA - Submit Idea */}
+        <button
+          onClick={handleIdeaSubmission}
+          className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 font-semibold rounded-lg transition-all duration-200 hover:scale-105 shadow-lg"
+        >
+          <Lightbulb size={18} className="group-hover:scale-110 transition-transform" />
+          Submit Team Idea
+        </button>
       </div>
-      
-      {/* Team Details Card */}
-      <Card className="p-6 sm:p-10 bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-500 rounded-2xl">
-        <div className="mb-8">
-          <h3 className="text-2xl sm:text-4xl font-black text-black mb-4">{userTeam.teamName}</h3>
-          <p className="text-gray-700 font-medium leading-relaxed text-base sm:text-lg max-w-3xl">
-            {userTeam.description}
-          </p>
-        </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Team Leader Section */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-black text-gray-600 uppercase tracking-wider mb-4">
-              Team Leader
-            </h4>
-            <MemberBadge 
-              member={userTeam.leader} 
-              isCurrentUser={userTeam.leader._id === currentUser?._id}
-              isLeader={true}
-            />
-          </div>
+      {/* Main Team Layout */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Team Info Card */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card className="p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{userTeam.teamName}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {userTeam.description}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                <Users size={14} />
+                {totalMembers}/4
+              </div>
+            </div>
+          </Card>
 
-          {/* Team Members Section */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-black text-gray-600 uppercase tracking-wider mb-4">
-              Team Members ({userTeam.members.length}/4)
-            </h4>
-            <div className="space-y-4 max-h-80 overflow-y-auto">
-              {userTeam.members.map(member => (
-                <MemberBadge 
+          {/* Team Members Grid */}
+          <Card className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold text-gray-900">Team Members</h4>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <Target size={14} />
+                {totalMembers} of 4 members
+              </div>
+            </div>
+            
+            <div className="grid sm:grid-cols-2 gap-3">
+              {allMembers.map(member => (
+                <MemberCard 
                   key={member._id}
                   member={member} 
                   isCurrentUser={member._id === currentUser?._id}
-                  isLeader={false}
-                  canRemove={isTeamLeader}
+                  isLeader={member._id === userTeam.leader._id}
+                  canRemove={isTeamLeader && member._id !== userTeam.leader._id}
                   onRemove={onRemoveMember}
                 />
               ))}
               
-              {/* Empty slots indicator */}
-              {userTeam.members.length < 4 && (
-                <div className="space-y-3">
-                  {Array.from({ length: 4 - userTeam.members.length }).map((_, index) => (
-                    <div 
-                      key={index}
-                      className="flex items-center gap-3 p-4 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
-                    >
-                      <div className="w-12 h-12 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center">
-                        <Plus size={16} className="text-gray-400" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-400">Open Position</p>
-                        <p className="text-xs text-gray-400">Waiting for team member</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              {/* Empty Slots */}
+              {Array.from({ length: emptySlots }).map((_, index) => (
+                <EmptySlot key={`empty-${index}`} index={index} />
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* Action Panel */}
+        <div className="space-y-4">
+          <Card className="p-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Team Actions</h4>
+            <div className="space-y-3">
+              {/* Add Member */}
+              {isTeamLeader && totalMembers < 4 && (
+                <button
+                  onClick={onAddMember}
+                  disabled={actionLoading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white hover:bg-green-700 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Plus size={16} />
+                  Add Member
+                </button>
+              )}
+              
+              {/* Leave Team */}
+              {isTeamMember && !isTeamLeader && (
+                <button
+                  onClick={onLeaveTeam}
+                  disabled={actionLoading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-yellow-600 text-white hover:bg-yellow-700 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <LogOut size={16} />
+                  Leave Team
+                </button>
+              )}
+              
+              {/* Delete Team */}
+              {isTeamLeader && (
+                <button
+                  onClick={onDeleteTeam}
+                  disabled={actionLoading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white hover:bg-red-700 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Trash2 size={16} />
+                  Delete Team
+                </button>
               )}
             </div>
-          </div>
+          </Card>
+
+          {/* Team Stats */}
+          <Card className="p-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Team Stats</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Total Members</span>
+                <span className="font-semibold">{totalMembers}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Available Slots</span>
+                <span className="font-semibold">{emptySlots}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Team Leader</span>
+                <span className="font-semibold text-yellow-600">{userTeam.leader.name}</span>
+              </div>
+            </div>
+          </Card>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };
