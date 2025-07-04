@@ -269,6 +269,38 @@ const AddMemberModal = ({ isOpen, onClose, availableFaculty, onAddMember, loadin
     </div>
   );
 };
+
+const MemberBadge = ({ member, isCurrentUser, isLeader }) => (
+  <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 ${
+    isCurrentUser 
+      ? 'bg-blue-50 border-blue-300 hover:bg-blue-100' 
+      : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+  }`}>
+    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+      isLeader 
+        ? 'bg-yellow-500 text-white' 
+        : isCurrentUser 
+        ? 'bg-blue-500 text-white' 
+        : 'bg-gray-500 text-white'
+    }`}>
+      {member.name.charAt(0)}
+    </div>
+    <div className="flex-1">
+      <div className="flex items-center gap-2">
+        <p className="font-bold text-gray-800">{member.name}</p>
+        {isLeader && (
+          <Crown size={16} className="text-yellow-500" />
+        )}
+        {isCurrentUser && (
+          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full">
+            You
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-gray-600">{member.department || 'Department not specified'}</p>
+    </div>
+  </div>
+);
 const TeamsPage = ({ onCreateTeam }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userTeam, setUserTeam] = useState(null);
