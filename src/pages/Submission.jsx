@@ -310,60 +310,66 @@ const Submissions = () => {
             </div>
           </div>
 
-          {/* Track Selection */}
-          <div className="mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white border-2 border-black p-5 relative">
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
-                <Target className="w-5 h-5" />
-              </div>
-              
-              <div className="pt-3">
-                <h3 className="text-lg font-black tracking-wide uppercase mb-3 text-black">
-                  Select Track
-                </h3>
-                
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowDropdown(!showDropdown)}
-                    className="w-full bg-white border-2 border-black p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between"
-                  >
-                    <span>
-                      {selectedTrack ? tracks.find(t => t.id === selectedTrack)?.name : 'Choose your innovation track...'}
-                    </span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  {showDropdown && (
-                    <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-50 max-h-64 overflow-y-auto shadow-lg">
-                      {tracks.map((track) => (
-                        <button
-                          key={track.id}
-                          type="button"
-                          onClick={() => {
-                            setSelectedTrack(track.id);
-                            setShowDropdown(false);
-                          }}
-                          className="w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 font-medium text-gray-700"
-                        >
-                          <div className="font-semibold text-black">{track.name}</div>
-                          <div className="text-sm text-gray-600 mt-1">{track.description}</div>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Selected Track Description */}
-                {selectedTrackData && (
-                  <div className="mt-4 p-3 bg-gray-50 border-l-4 border-black">
-                    <h4 className="font-bold text-black mb-1">{selectedTrackData.name}</h4>
-                    <p className="text-sm text-gray-700">{selectedTrackData.description}</p>
-                  </div>
-                )}
-              </div>
-            </div>
+         <div className="mb-6 opacity-0 animate-fade-in-up relative z-50" style={{ animationDelay: '0.5s' }}>
+  <div className="bg-white border-2 border-black p-5 relative">
+    <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
+      <Target className="w-5 h-5" />
+    </div>
+    
+    <div className="pt-3">
+      <h3 className="text-lg font-black tracking-wide uppercase mb-3 text-black">
+        Select Track
+      </h3>
+      
+      <div className="relative z-50">
+        <button
+          type="button"
+          onClick={() => setShowDropdown(!showDropdown)}
+          className="w-full bg-white border-2 border-black p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between relative z-50"
+        >
+          <span>
+            {selectedTrack ? tracks.find(t => t.id === selectedTrack)?.name : 'Choose your innovation track...'}
+          </span>
+          <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+        </button>
+        
+        {showDropdown && (
+          <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-[9999] max-h-64 overflow-y-auto shadow-2xl">
+            {tracks.map((track) => (
+              <button
+                key={track.id}
+                type="button"
+                onClick={() => {
+                  setSelectedTrack(track.id);
+                  setShowDropdown(false);
+                }}
+                className="w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 font-medium text-gray-700"
+              >
+                <div className="font-semibold text-black">{track.name}</div>
+                <div className="text-sm text-gray-600 mt-1">{track.description}</div>
+              </button>
+            ))}
           </div>
+        )}
+      </div>
+
+      {/* Selected Track Description */}
+      {selectedTrackData && (
+        <div className="mt-4 p-3 bg-gray-50 border-l-4 border-black">
+          <h4 className="font-bold text-black mb-1">{selectedTrackData.name}</h4>
+          <p className="text-sm text-gray-700">{selectedTrackData.description}</p>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+{showDropdown && (
+  <div 
+    className="fixed inset-0 z-[9998]" 
+    onClick={() => setShowDropdown(false)}
+  />
+)}
 
           {/* Optional Description */}
           <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
