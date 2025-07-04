@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Users, Target, Send, ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ChevronDown, Users, Target, Send, ArrowLeft, CheckCircle } from 'lucide-react';
 
 const Submissions = () => {
-  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [selectedTrack, setSelectedTrack] = useState('');
   const [description, setDescription] = useState('');
   const [teamData, setTeamData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Backend base URL
-  const BACKEND_URL = 'https://profhack-backend-npqc.onrender.com';
+  // Mock team data for demo
+  const mockTeamData = {
+    _id: 'team_123',
+    teamName: 'Innovation Squad',
+    leader: { name: 'John Doe' },
+    members: [
+      { name: 'John Doe' },
+      { name: 'Jane Smith' },
+      { name: 'Alex Johnson' },
+      { name: 'Sarah Wilson' }
+    ]
+  };
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -27,43 +36,14 @@ const Submissions = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Fetch team data on component mount
+  // Simulate loading team data
   useEffect(() => {
-    fetchTeamData();
-  }, []);
-
-  const fetchTeamData = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        console.error('No authentication token found');
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch(`${BACKEND_URL}/api/teams/me`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setTeamData(data);
-      } else {
-        const errorData = await response.json();
-        console.error('Failed to fetch team data:', errorData.message || 'Unknown error');
-      }
-    } catch (error) {
-      console.error('Error fetching team data:', error);
-    } finally {
+    setLoading(true);
+    setTimeout(() => {
+      setTeamData(mockTeamData);
       setLoading(false);
-    }
-  };
+    }, 1000);
+  }, []);
 
   const tracks = [
     { 
@@ -131,53 +111,22 @@ const Submissions = () => {
 
     setIsSubmitting(true);
     
-    try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        alert('Authentication token not found. Please login again.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      const payload = {
-        trackId: selectedTrack,
-        teamId: teamData._id,
-        description: description.trim()
-      };
-
-      const response = await fetch(`${BACKEND_URL}/api/submissions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        alert('Submission successful!');
-        setDescription('');
-        setSelectedTrack('');
-        console.log('Submission result:', result);
-        
-        // Route to /teams after successful submission
-        navigate('/teams');
-      } else {
-        const errorData = await response.json();
-        alert(`Submission failed: ${errorData.message || 'Please try again.'}`);
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert('An error occurred during submission. Please check your connection and try again.');
-    } finally {
+    // Simulate API call
+    setTimeout(() => {
+      setSubmitSuccess(true);
       setIsSubmitting(false);
-    }
+      setDescription('');
+      setSelectedTrack('');
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 3000);
+    }, 2000);
   };
 
   const handleBackToTeams = () => {
-    navigate('/teams');
+    console.log('Navigate back to teams');
   };
 
   const handleTrackSelect = (trackId) => {
@@ -189,12 +138,24 @@ const Submissions = () => {
     setShowDropdown(!showDropdown);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showDropdown && !event.target.closest('.dropdown-container')) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [showDropdown]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-amber-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-base font-medium text-gray-700">Loading team data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-lg font-medium text-gray-700">Loading team data...</p>
         </div>
       </div>
     );
@@ -225,8 +186,8 @@ const Submissions = () => {
   const selectedTrackData = tracks.find(t => t.id === selectedTrack);
 
   return (
-    <div className="min-h-screen bg-amber-50 relative overflow-hidden">
-      {/* Subtle Grid Background */}
+    <div className="min-h-screen bg-amber-50 relative">
+      {/* Background Grid */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none">
         <div 
           className="w-full h-full transition-transform duration-1000 ease-out"
@@ -241,19 +202,19 @@ const Submissions = () => {
         />
       </div>
 
-      {/* Backdrop for closing dropdown */}
-      {showDropdown && (
-        <div 
-          className="fixed inset-0 z-40" 
-          onClick={() => setShowDropdown(false)}
-        />
+      {/* Success Message */}
+      {submitSuccess && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 z-50 animate-pulse">
+          <CheckCircle className="w-5 h-5" />
+          Submission Successful!
+        </div>
       )}
 
-      <div className="relative z-10 pt-16 pb-20 px-4">
-        <div className="max-w-3xl mx-auto">
+      <div className="relative z-10 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
           
           {/* Back Button */}
-          <div className="mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <div className="mb-8">
             <button
               onClick={handleBackToTeams}
               className="flex items-center gap-2 text-black hover:text-gray-700 transition-colors font-medium"
@@ -265,50 +226,45 @@ const Submissions = () => {
 
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-base md:text-lg font-bold tracking-[0.4em] text-black uppercase mb-4">
-                Project Submission
-              </h2>
-              <div className="w-20 h-0.5 bg-black mx-auto"></div>
-            </div>
-
-            <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-black leading-[0.9] mb-6">
-                SUBMIT
-                <br />
-                <span className="text-5xl md:text-6xl lg:text-7xl">PROJECT</span>
-              </h1>
-            </div>
+            <h2 className="text-sm md:text-base font-bold tracking-[0.4em] text-black uppercase mb-4">
+              Project Submission
+            </h2>
+            <div className="w-20 h-0.5 bg-black mx-auto mb-8"></div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-black leading-tight">
+              SUBMIT
+              <br />
+              <span className="text-5xl md:text-6xl lg:text-7xl">PROJECT</span>
+            </h1>
           </div>
 
           {/* Team Info Card */}
-          <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="bg-white border-2 border-black p-5 relative">
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
-                <Users className="w-5 h-5" />
+          <div className="mb-8">
+            <div className="bg-white border-2 border-black p-6 relative shadow-lg">
+              <div className="absolute -top-3 -left-3 w-12 h-12 bg-black text-white flex items-center justify-center font-black text-lg">
+                <Users className="w-6 h-6" />
               </div>
               
-              <div className="pt-3">
-                <h3 className="text-lg font-black tracking-wide uppercase mb-3 text-black">
+              <div className="pt-4">
+                <h3 className="text-xl font-black tracking-wide uppercase mb-4 text-black">
                   Team Information
                 </h3>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-bold text-black mb-1">Team Name:</p>
-                    <p className="text-gray-700 font-medium">{teamData.teamName}</p>
+                    <p className="font-bold text-black mb-2">Team Name:</p>
+                    <p className="text-gray-700 font-medium text-lg">{teamData.teamName}</p>
                   </div>
                   
                   <div>
-                    <p className="font-bold text-black mb-1">Team Leader:</p>
-                    <p className="text-gray-700 font-medium">{teamData.leader.name}</p>
+                    <p className="font-bold text-black mb-2">Team Leader:</p>
+                    <p className="text-gray-700 font-medium text-lg">{teamData.leader.name}</p>
                   </div>
                   
                   <div className="md:col-span-2">
-                    <p className="font-bold text-black mb-2">Team Members:</p>
+                    <p className="font-bold text-black mb-3">Team Members:</p>
                     <div className="flex flex-wrap gap-2">
                       {teamData.members.map((member, index) => (
-                        <span key={index} className="bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 border">
+                        <span key={index} className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded">
                           {member.name}
                         </span>
                       ))}
@@ -320,27 +276,27 @@ const Submissions = () => {
           </div>
 
           {/* Track Selection */}
-          <div className="mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white border-2 border-black p-5 relative">
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
-                <Target className="w-5 h-5" />
+          <div className="mb-8">
+            <div className="bg-white border-2 border-black p-6 relative shadow-lg">
+              <div className="absolute -top-3 -left-3 w-12 h-12 bg-black text-white flex items-center justify-center font-black text-lg">
+                <Target className="w-6 h-6" />
               </div>
               
-              <div className="pt-3">
-                <h3 className="text-lg font-black tracking-wide uppercase mb-3 text-black">
+              <div className="pt-4">
+                <h3 className="text-xl font-black tracking-wide uppercase mb-4 text-black">
                   Select Track
                 </h3>
                 
-                <div className="relative">
+                <div className="dropdown-container relative">
                   <button
                     type="button"
                     onClick={handleDropdownToggle}
-                    className="w-full bg-white border-2 border-black p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between"
+                    className="w-full bg-white border-2 border-black p-4 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between relative z-10"
                   >
-                    <span>
+                    <span className="text-base">
                       {selectedTrack ? tracks.find(t => t.id === selectedTrack)?.name : 'Choose your innovation track...'}
                     </span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
                   {showDropdown && (
@@ -350,10 +306,10 @@ const Submissions = () => {
                           key={track.id}
                           type="button"
                           onClick={() => handleTrackSelect(track.id)}
-                          className="w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 font-medium text-gray-700 block"
+                          className="w-full p-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 block"
                         >
-                          <div className="font-semibold text-black">{track.name}</div>
-                          <div className="text-sm text-gray-600 mt-1">{track.description}</div>
+                          <div className="font-bold text-black text-base mb-1">{track.name}</div>
+                          <div className="text-sm text-gray-600">{track.description}</div>
                         </button>
                       ))}
                     </div>
@@ -362,32 +318,32 @@ const Submissions = () => {
 
                 {/* Selected Track Description */}
                 {selectedTrackData && (
-                  <div className="mt-4 p-3 bg-gray-50 border-l-4 border-black">
-                    <h4 className="font-bold text-black mb-1">{selectedTrackData.name}</h4>
-                    <p className="text-sm text-gray-700">{selectedTrackData.description}</p>
+                  <div className="mt-4 p-4 bg-gray-50 border-l-4 border-black">
+                    <h4 className="font-bold text-black mb-2 text-lg">{selectedTrackData.name}</h4>
+                    <p className="text-gray-700">{selectedTrackData.description}</p>
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Optional Description */}
-          <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="bg-white border-2 border-black p-5 relative">
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
+          {/* Description Section */}
+          <div className="mb-10">
+            <div className="bg-white border-2 border-black p-6 relative shadow-lg">
+              <div className="absolute -top-3 -left-3 w-12 h-12 bg-black text-white flex items-center justify-center font-black text-lg">
                 02
               </div>
               
-              <div className="pt-3">
-                <h3 className="text-lg font-black tracking-wide uppercase mb-3 text-black">
+              <div className="pt-4">
+                <h3 className="text-xl font-black tracking-wide uppercase mb-4 text-black">
                   Description (Optional)
                 </h3>
                 
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  rows={4}
-                  className="w-full border-2 border-black p-3 font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 resize-none"
+                  rows={5}
+                  className="w-full border-2 border-black p-4 font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 resize-none text-base"
                   placeholder="Add any additional details about your project submission..."
                 />
               </div>
@@ -395,21 +351,21 @@ const Submissions = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
+          <div className="text-center mb-12">
             <button
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="bg-black text-white px-10 py-3 font-black text-base tracking-wide uppercase hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-3"
+              className="bg-black text-white px-12 py-4 font-black text-lg tracking-wide uppercase hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-3 shadow-lg"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                   Submitting...
                 </>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
+                  <Send className="w-5 h-5" />
                   Submit Project
                 </>
               )}
@@ -417,7 +373,7 @@ const Submissions = () => {
           </div>
 
           {/* Footer */}
-          <div className="text-center mt-16 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <div className="text-center">
             <div className="flex items-center justify-center gap-4 text-xs text-gray-600 font-medium">
               <div className="w-10 h-px bg-gray-400"></div>
               <span className="tracking-wider uppercase">Innovation Through Collaboration</span>
@@ -427,40 +383,6 @@ const Submissions = () => {
 
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-        }
-        
-        /* Custom scrollbar for dropdown */
-        .max-h-80::-webkit-scrollbar {
-          width: 8px;
-        }
-        
-        .max-h-80::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-        
-        .max-h-80::-webkit-scrollbar-thumb {
-          background: #888;
-          border-radius: 4px;
-        }
-        
-        .max-h-80::-webkit-scrollbar-thumb:hover {
-          background: #555;
-        }
-      `}</style>
     </div>
   );
 };
