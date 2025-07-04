@@ -309,7 +309,7 @@ const Submissions = () => {
               </div>
             </div>
           </div>
-<div className="mb-6 opacity-0 animate-fade-in-up relative z-50" style={{ animationDelay: '0.5s' }}>
+<div className="mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
   <div className="bg-white border-2 border-black p-5 relative">
     <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
       <Target className="w-5 h-5" />
@@ -320,11 +320,11 @@ const Submissions = () => {
         Select Track
       </h3>
       
-      <div className="relative z-50">
+      <div className="relative">
         <button
           type="button"
           onClick={() => setShowDropdown(!showDropdown)}
-          className="w-full bg-white border-2 border-black p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between relative z-50"
+          className="w-full bg-white border-2 border-black p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between"
         >
           <span>
             {selectedTrack ? tracks.find(t => t.id === selectedTrack)?.name : 'Choose your innovation track...'}
@@ -333,12 +333,13 @@ const Submissions = () => {
         </button>
         
         {showDropdown && (
-          <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-[9999] max-h-80 overflow-y-auto shadow-2xl scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-[100] max-h-80 overflow-y-auto shadow-2xl">
             {tracks.map((track) => (
               <button
                 key={track.id}
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setSelectedTrack(track.id);
                   setShowDropdown(false);
                 }}
@@ -363,10 +364,10 @@ const Submissions = () => {
   </div>
 </div>
 
-// Also update the Click outside to close dropdown overlay:
+
 {showDropdown && (
   <div 
-    className="fixed inset-0 z-[9998]" 
+    className="fixed inset-0 z-[50]" 
     onClick={() => setShowDropdown(false)}
   />
 )}
