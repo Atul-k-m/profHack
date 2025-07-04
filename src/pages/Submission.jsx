@@ -282,13 +282,13 @@ const Submissions = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-sm md:text-base font-bold tracking-[0.4em] text-black uppercase mb-4">
-              Project Submission
+              Idea Submission
             </h2>
             <div className="w-20 h-0.5 bg-black mx-auto mb-8"></div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-black leading-tight">
               SUBMIT
               <br />
-              <span className="text-5xl md:text-6xl lg:text-7xl">PROJECT</span>
+              <span className="text-5xl md:text-6xl lg:text-7xl">Idea</span>
             </h1>
           </div>
 
@@ -399,7 +399,7 @@ const Submissions = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   rows={5}
                   className="w-full border-2 border-black p-4 font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 resize-none text-base"
-                  placeholder="Add any additional details about your project submission..."
+                  placeholder="Add any additional details about your Idea submission..."
                 />
               </div>
             </div>
@@ -421,7 +421,7 @@ const Submissions = () => {
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  Submit Project
+                  Submit Idea
                 </>
               )}
             </button>
