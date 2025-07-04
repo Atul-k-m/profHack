@@ -309,8 +309,7 @@ const Submissions = () => {
               </div>
             </div>
           </div>
-
-         <div className="mb-6 opacity-0 animate-fade-in-up relative z-50" style={{ animationDelay: '0.5s' }}>
+<div className="mb-6 opacity-0 animate-fade-in-up relative z-50" style={{ animationDelay: '0.5s' }}>
   <div className="bg-white border-2 border-black p-5 relative">
     <div className="absolute -top-3 -left-3 w-10 h-10 bg-black text-white flex items-center justify-center font-black text-base">
       <Target className="w-5 h-5" />
@@ -334,7 +333,7 @@ const Submissions = () => {
         </button>
         
         {showDropdown && (
-          <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-[9999] max-h-64 overflow-y-auto shadow-2xl">
+          <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-[9999] max-h-80 overflow-y-auto shadow-2xl scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
             {tracks.map((track) => (
               <button
                 key={track.id}
@@ -343,7 +342,7 @@ const Submissions = () => {
                   setSelectedTrack(track.id);
                   setShowDropdown(false);
                 }}
-                className="w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 font-medium text-gray-700"
+                className="w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0 font-medium text-gray-700 block"
               >
                 <div className="font-semibold text-black">{track.name}</div>
                 <div className="text-sm text-gray-600 mt-1">{track.description}</div>
@@ -364,6 +363,7 @@ const Submissions = () => {
   </div>
 </div>
 
+// Also update the Click outside to close dropdown overlay:
 {showDropdown && (
   <div 
     className="fixed inset-0 z-[9998]" 
