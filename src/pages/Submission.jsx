@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Users, Target, Send, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Submissions = () => {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [selectedTrack, setSelectedTrack] = useState('');
   const [description, setDescription] = useState('');
@@ -161,7 +163,7 @@ const Submissions = () => {
         console.log('Submission result:', result);
         
         // Route to /teams after successful submission
-        window.location.href = '/teams';
+        navigate('/teams');
       } else {
         const errorData = await response.json();
         alert(`Submission failed: ${errorData.message || 'Please try again.'}`);
@@ -175,7 +177,7 @@ const Submissions = () => {
   };
 
   const handleBackToTeams = () => {
-    window.location.href = '/teams';
+    navigate('/teams');
   };
 
   if (loading) {
@@ -229,6 +231,14 @@ const Submissions = () => {
           }}
         />
       </div>
+
+      {/* Click outside to close dropdown */}
+      {showDropdown && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setShowDropdown(false)}
+        />
+      )}
 
       <div className="relative z-10 pt-16 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
@@ -325,7 +335,7 @@ const Submissions = () => {
                   </button>
                   
                   {showDropdown && (
-                    <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-20 max-h-64 overflow-y-auto">
+                    <div className="absolute top-full left-0 right-0 bg-white border-2 border-black border-t-0 z-50 max-h-64 overflow-y-auto shadow-lg">
                       {tracks.map((track) => (
                         <button
                           key={track.id}
