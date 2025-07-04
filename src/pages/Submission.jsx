@@ -394,7 +394,6 @@ const Submissions = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
             <button
               type="button"
@@ -407,6 +406,7 @@ const Submissions = () => {
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                   Submitting...
                 </>
+
               ) : (
                 <>
                   <Send className="w-4 h-4" />
