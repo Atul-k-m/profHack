@@ -10,6 +10,9 @@ const Submissions = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // Backend base URL
+  const BACKEND_URL = 'https://profhack-backend-npqc.onrender.com';
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -30,9 +33,19 @@ const Submissions = () => {
   const fetchTeamData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/teams/me', {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        console.error('No authentication token found');
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(`${BACKEND_URL}/api/teams/me`, {
+        method: 'GET',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       });
       
@@ -40,7 +53,8 @@ const Submissions = () => {
         const data = await response.json();
         setTeamData(data);
       } else {
-        console.error('Failed to fetch team data');
+        const errorData = await response.json();
+        console.error('Failed to fetch team data:', errorData.message || 'Unknown error');
       }
     } catch (error) {
       console.error('Error fetching team data:', error);
@@ -68,34 +82,50 @@ const Submissions = () => {
       return;
     }
 
+    if (!teamData) {
+      alert('Team data not available');
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        alert('Authentication token not found. Please login again.');
+        setIsSubmitting(false);
+        return;
+      }
+
       const payload = {
         trackId: selectedTrack,
         teamId: teamData._id,
         description: description.trim()
       };
 
-      const response = await fetch('/api/submissions', {
+      const response = await fetch(`${BACKEND_URL}/api/submissions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(payload)
       });
 
       if (response.ok) {
+        const result = await response.json();
         alert('Submission successful!');
         setDescription('');
         setSelectedTrack('');
+        console.log('Submission result:', result);
       } else {
-        alert('Submission failed. Please try again.');
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.message || 'Please try again.'}`);
       }
     } catch (error) {
       console.error('Submission error:', error);
-      alert('An error occurred during submission.');
+      alert('An error occurred during submission. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
