@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Users, Target, Send, ArrowLeft, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Submissions = () => {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [selectedTrack, setSelectedTrack] = useState('');
   const [description, setDescription] = useState('');
@@ -11,18 +13,8 @@ const Submissions = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Mock team data for demo
-  const mockTeamData = {
-    _id: 'team_123',
-    teamName: 'Innovation Squad',
-    leader: { name: 'John Doe' },
-    members: [
-      { name: 'John Doe' },
-      { name: 'Jane Smith' },
-      { name: 'Alex Johnson' },
-      { name: 'Sarah Wilson' }
-    ]
-  };
+  // Backend base URL
+  const BACKEND_URL = 'https://profhack-backend-npqc.onrender.com';
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -36,14 +28,43 @@ const Submissions = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Simulate loading team data
+  // Fetch team data on component mount
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setTeamData(mockTeamData);
-      setLoading(false);
-    }, 1000);
+    fetchTeamData();
   }, []);
+
+  const fetchTeamData = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        console.error('No authentication token found');
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(`${BACKEND_URL}/api/teams/me`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setTeamData(data);
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to fetch team data:', errorData.message || 'Unknown error');
+      }
+    } catch (error) {
+      console.error('Error fetching team data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tracks = [
     { 
@@ -111,22 +132,56 @@ const Submissions = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setSubmitSuccess(true);
-      setIsSubmitting(false);
-      setDescription('');
-      setSelectedTrack('');
+    try {
+      const token = localStorage.getItem('token');
       
-      // Reset success message after 3 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 3000);
-    }, 2000);
+      if (!token) {
+        alert('Authentication token not found. Please login again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const payload = {
+        trackId: selectedTrack,
+        teamId: teamData._id,
+        description: description.trim()
+      };
+
+      const response = await fetch(`${BACKEND_URL}/api/submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setSubmitSuccess(true);
+        setDescription('');
+        setSelectedTrack('');
+        console.log('Submission result:', result);
+        
+        // Reset success message and navigate after 3 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false);
+          navigate('/teams');
+        }, 3000);
+      } else {
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.message || 'Please try again.'}`);
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An error occurred during submission. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleBackToTeams = () => {
-    console.log('Navigate back to teams');
+    navigate('/teams');
   };
 
   const handleTrackSelect = (trackId) => {
