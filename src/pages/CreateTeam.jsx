@@ -1,34 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { ArrowLeft, Users, ChevronDown, ChevronRight,Search, User, CheckCircle2, X, Plus, AlertCircle, Target, Briefcase } from 'lucide-react';
+import { ArrowLeft, Users, ChevronDown, ChevronRight, Search, User, CheckCircle2, X, Plus, AlertCircle, Target, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-
-const DEPARTMENTS = {
-  foundation: [
-    'Physics', 
-    'Chemistry', 
-    'Mathematics', 
-    'Master of Business Administration', 
-    'Humanities and Social Science',
-    'Humanities & Social Science'
-  ],
-  structural: [
-    'Mechanical Engineering', 
-    'Civil Engineering', 
-    'Electrical & Electronics Engineering',
-    'Electronics & Communication Engineering', 
-    'Electronics & Telecommunication Engineering'
-  ],
-  innovation: [
-    'Computer Science & Engineering',
-    'Information Science & Engineering', 
-    'Artificial Intelligence and Machine Learning',
-    'Computer Science and Business Systems', 
-    'Master of Computer Applications',
-    // Keep abbreviations as fallback
-    'CSE', 'ISE', 'AI&ML', 'CSBS'
-  ]
-};
 
 const Navbar = React.memo(() => {
   const navigate = useNavigate();
@@ -58,7 +30,6 @@ const Navbar = React.memo(() => {
   );
 });
 
-
 const Card = React.memo(({ children, className = "" }) => (
   <div className={`bg-white border-2 border-black shadow-lg relative overflow-hidden ${className}`}>
     <div className="absolute inset-0 opacity-5 pointer-events-none bg-grid-pattern"></div>
@@ -83,18 +54,7 @@ const RulesCard = React.memo(() => (
       </div>
       <div className="flex items-start gap-3">
         <div className="w-6 h-6 bg-black text-white flex items-center justify-center text-xs font-bold rounded-full flex-shrink-0 mt-0.5">2</div>
-        <p className="text-sm font-medium text-gray-700">All members must be from <strong>different departments</strong></p>
-      </div>
-      <div className="flex items-start gap-3">
-        <div className="w-6 h-6 bg-black text-white flex items-center justify-center text-xs font-bold rounded-full flex-shrink-0 mt-0.5">3</div>
-        <div className="text-sm font-medium text-gray-700">
-          <p className="mb-1">Group constraints:</p>
-          <ul className="ml-4 space-y-1 text-xs">
-            <li>• Max <strong>3 from innovation group</strong> (CSE, ISE, AI&ML, CSBS, MCA)</li>
-            <li>• Max <strong>2 from foundation group</strong> (Mechanical, Civil, EEE, ECE, ETC)</li>
-            <li>• Max <strong>1 from foundation group</strong> (Physics, Chemistry, Mathematics, MBA, HSS)</li>
-          </ul>
-        </div>
+        <p className="text-sm font-medium text-gray-700">Only faculty members <strong>not already in a team</strong> can be selected</p>
       </div>
     </div>
   </Card>
@@ -178,11 +138,6 @@ const TeamFormation = ({ onBack }) => {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const [expandedGroups, setExpandedGroups] = useState({
-    foundation: false,
-    structural: false,
-    innovation: false
-  });
   const [validationErrors, setValidationErrors] = useState([]);
 
   // Fetch current user profile for leader info
@@ -219,70 +174,87 @@ const TeamFormation = ({ onBack }) => {
 
     fetchLeaderProfile();
   }, []);
-const getFilteredGroupedFaculty = () => {
-  if (!searchTerm.trim()) {
-    return groupedFaculty;
-  }
-  
-  const filteredGroups = {};
-  const lowerSearchTerm = searchTerm.toLowerCase();
-  
-  Object.entries(groupedFaculty).forEach(([groupKey, facultyList]) => {
-    const filteredFaculty = facultyList.filter(faculty => 
-      faculty.name?.toLowerCase().includes(lowerSearchTerm) ||
-      faculty.department?.toLowerCase().includes(lowerSearchTerm) ||
-      faculty.designation?.toLowerCase().includes(lowerSearchTerm)
-    );
-    
-    if (filteredFaculty.length > 0) {
-      filteredGroups[groupKey] = filteredFaculty;
-    }
-  });
-  
-  return filteredGroups;
-};
-  // Fetch all faculty for member selection
- const fetchAllFaculty = useCallback(async () => {
-  try {
-    setLoading(true);
-    const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token');
-    
-    // Try multiple possible endpoints
-    let response;
-    try {
-      // First try the teams endpoint
-      response = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/faculty/all', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-    } catch (error) {
-      // Fallback to faculty endpoint if teams endpoint doesn't exist
-      response = await fetch('https://profhack-backend-npqc.onrender.com/api/faculty/all', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-    }
 
-    if (response.ok) {
-      const facultyData = await response.json();
-      console.log('Fetched faculty data:', facultyData); // Debug log
-      setAllFaculty(facultyData);
-    } else {
-      const errorText = await response.text();
-      console.error('Failed to fetch faculty:', response.status, errorText);
-      throw new Error(`Failed to fetch faculty: ${response.status}`);
+  // Fetch all faculty for member selection - only those not in teams
+  const fetchAllFaculty = useCallback(async () => {
+    try {
+      setLoading(true);
+      const token = window.authToken || localStorage.getItem('authToken') || localStorage.getItem('token');
+      
+      // Fetch all faculty
+      let facultyResponse;
+      try {
+        facultyResponse = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/faculty/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        facultyResponse = await fetch('https://profhack-backend-npqc.onrender.com/api/faculty/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+
+      if (!facultyResponse.ok) {
+        throw new Error(`Failed to fetch faculty: ${facultyResponse.status}`);
+      }
+
+      const facultyData = await facultyResponse.json();
+      
+      // Fetch all teams to check which faculty are already in teams
+      let teamsResponse;
+      try {
+        teamsResponse = await fetch('https://profhack-backend-npqc.onrender.com/api/teams/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        teamsResponse = await fetch('https://profhack-backend-npqc.onrender.com/api/teams', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+
+      let teamsData = [];
+      if (teamsResponse.ok) {
+        teamsData = await teamsResponse.json();
+      }
+
+      // Get all faculty IDs that are already in teams
+      const facultyInTeams = new Set();
+      teamsData.forEach(team => {
+        if (team.leader) {
+          facultyInTeams.add(team.leader._id || team.leader);
+        }
+        if (team.members) {
+          team.members.forEach(member => {
+            facultyInTeams.add(member._id || member);
+          });
+        }
+      });
+
+      // Filter out faculty who are already in teams
+      const availableFaculty = facultyData.filter(faculty => 
+        !facultyInTeams.has(faculty._id)
+      );
+
+      console.log('Available faculty (not in teams):', availableFaculty);
+      setAllFaculty(availableFaculty);
+    } catch (error) {
+      console.error('Error fetching faculty:', error);
+      setError('Failed to load faculty data. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Error fetching faculty:', error);
-    setError('Failed to load faculty data. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-}, []);
+  }, []);
 
   useEffect(() => {
     if (currentStep === 2) {
@@ -290,187 +262,49 @@ const getFilteredGroupedFaculty = () => {
     }
   }, [currentStep, fetchAllFaculty]);
 
-  // Group faculty by department groups
-  const groupedFaculty = useMemo(() => {
-  const grouped = { foundation: [], structural: [], innovation: [] };
-  
-  console.log('All faculty for grouping:', allFaculty); // Debug log
-  
-  allFaculty.forEach(faculty => {
-    const dept = faculty.department;
-    console.log('Processing faculty:', faculty.name, 'Department:', dept); 
-    
-    if (DEPARTMENTS.foundation.some(foundationDept => 
-      foundationDept.toLowerCase() === dept?.toLowerCase() || 
-      dept?.toLowerCase().includes(foundationDept.toLowerCase())
-    )) {
-      grouped.foundation.push(faculty);
-      console.log('Added to foundation:', faculty.name);
-    } else if (DEPARTMENTS.structural.some(engDept => 
-      engDept.toLowerCase() === dept?.toLowerCase() || 
-      dept?.toLowerCase().includes(engDept.toLowerCase()) ||
-      (engDept === 'Electrical & Electronics Engineering' && dept?.includes('EEE')) ||
-      (engDept === 'Electronics & Communication Engineering' && dept?.includes('ECE'))
-    )) {
-      grouped.structural.push(faculty);
-      console.log('Added to structural:', faculty.name);
-    } else if (DEPARTMENTS.innovation.some(innovationDept => 
-      innovationDept.toLowerCase() === dept?.toLowerCase() || 
-      dept?.toLowerCase().includes(innovationDept.toLowerCase()) ||
-      (innovationDept === 'Computer Science & Engineering' && dept?.includes('innovation')) ||
-      (innovationDept === 'Information Science & Engineering' && dept?.includes('ISE'))
-    )) {
-      grouped.innovation.push(faculty);
-      console.log('Added to innovation:', faculty.name);
-    } else {
-      console.log('Department not matched:', dept);
+  // Filter faculty based on search term
+  const filteredFaculty = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return allFaculty;
     }
-  });
-  
-  console.log('Grouped faculty:', grouped); 
-  return grouped;
-}, [allFaculty]);
+    
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return allFaculty.filter(faculty => 
+      faculty.name?.toLowerCase().includes(lowerSearchTerm) ||
+      faculty.department?.toLowerCase().includes(lowerSearchTerm) ||
+      faculty.designation?.toLowerCase().includes(lowerSearchTerm)
+    );
+  }, [allFaculty, searchTerm]);
 
- const validateTeamComposition = useCallback(() => {
-  const errors = [];
-  const selectedMembers = [...teamData.members];
-  if (teamData.leader) selectedMembers.push(teamData.leader);
+  // Simple validation - only check for 5 members
+  const validateTeamComposition = useCallback(() => {
+    const errors = [];
+    const selectedMembers = [...teamData.members];
+    if (teamData.leader) selectedMembers.push(teamData.leader);
 
-  if (selectedMembers.length !== 5) {
-    errors.push(`Team must have exactly 5 members (currently ${selectedMembers.length})`);
-  }
+    if (selectedMembers.length !== 5) {
+      errors.push(`Team must have exactly 5 members (currently ${selectedMembers.length})`);
+    }
 
-  const departments = selectedMembers.map(m => m.department);
-  
+    setValidationErrors(errors);
+    return errors.length === 0;
+  }, [teamData.members, teamData.leader]);
 
-  // Count members by group using the department classification logic
-  const innovationCount = selectedMembers.filter(m => 
-    DEPARTMENTS.innovation.some(innovationDept => 
-      innovationDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
-      (innovationDept === 'Computer Science & Engineering' && m.department?.includes('innovation')) ||
-      (innovationDept === 'Information Science & Engineering' && m.department?.includes('ISE'))
-    )
-  ).length;
+  const canSelectFaculty = useCallback((faculty) => {
+    if (!teamData.leader) return { canSelect: false, reason: 'Leader not set' };
+    
+    const currentMembers = [...teamData.members, teamData.leader];
+    
+    if (currentMembers.some(m => m._id === faculty._id)) {
+      return { canSelect: false, reason: 'Already selected' };
+    }
 
-  const structuralCount = selectedMembers.filter(m => 
-    DEPARTMENTS.structural.some(engDept => 
-      engDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(engDept.toLowerCase()) ||
-      (engDept === 'Electrical & Electronics Engineering' && m.department?.includes('EEE')) ||
-      (engDept === 'Electronics & Communication Engineering' && m.department?.includes('ECE'))
-    )
-  ).length;
+    if (currentMembers.length >= 5) {
+      return { canSelect: false, reason: 'Team is full (5 members max)' };
+    }
 
-  const foundationCount = selectedMembers.filter(m => 
-    DEPARTMENTS.foundation.some(foundationDept => 
-      foundationDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(foundationDept.toLowerCase())
-    )
-  ).length;
-
-  // Updated validation rules
-  if (foundationCount !== 1) {
-    errors.push(`Must have exactly 1 foundation group member (currently ${foundationCount})`);
-  }
-  
-  if (structuralCount < 1) {
-    errors.push(`Must have at least 1 structural group member (currently ${structuralCount})`);
-  }
-  if (structuralCount > 2) {
-    errors.push(`Too many structural group members (${structuralCount}/2 max)`);
-  }
-  
-  if (innovationCount < 2) {
-    errors.push(`Must have at least 2 innovation group members (currently ${innovationCount})`);
-  }
-  if (innovationCount > 3) {
-    errors.push(`Too many innovation group members (${innovationCount}/3 max)`);
-  }
-
-  setValidationErrors(errors);
-  return errors.length === 0;
-}, [teamData.members, teamData.leader]);
-
-const canSelectFaculty = useCallback((faculty) => {
-  if (!teamData.leader) return { canSelect: false, reason: 'Leader not set' };
-  
-  const currentMembers = [...teamData.members, teamData.leader];
-  
-  if (currentMembers.some(m => m._id === faculty._id)) {
-    return { canSelect: false, reason: 'Already selected' };
-  }
-
-  if (currentMembers.length >= 5) {
-    return { canSelect: false, reason: 'Team is full (5 members max)' };
-  }
-
-  
-
-  // Determine which group this faculty belongs to
-  const isInnovation = DEPARTMENTS.innovation.some(innovationDept => 
-    innovationDept.toLowerCase() === faculty.department?.toLowerCase() || 
-    faculty.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
-    (innovationDept === 'Computer Science & Engineering' && faculty.department?.includes('innovation')) ||
-    (innovationDept === 'Information Science & Engineering' && faculty.department?.includes('ISE'))
-  );
-
-  const isStructural = DEPARTMENTS.structural.some(engDept => 
-    engDept.toLowerCase() === faculty.department?.toLowerCase() || 
-    faculty.department?.toLowerCase().includes(engDept.toLowerCase()) ||
-    (engDept === 'Electrical & Electronics Engineering' && faculty.department?.includes('EEE')) ||
-    (engDept === 'Electronics & Communication Engineering' && faculty.department?.includes('ECE'))
-  );
-
-  const isFoundation = DEPARTMENTS.foundation.some(foundationDept => 
-    foundationDept.toLowerCase() === faculty.department?.toLowerCase() || 
-    faculty.department?.toLowerCase().includes(foundationDept.toLowerCase())
-  );
-
-  // Count current members by group
-  const testMembers = [...currentMembers, faculty];
-  
-  const innovationCount = testMembers.filter(m => 
-    DEPARTMENTS.innovation.some(innovationDept => 
-      innovationDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(innovationDept.toLowerCase()) ||
-      (innovationDept === 'Computer Science & Engineering' && m.department?.includes('innovation')) ||
-      (innovationDept === 'Information Science & Engineering' && m.department?.includes('ISE'))
-    )
-  ).length;
-
-  const structuralCount = testMembers.filter(m => 
-    DEPARTMENTS.structural.some(engDept => 
-      engDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(engDept.toLowerCase()) ||
-      (engDept === 'Electrical & Electronics Engineering' && m.department?.includes('EEE')) ||
-      (engDept === 'Electronics & Communication Engineering' && m.department?.includes('ECE'))
-    )
-  ).length;
-
-  const foundationCount = testMembers.filter(m => 
-    DEPARTMENTS.foundation.some(foundationDept => 
-      foundationDept.toLowerCase() === m.department?.toLowerCase() || 
-      m.department?.toLowerCase().includes(foundationDept.toLowerCase())
-    )
-  ).length;
-
-  // Check group limits
-  if (isFoundation && foundationCount > 1) {
-    return { canSelect: false, reason: 'Foundation group limit reached (1 max)' };
-  }
-  
-  if (isStructural && structuralCount > 2) {
-    return { canSelect: false, reason: 'Structural group limit reached (2 max)' };
-  }
-  
-  if (isInnovation && innovationCount > 3) {
-    return { canSelect: false, reason: 'Innovation group limit reached (3 max)' };
-  }
-
-  return { canSelect: true, reason: '' };
-}, [teamData.members, teamData.leader]);
-
+    return { canSelect: true, reason: '' };
+  }, [teamData.members, teamData.leader]);
 
   const handleInputChange = useCallback((field, value) => {
     setTeamData(prev => ({ ...prev, [field]: value }));
@@ -491,10 +325,6 @@ const canSelectFaculty = useCallback((faculty) => {
       ...prev,
       members: prev.members.filter(m => m._id !== faculty._id)
     }));
-  }, []);
-
-  const toggleGroup = useCallback((group) => {
-    setExpandedGroups(prev => ({ ...prev, [group]: !prev[group] }));
   }, []);
 
   const handleStepNavigation = useCallback((step) => {
@@ -533,7 +363,6 @@ const canSelectFaculty = useCallback((faculty) => {
       });
 
       if (response.ok) {
-        // Success - redirect back or show success message
         alert('Team created successfully!');
         navigate('/teams');
       } else {
@@ -546,7 +375,7 @@ const canSelectFaculty = useCallback((faculty) => {
     } finally {
       setSubmitting(false);
     }
-  }, [teamData, validateTeamComposition, onBack]);
+  }, [teamData, validateTeamComposition, navigate]);
 
   // Auto-validate when members change
   useEffect(() => {
@@ -609,7 +438,7 @@ const canSelectFaculty = useCallback((faculty) => {
                 </h2>
               </div>
 
-           <div className="space-y-6">
+              <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold tracking-wider uppercase text-gray-600 mb-2">
                     Team Name *
@@ -658,7 +487,6 @@ const canSelectFaculty = useCallback((faculty) => {
                   </div>
                 )}
 
-
                 <div className="flex justify-end">
                   <button
                     onClick={() => handleStepNavigation(2)}
@@ -675,7 +503,7 @@ const canSelectFaculty = useCallback((faculty) => {
         )}
 
         {/* Step 2: Add Members */}
-          {currentStep === 2 && (
+        {currentStep === 2 && (
           <div className="space-y-6">
             <Card className="p-6">
               <div className="border-b-2 border-black mb-6 pb-3">
@@ -711,7 +539,6 @@ const canSelectFaculty = useCallback((faculty) => {
                   ))}
                 </div>
 
-               
                 {validationErrors.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {validationErrors.map((error, index) => (
@@ -725,12 +552,12 @@ const canSelectFaculty = useCallback((faculty) => {
               {loading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin w-8 h-8 border-2 border-black border-t-transparent rounded-full mx-auto mb-4"></div>
-                  <p className="text-sm font-medium text-gray-600">Loading faculty...</p>
+                  <p className="text-sm font-medium text-gray-600">Loading available faculty...</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   <h3 className="text-sm font-bold tracking-wider uppercase text-gray-600 mb-4">
-                    Select Faculty Members
+                    Available Faculty Members (Not in any team)
                   </h3>
                   
                   {/* Search Filter */}
@@ -755,64 +582,40 @@ const canSelectFaculty = useCallback((faculty) => {
                     </div>
                   </div>
                   
-                  {Object.entries(getFilteredGroupedFaculty()).map(([groupKey, facultyList]) => {
-                    const groupDisplayNames = {
-                      'foundation': 'Foundation Layer',
-                      'structural': 'Structural Layer',
-                      'innovation': 'Innovation Layer'
-                    };
-                    
-                    const displayName = groupDisplayNames[groupKey] || groupKey.toUpperCase();
-                    
-                    return (
-                      <div key={groupKey} className="border-2 border-gray-300">
-                        <button
-                          onClick={() => toggleGroup(groupKey)}
-                          className="w-full p-4 bg-gray-100 hover:bg-gray-200 flex items-center justify-between font-bold text-sm uppercase tracking-wide transition-colors"
-                        >
-                          <span>
-                            {displayName} ({facultyList.length} faculty)
-                          </span>
-                          {expandedGroups[groupKey] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-                        </button>
-                        
-                        {expandedGroups[groupKey] && (
-                          <div className="p-4 space-y-2 max-h-60 overflow-y-auto">
-                            {facultyList.length === 0 ? (
-                              <p className="text-sm text-gray-500 italic text-center py-4">
-                                No faculty found matching your search
-                              </p>
-                            ) : (
-                              facultyList.map(faculty => {
-                                const { canSelect, reason } = canSelectFaculty(faculty);
-                                const isSelected = teamData.members.some(m => m._id === faculty._id) || 
-                                                 (teamData.leader && teamData.leader._id === faculty._id);
-                                
-                                return (
-                                  <FacultyCard
-                                    key={faculty._id}
-                                    faculty={faculty}
-                                    isSelected={isSelected}
-                                    onSelect={handleMemberSelect}
-                                    isDisabled={!canSelect}
-                                    disabledReason={reason}
-                                  />
-                                );
-                              })
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  
-                  {Object.keys(getFilteredGroupedFaculty()).length === 0 && (
-                    <div className="text-center py-8">
-                      <p className="text-sm text-gray-500">No faculty found matching your search criteria</p>
+                  {/* Faculty List */}
+                  <div className="border-2 border-gray-300">
+                    <div className="p-4 bg-gray-100 font-bold text-sm uppercase tracking-wide">
+                      Available Faculty ({filteredFaculty.length})
                     </div>
-                  )}
+                    
+                    <div className="p-4 space-y-2 max-h-96 overflow-y-auto">
+                      {filteredFaculty.length === 0 ? (
+                        <p className="text-sm text-gray-500 italic text-center py-8">
+                          {searchTerm ? 'No faculty found matching your search' : 'No available faculty members (all are already in teams)'}
+                        </p>
+                      ) : (
+                        filteredFaculty.map(faculty => {
+                          const { canSelect, reason } = canSelectFaculty(faculty);
+                          const isSelected = teamData.members.some(m => m._id === faculty._id) || 
+                                           (teamData.leader && teamData.leader._id === faculty._id);
+                          
+                          return (
+                            <FacultyCard
+                              key={faculty._id}
+                              faculty={faculty}
+                              isSelected={isSelected}
+                              onSelect={handleMemberSelect}
+                              isDisabled={!canSelect}
+                              disabledReason={reason}
+                            />
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
+
               {/* Navigation */}
               <div className="flex justify-between mt-8">
                 <button
