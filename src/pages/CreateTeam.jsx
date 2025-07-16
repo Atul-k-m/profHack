@@ -2,6 +2,62 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ArrowLeft, Users, ChevronDown, ChevronRight, Search, User, CheckCircle2, X, Plus, AlertCircle, Target, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+
+const DEPARTMENTS = {
+  foundation: [
+    'Physics',
+    'Chemistry', 
+    'Mathematics',
+    'Master of Business Administration',
+    'Humanities and Social Science',
+    'Humanities & Social Science'
+  ],
+  structural: [
+    'Mechanical Engineering',
+    'Civil Engineering', 
+    'Electrical & Electronics Engineering',
+    'Electronics & Communication Engineering',
+    'Electronics & Telecommunication Engineering'
+  ],
+  innovation: [
+    'Computer Science & Engineering',
+    'Information Science & Engineering',
+    'Artificial Intelligence and Machine Learning',
+    'Computer Science and Business Systems',
+    'Master of Computer Applications',
+    'CSE',
+    'ISE', 
+    'AI&ML',
+    'CSBS'
+  ]
+};
+
+const categorizeFaculty = (faculty) => {
+  const categorized = {
+    foundation: [],
+    structural: [],
+    innovation: [],
+    uncategorized: []
+  };
+
+  faculty.forEach(member => {
+    let categorized_flag = false;
+    
+    Object.entries(DEPARTMENTS).forEach(([category, departments]) => {
+      if (departments.includes(member.department)) {
+        categorized[category].push(member);
+        categorized_flag = true;
+      }
+    });
+
+    if (!categorized_flag) {
+      categorized.uncategorized.push(member);
+    }
+  });
+
+  return categorized;
+};
+
 const Navbar = React.memo(() => {
   const navigate = useNavigate();
 
@@ -583,38 +639,63 @@ const TeamFormation = ({ onBack }) => {
                   </div>
                   
                   {/* Faculty List */}
-                  <div className="border-2 border-gray-300">
-                    <div className="p-4 bg-gray-100 font-bold text-sm uppercase tracking-wide">
-                      Available Faculty ({filteredFaculty.length})
-                    </div>
-                    
-                    <div className="p-4 space-y-2 max-h-96 overflow-y-auto">
-                      {filteredFaculty.length === 0 ? (
-                        <p className="text-sm text-gray-500 italic text-center py-8">
-                          {searchTerm ? 'No faculty found matching your search' : 'No available faculty members (all are already in teams)'}
-                        </p>
-                      ) : (
-                        filteredFaculty.map(faculty => {
-                          const { canSelect, reason } = canSelectFaculty(faculty);
-                          const isSelected = teamData.members.some(m => m._id === faculty._id) || 
-                                           (teamData.leader && teamData.leader._id === faculty._id);
-                          
-                          return (
-                            <FacultyCard
-                              key={faculty._id}
-                              faculty={faculty}
-                              isSelected={isSelected}
-                              onSelect={handleMemberSelect}
-                              isDisabled={!canSelect}
-                              disabledReason={reason}
-                            />
-                          );
-                        })
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
+                <div className="border-2 border-gray-300">
+  <div className="p-4 bg-gray-100 font-bold text-sm uppercase tracking-wide">
+    Available Faculty ({filteredFaculty.length})
+  </div>
+  
+  <div className="p-4 space-y-4 max-h-96 overflow-y-auto">
+    {filteredFaculty.length === 0 ? (
+      <p className="text-sm text-gray-500 italic text-center py-8">
+        {searchTerm ? 'No faculty found matching your search' : 'No available faculty members (all are already in teams)'}
+      </p>
+    ) : (
+      (() => {
+        const categorized = categorizeFaculty(filteredFaculty);
+        const categoryLabels = {
+          foundation: 'Foundation Departments',
+          structural: 'Structural Departments', 
+          innovation: 'Innovation Departments',
+          uncategorized: 'Other Departments'
+        };
+        
+        return Object.entries(categorized).map(([category, faculty]) => {
+          if (faculty.length === 0) return null;
+          
+          return (
+            <div key={category} className="space-y-2">
+              <div className="flex items-center gap-2 py-2 px-3 bg-blue-50 border-l-4 border-blue-500">
+                <Briefcase size={16} className="text-blue-600" />
+                <h4 className="font-bold text-sm text-blue-800 uppercase tracking-wide">
+                  {categoryLabels[category]} ({faculty.length})
+                </h4>
+              </div>
+              
+              <div className="space-y-1 ml-4">
+                {faculty.map(member => {
+                  const { canSelect, reason } = canSelectFaculty(member);
+                  const isSelected = teamData.members.some(m => m._id === member._id) || 
+                                   (teamData.leader && teamData.leader._id === member._id);
+                  
+                  return (
+                    <FacultyCard
+                      key={member._id}
+                      faculty={member}
+                      isSelected={isSelected}
+                      onSelect={handleMemberSelect}
+                      isDisabled={!canSelect}
+                      disabledReason={reason}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        });
+      })()
+    )}
+  </div>
+</div>
 
               {/* Navigation */}
               <div className="flex justify-between mt-8">
