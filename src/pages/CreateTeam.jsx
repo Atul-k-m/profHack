@@ -655,8 +655,7 @@ const TeamFormation = ({ onBack }) => {
         const categoryLabels = {
           foundation: 'Foundation Departments',
           structural: 'Structural Departments', 
-          innovation: 'Innovation Departments',
-          uncategorized: 'Other Departments'
+          innovation: 'Innovation Departments'
         };
         
         return Object.entries(categorized).map(([category, faculty]) => {
