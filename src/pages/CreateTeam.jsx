@@ -41,6 +41,11 @@ const categorizeFaculty = (faculty) => {
   };
 
   faculty.forEach(member => {
+   
+    if (member.department === 'Test') {
+      return;
+    }
+    
     let categorized_flag = false;
     
     Object.entries(DEPARTMENTS).forEach(([category, departments]) => {
