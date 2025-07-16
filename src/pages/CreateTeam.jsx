@@ -638,8 +638,8 @@ const TeamFormation = ({ onBack }) => {
                     </div>
                   </div>
                   
-                  {/* Faculty List */}
-                <div className="border-2 border-gray-300">
+                {/* Faculty List */}
+<div className="border-2 border-gray-300">
   <div className="p-4 bg-gray-100 font-bold text-sm uppercase tracking-wide">
     Available Faculty ({filteredFaculty.length})
   </div>
@@ -696,6 +696,8 @@ const TeamFormation = ({ onBack }) => {
     )}
   </div>
 </div>
+                </div>
+              )}
 
               {/* Navigation */}
               <div className="flex justify-between mt-8">
