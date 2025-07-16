@@ -10,14 +10,19 @@ const DEPARTMENTS = {
     'Mathematics',
     'Master of Business Administration',
     'Humanities and Social Science',
-    'Humanities & Social Science'
+    'Humanities & Social Science',
+    'Department of Chemistry',
+    'Department of Humanities and Social Science'
   ],
   structural: [
     'Mechanical Engineering',
     'Civil Engineering', 
     'Electrical & Electronics Engineering',
     'Electronics & Communication Engineering',
-    'Electronics & Telecommunication Engineering'
+    'Electronics & Telecommunication Engineering',
+    'Department of Electronics & Communication Engineering',
+    'Department of Mechanical Engineering',
+    'Department of Civil Engineering'
   ],
   innovation: [
     'Computer Science & Engineering',
@@ -25,10 +30,12 @@ const DEPARTMENTS = {
     'Artificial Intelligence and Machine Learning',
     'Computer Science and Business Systems',
     'Master of Computer Applications',
+    'Department of Information Science & Engineering',
     'CSE',
     'ISE', 
     'AI&ML',
-    'CSBS'
+    'CSBS',
+    'Department of Artificial Intelligence and Machine Learning'
   ]
 };
 
