@@ -145,7 +145,7 @@ const OptimizedHero = () => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <Button
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/leaderboard')}
               className="
                 group relative overflow-hidden
                 w-full sm:w-auto min-w-[200px]
@@ -159,7 +159,7 @@ const OptimizedHero = () => {
                 before:z-[-1]
               "
             >
-              <span className="relative z-10">Register Now</span>
+              <span className="relative z-10">Leaderboard</span>
             </Button>
             
             <Button

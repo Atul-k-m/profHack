@@ -1,0 +1,2474 @@
+[{
+  "_id": {
+    "$oid": "68543b7fc705fe4a0fa7eeb8"
+  },
+  "teamName": "DIGITAL Dreams Venture Smart Kit",
+  "description": "Rockers of BMSIT",
+  "leader": {
+    "$oid": "6847b7d3f4b90e624cb4b397"
+  },
+  "members": [
+    {
+      "$oid": "684922469464a93daa91dc04"
+    },
+    {
+      "$oid": "684bdc5f26d8ae1995a77686"
+    },
+    {
+      "$oid": "684be8dd26d8ae1995a776aa"
+    },
+    {
+      "$oid": "684952906dc70fc50c5ad4d6"
+    }
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-19T16:31:59.093Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-19T16:31:59.093Z"
+  },
+  "__v": 0,
+  "leaderName": "Dr. Drakshaveni G",
+  "memberNames": [
+    "Dr. A Vijaya Bhaskar Reddy",
+    "Dr. Deepak M S",
+    "Dr. Keerthi Kumar N",
+    "Dr. Swetha M S"
+  ],
+  "leaderDepartment": "Master of Computer Applications",
+  "memberDepartments": [
+    "Chemistry",
+    "Civil Engineering",
+    "Mechanical Engineering",
+    "Information Science & Engineering"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6855784dafe706a7cdf9ce8e"
+  },
+  "teamName": "AswamedhaX",
+  "description": "Our team AswamedhaX brings together a dynamic group of tech enthusiasts driven by curiosity and purpose. Our team thrives at the intersection of creativity and technology, specializing in domains like Artificial Intelligence, IoT, and Cloud Computing. We believe in solving real-world problems through scalable, user-centric, and forward-thinking solutions. Backed by a diverse skill set and a collaborative mindset, we aim to challenge conventions, break limits, and build impactful technologies.",
+  "leader": {
+    "$oid": "684a5abd3026bec9b4218d6d"
+  },
+  "members": [
+    {
+      "$oid": "684ab27732daee4dc9969d00"
+    },
+    {
+      "$oid": "6847beb4f4b90e624cb4b3f4"
+    },
+    {
+      "$oid": "684becd226d8ae1995a776b5"
+    },
+    {
+      "$oid": "6848317e8665bfdb2056a998"
+    }
+  ],
+  "memberNames": [
+    "Dr. C Kavitha",
+    "Dr. Sanjay Lakshminarayanan",
+    "Dr. Archana R A",
+    "Dr. Mohammed Khurram"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Electrical & Electronics Engineering",
+    "Computer Science and Business Systems",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-20T15:03:41.563Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T15:03:41.563Z"
+  },
+  "leaderName": "Dr. N Rakesh",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685a0e87f0bc6cf15697d005"
+  },
+  "teamName": "SPUNK",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847b72df4b90e624cb4b389"
+  },
+  "members": [
+    {
+      "$oid": "684964bdcb3b689d54182264"
+    },
+    {
+      "$oid": "684be58d26d8ae1995a776a3"
+    },
+    {
+      "$oid": "68502243c4ecf55eefd051ff"
+    },
+    {
+      "$oid": "684a6ebbcc63da4b523b0d60"
+    }
+  ],
+  "memberNames": [
+    "Dr. K Suresh Kumar",
+    "Mr. H D Kattimani",
+    "Mr. T.N. Praveen Kumar",
+    "Mrs. Nirupama B K"
+  ],
+  "memberDepartments": [
+    "Chemistry",
+    "Electrical & Electronics Engineering",
+    "Department of Mechanical Engineering",
+    "Master of Computer Applications"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-24T02:33:43.628Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-24T02:33:43.628Z"
+  },
+  "leaderName": "Dr. Usha B A",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685a2d58a23f27942e88a58e"
+  },
+  "teamName": "GreenByte",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847b881f4b90e624cb4b3a7"
+  },
+  "members": [
+    {
+      "$oid": "684af867e07c0fb4f2947151"
+    },
+    {
+      "$oid": "68480172bca99b47ff2a0549"
+    },
+    {
+      "$oid": "684bda9c26d8ae1995a7767d"
+    },
+    {
+      "$oid": "684bc5b426d8ae1995a7762d"
+    }
+  ],
+  "memberNames": [
+    "Dr. Nikki Kedia",
+    "Dr. Asha G Hagargund",
+    "Dr. Srivani P",
+    "Dr. Ravi Kumar B N"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Electronics & Communication Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-24T04:45:12.895Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-24T04:45:12.895Z"
+  },
+  "leaderName": "Mr. Ajith S",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685a46599ee32a63298749ac"
+  },
+  "teamName": "Team Chanakya",
+  "description": "Team Chanakya — Where Minds Meet Mastery. \nSymbol of Strategy & Wisdom: Chanakya was a legendary Indian philosopher, economist, and royal advisor. The name evokes intelligence, interdisciplinary mastery, and strategic thinking.\nInterdisciplinary Resonance: Chanakya excelled in multiple domains—politics, economics, philosophy—mirroring the interdisciplinary nature of our faculty team.",
+  "leader": {
+    "$oid": "6847b632f4b90e624cb4b378"
+  },
+  "members": [
+    {
+      "$oid": "685023a9c4ecf55eefd0520e"
+    },
+    {
+      "$oid": "684bbc9726d8ae1995a775bd"
+    },
+    {
+      "$oid": "68496362cb3b689d54182259"
+    },
+    {
+      "$oid": "684926809464a93daa91dc10"
+    }
+  ],
+  "memberNames": [
+    "Dr. Jojy Joseph Idicula",
+    "Dr. M.C. Hanumantharaju",
+    "Dr. Prakash G L",
+    "Mrs. Archana K"
+  ],
+  "memberDepartments": [
+    "Department of Mathematics",
+    "Electronics & Communication Engineering",
+    "Information Science & Engineering",
+    "Civil Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-24T06:31:53.794Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-24T06:31:53.794Z"
+  },
+  "leaderName": "Dr. Hemamalini B H",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685bbfbbfea884eacb118223"
+  },
+  "teamName": "AIGLE AIR",
+  "description": "\"Breathe Smart, Learn Better – Clean Air for Every Campus Corner\"",
+  "leader": {
+    "$oid": "68490e414cc5e4bf2344dd78"
+  },
+  "members": [
+    {
+      "$oid": "684968dfcb3b689d54182279"
+    },
+    {
+      "$oid": "684a53bf90502ac829e4478c"
+    },
+    {
+      "$oid": "684a84bdf958a61ee0a4dde5"
+    },
+    {
+      "$oid": "684a748fcc63da4b523b0d75"
+    }
+  ],
+  "memberNames": [
+    "Dr. Ramakrishnappa T",
+    "Dr. Narapareddy Ramarao",
+    "Mrs. Nithya Poornima",
+    "Dr. Narasimha Murthy M S"
+  ],
+  "memberDepartments": [
+    "Chemistry",
+    "Electrical & Electronics Engineering",
+    "Mechanical Engineering",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-25T09:22:03.750Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T09:22:03.750Z"
+  },
+  "leaderName": "Mrs. S. Mahalakshmi",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685bc976fea884eacb118268"
+  },
+  "teamName": "ನವೋನ್ಮೇಷ",
+  "description": "ಅನುಭವದ ಬಾಳಲಿ, ನವೋನ್ಮೇಷದ ರಂಗೋಲಿ\nFrom experience blooms the colorful canvas of Navonmesha!",
+  "leader": {
+    "$oid": "68480b626db6c28f852ee04c"
+  },
+  "members": [
+    {
+      "$oid": "684a488f90502ac829e44740"
+    },
+    {
+      "$oid": "68494a795f24af563cfe8d55"
+    },
+    {
+      "$oid": "684a530f90502ac829e44786"
+    },
+    {
+      "$oid": "684bf736bf5a59eabc3e4b73"
+    }
+  ],
+  "memberNames": [
+    "Dr. Manoj H M",
+    "Dr. Jyothi C Abbar",
+    "Ms. Mayuri",
+    "Mr. Ozwin Dominic D'Souza"
+  ],
+  "memberDepartments": [
+    "Artificial Intelligence and Machine Learning",
+    "Chemistry",
+    "Artificial Intelligence and Machine Learning",
+    "Electrical & Electronics Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-25T10:03:34.064Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T10:03:34.064Z"
+  },
+  "leaderName": "Dr. Marsh M Bandi",
+  "leaderDepartment": "Civil Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685bf947fc413198bb4e74be"
+  },
+  "teamName": "Ping intelligent",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6849653ecb3b689d5418226b"
+  },
+  "members": [
+    {
+      "$oid": "684966efcb3b689d54182271"
+    },
+    {
+      "$oid": "6849d0e6b79518c1677db1e8"
+    },
+    {
+      "$oid": "684a7a4bcc63da4b523b0db0"
+    },
+    {
+      "$oid": "684be12b26d8ae1995a7769b"
+    }
+  ],
+  "memberNames": [
+    "Dr. Varun V L",
+    "Dr. Nagamadhu M",
+    "Dr. Lakshmi B N",
+    "Mr. Udayaprasad"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Mechanical Engineering",
+    "Computer Science & Engineering",
+    "Computer Science and Business Systems"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-25T13:27:35.151Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T13:27:35.151Z"
+  },
+  "leaderName": "Dr. Dhanalakshmi B K",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cc0e854d57811a8c301d2"
+  },
+  "teamName": "MYTriSpark",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684824da8665bfdb2056a962"
+  },
+  "members": [
+    {
+      "$oid": "684a504c90502ac829e44773"
+    },
+    {
+      "$oid": "68491c0f9464a93daa91dbea"
+    },
+    {
+      "$oid": "684826d08665bfdb2056a974"
+    },
+    {
+      "$oid": "684829458665bfdb2056a97f"
+    }
+  ],
+  "memberNames": [
+    "Dr. Mahesh G",
+    "Dr. Shankar R",
+    "Dr. Sowmya Shree M S",
+    "Mrs. Seema B"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Electronics & Telecommunication Engineering",
+    "Master of Business Administration"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T03:39:20.716Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T03:39:20.716Z"
+  },
+  "leaderName": "Mr. Yatheesh N G",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cc61a54d57811a8c301fd"
+  },
+  "teamName": "Intel Tech",
+  "description": "Explore the real cases through IT Solutions",
+  "leader": {
+    "$oid": "684a6db8cc63da4b523b0d49"
+  },
+  "members": [
+    {
+      "$oid": "6847fbf4bca99b47ff2a0532"
+    },
+    {
+      "$oid": "684a4d2190502ac829e4476b"
+    },
+    {
+      "$oid": "684ada6778205cd362b8cfd7"
+    },
+    {
+      "$oid": "684ace329c8acb5bba79cb36"
+    }
+  ],
+  "memberNames": [
+    "Dr. Sandra Dias",
+    "Dr. Lalit Kumar Gupta",
+    "Mrs. Shilpa G",
+    "Dr. Jai Arul Jose"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Civil Engineering",
+    "Electrical & Electronics Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T04:01:30.704Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T04:01:30.704Z"
+  },
+  "leaderName": "Mrs. Reshma C R",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cd17c20c1766ef6409d85"
+  },
+  "teamName": "YantraMinds",
+  "description": "Reboot Hackathon\n Yantra means \"machine\" in Sanskrit. A perfect name for connected solutions and explorers of the unknown. Synthesizing creativity with logic where software meets hardware. A sustainability-centric team designing tech smart solutions .",
+  "leader": {
+    "$oid": "684b9e613e3f6cee08dc6cb4"
+  },
+  "members": [
+    {
+      "$oid": "684c3dc5bf3bac9cfb1beb7c"
+    },
+    {
+      "$oid": "684bc2e426d8ae1995a775fa"
+    },
+    {
+      "$oid": "684aad32328b91e547c2d851"
+    },
+    {
+      "$oid": "68501e23c4ecf55eefd051d3"
+    }
+  ],
+  "memberNames": [
+    "Dr. Ashwini K R",
+    "Dr. O. Gurumoorthy",
+    "Dr. Rajesh I S",
+    "Mr. Akshay Arya"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Mechanical Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T04:50:04.540Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T04:50:04.540Z"
+  },
+  "leaderName": "Dr. Bharathi Malakreddy A",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cd37e20c1766ef6409da8"
+  },
+  "teamName": "Synergy",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684812ec6db6c28f852ee065"
+  },
+  "members": [
+    {
+      "$oid": "6847e0f6ebc0988e776caa0f"
+    },
+    {
+      "$oid": "684a515390502ac829e4477e"
+    },
+    {
+      "$oid": "684935b3cd59c71468333627"
+    },
+    {
+      "$oid": "68501e71c4ecf55eefd051d6"
+    }
+  ],
+  "memberNames": [
+    "Dr. Daruka Prasad B",
+    "Dr. Rashmi N",
+    "Dr. Prathiba N",
+    "Mrs. Priyanka M R"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Electronics & Communication Engineering",
+    "Electronics & Telecommunication Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T04:58:38.003Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T04:58:38.003Z"
+  },
+  "leaderName": "Dr. B.R. Arun Kumar",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cd73420c1766ef6409ded"
+  },
+  "teamName": "PentaCoders",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684a7a4acc63da4b523b0dae"
+  },
+  "members": [
+    {
+      "$oid": "684a7813cc63da4b523b0d8f"
+    },
+    {
+      "$oid": "684ebc76f0c5987a47a8ef59"
+    },
+    {
+      "$oid": "684bc53d26d8ae1995a77623"
+    },
+    {
+      "$oid": "684910a04cc5e4bf2344dd96"
+    }
+  ],
+  "memberNames": [
+    "Dr. Basavaraj G N",
+    "Ms. Megha S",
+    "Dr. Jagadeesh Y J",
+    "Mrs. Nayana L"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Mechanical Engineering",
+    "Physics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T05:14:28.357Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T05:14:28.357Z"
+  },
+  "leaderName": "Dr. Mohan B A",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cec136c718c854d4655c9"
+  },
+  "teamName": "PRECOL",
+  "description": "When minds unite, solutions ignite",
+  "leader": {
+    "$oid": "6847bf5df4b90e624cb4b405"
+  },
+  "members": [
+    {
+      "$oid": "684bc24126d8ae1995a775ee"
+    },
+    {
+      "$oid": "684957616dc70fc50c5ad4ed"
+    },
+    {
+      "$oid": "68490f4e4cc5e4bf2344dd89"
+    },
+    {
+      "$oid": "684a6b28cc63da4b523b0d3a"
+    }
+  ],
+  "memberNames": [
+    "Dr. Sumati Thareja",
+    "Dr. S Thejaswini",
+    "Dr. Mamatha K R",
+    "Dr. Shivakumara T"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Electronics & Telecommunication Engineering",
+    "Electronics & Communication Engineering",
+    "Master of Computer Applications"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T06:43:32.011Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T06:43:32.011Z"
+  },
+  "leaderName": "Mr. A Venkatesh",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685cf8d46c718c854d465617"
+  },
+  "teamName": "Advitīya",
+  "description": "\"Engineering a Sustainable Vision for Climate Smart Urban Spaces\"",
+  "leader": {
+    "$oid": "68481e158665bfdb2056a94a"
+  },
+  "members": [
+    {
+      "$oid": "684811cd6db6c28f852ee05f"
+    },
+    {
+      "$oid": "68482e138665bfdb2056a988"
+    },
+    {
+      "$oid": "684825988665bfdb2056a968"
+    },
+    {
+      "$oid": "684820ad8665bfdb2056a957"
+    }
+  ],
+  "memberNames": [
+    "Shimna Manoharan",
+    "Dr. Basavaraj R B",
+    "Mrs. Sowmya V L",
+    "Dr. Archana Bhat"
+  ],
+  "memberDepartments": [
+    "Civil Engineering",
+    "Physics",
+    "Artificial Intelligence and Machine Learning",
+    "Artificial Intelligence and Machine Learning"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T07:37:56.553Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T07:37:56.553Z"
+  },
+  "leaderName": "Dr. Rajesh Gopinath",
+  "leaderDepartment": "Civil Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d23e5691483c041bf2c60"
+  },
+  "teamName": "DronAcharya",
+  "description": "DroneDrishti - \"Eyes in the Sky, Wisdom on the Ground\"",
+  "leader": {
+    "$oid": "68491b009464a93daa91dbe3"
+  },
+  "members": [
+    {
+      "$oid": "684c3afebf3bac9cfb1beb6f"
+    },
+    {
+      "$oid": "684a7a30cc63da4b523b0daa"
+    },
+    {
+      "$oid": "684ab84232daee4dc9969d0c"
+    },
+    {
+      "$oid": "6847bdc3f4b90e624cb4b3ee"
+    }
+  ],
+  "memberNames": [
+    "Dr. Biswaranjan Barik",
+    "Dr. Ashwini N",
+    "Dr. Gireesh Babu C N",
+    "Dr. Anitha Kiran"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Computer Science & Engineering",
+    "Information Science & Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T10:41:41.122Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T10:41:41.122Z"
+  },
+  "leaderName": "Dr. Raju Hajare",
+  "leaderDepartment": "Electronics & Telecommunication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d26be691483c041bf2c80"
+  },
+  "teamName": "Jeevadhara",
+  "description": "Adopting smart technology to save lives of people.",
+  "leader": {
+    "$oid": "6847b982f4b90e624cb4b3ae"
+  },
+  "members": [
+    {
+      "$oid": "684921ff9464a93daa91dc01"
+    },
+    {
+      "$oid": "684a78cbcc63da4b523b0d94"
+    },
+    {
+      "$oid": "684d6037c0b419e5a617cb63"
+    },
+    {
+      "$oid": "6847dc6cebc0988e776caa08"
+    }
+  ],
+  "memberNames": [
+    "Dr. Banuprakash R",
+    "Dr. Siddiq Iqbal",
+    "Mrs. Vishakha Yadav",
+    "Dr. Annapoorna M S"
+  ],
+  "memberDepartments": [
+    "Electronics & Telecommunication Engineering",
+    "Electronics & Telecommunication Engineering",
+    "Computer Science & Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T10:53:50.442Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T10:53:50.442Z"
+  },
+  "leaderName": "Mr. Dwarakanath G V",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d7a1ea64b585bd058c3bb"
+  },
+  "teamName": "Jñānī Samūhaḥ (ज्ञानी समूहः)",
+  "description": "“Group of the Enlightened”\nSense of intelligence, enlightenment, and a collective pursuit of truth to inspire a deeper intellectual connection.",
+  "leader": {
+    "$oid": "6847b680f4b90e624cb4b37d"
+  },
+  "members": [
+    {
+      "$oid": "6847d7e0ebc0988e776ca9fe"
+    },
+    {
+      "$oid": "684bd09226d8ae1995a7765a"
+    },
+    {
+      "$oid": "684a215d2dafab4b35bf8aba"
+    },
+    {
+      "$oid": "684bdd3426d8ae1995a7768a"
+    }
+  ],
+  "memberNames": [
+    "Dr. Sheela Kathavate",
+    "Dr. Rajakumara H N",
+    "Dr. Madhu M C",
+    "Dr. Priyanka Pal"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Civil Engineering",
+    "Mechanical Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-26T16:49:34.491Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T16:49:34.491Z"
+  },
+  "leaderName": "Dr. Shoba M",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e172d16454962dcb99a04"
+  },
+  "teamName": "Apahshakti",
+  "description": "The goal is to manage the urban flood water in the urban Bangalore",
+  "leader": {
+    "$oid": "684a6e66cc63da4b523b0d58"
+  },
+  "members": [
+    {
+      "$oid": "684bffc4bf5a59eabc3e4b83"
+    },
+    {
+      "$oid": "68501efcc4ecf55eefd051df"
+    },
+    {
+      "$oid": "684bc1d626d8ae1995a775e2"
+    },
+    {
+      "$oid": "685023c1c4ecf55eefd05211"
+    }
+  ],
+  "memberNames": [
+    "Dr. Anupkumar G Ekbote",
+    "Ms. Shama H M",
+    "Dr. Aruna Kumara H",
+    "Dr. Sudheer Kumar K H"
+  ],
+  "memberDepartments": [
+    "Civil Engineering",
+    "Computer Science & Engineering",
+    "Mathematics",
+    "Department of Chemistry"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-27T03:59:41.643Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-28T05:59:18.552Z"
+  },
+  "leaderName": "Dr. Chandrashekharappa Agasnalli",
+  "leaderDepartment": "Civil Engineering",
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "685e62ba4f734764a2004889"
+  },
+  "teamName": "Ashwamedha",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847c293f4b90e624cb4b42d"
+  },
+  "members": [
+    {
+      "$oid": "684bcd5226d8ae1995a7764e"
+    },
+    {
+      "$oid": "684a8a2eb43c8f36c6534793"
+    },
+    {
+      "$oid": "684bd65726d8ae1995a77667"
+    },
+    {
+      "$oid": "684a6bcccc63da4b523b0d40"
+    }
+  ],
+  "memberNames": [
+    "Dr. K T Chandrashekara",
+    "Dr. Dhananjaya N",
+    "Ms. Amulya P",
+    "Dr. Vinod B R"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Physics",
+    "Information Science & Engineering",
+    "Civil Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-27T09:22:02.954Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T09:22:02.954Z"
+  },
+  "leaderName": "Dr. Mallikarjuna Gowda C.P",
+  "leaderDepartment": "Electronics & Telecommunication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685ea7292766516f187e0674"
+  },
+  "teamName": "NeuroAura",
+  "description": "NI-Driven AI-Enhanced",
+  "leader": {
+    "$oid": "6847b819f4b90e624cb4b39b"
+  },
+  "members": [
+    {
+      "$oid": "6847d946ebc0988e776caa02"
+    },
+    {
+      "$oid": "6847b832f4b90e624cb4b39f"
+    },
+    {
+      "$oid": "68501b3ec4ecf55eefd051c7"
+    },
+    {
+      "$oid": "684bc86b26d8ae1995a7763e"
+    }
+  ],
+  "memberNames": [
+    "Dr. Nethravathi N",
+    "Dr. Prashant A Athavale",
+    "Dr. Ravi Hosur",
+    "Mr. Sundaresh S"
+  ],
+  "memberDepartments": [
+    "Master of Business Administration",
+    "Electrical & Electronics Engineering",
+    "Computer Science & Engineering",
+    "Mechanical Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-27T14:14:01.957Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T14:14:01.957Z"
+  },
+  "leaderName": "Dr. Mutyala Sridevi",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685f637ec2688e442c7e1250"
+  },
+  "teamName": "Heart-Guard 360 Wings",
+  "description": "24/7 Realtime Cardio Care-Predicting the Pulse, Alerting the Risk, Rescuing the Rhythm of Life.",
+  "leader": {
+    "$oid": "68493ec5cd59c71468333634"
+  },
+  "members": [
+    {
+      "$oid": "684a6f4ecc63da4b523b0d67"
+    },
+    {
+      "$oid": "684a8b77b43c8f36c653479f"
+    },
+    {
+      "$oid": "6847b684f4b90e624cb4b380"
+    },
+    {
+      "$oid": "684a589f3026bec9b4218d58"
+    }
+  ],
+  "memberNames": [
+    "Dr. Arunakumari B N",
+    "Dr. Shankar S Narayan",
+    "Dr. Harish Kumar N",
+    "Ms. Neetha P U"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Mathematics",
+    "Information Science & Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-28T03:37:34.204Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T03:37:34.204Z"
+  },
+  "leaderName": "Dr. Anitha V R",
+  "leaderDepartment": "Electronics & Communication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685fb6523f98001099892ee4"
+  },
+  "teamName": "Tejasvi (तेजस्वि)",
+  "description": "Graceful, memorable, and symbolizes inner brilliance — great as a team identity.",
+  "leader": {
+    "$oid": "6848237d8665bfdb2056a95d"
+  },
+  "members": [
+    {
+      "$oid": "68496492cb3b689d5418225f"
+    },
+    {
+      "$oid": "684be92e26d8ae1995a776af"
+    },
+    {
+      "$oid": "68492b699464a93daa91dc1a"
+    },
+    {
+      "$oid": "68501af4c4ecf55eefd051c4"
+    }
+  ],
+  "memberNames": [
+    "Dr. Madhukara Naik",
+    "Dr. Laxmisagar H S",
+    "Ms. Chaitanya V",
+    "Dr. Bharati. R"
+  ],
+  "memberDepartments": [
+    "Chemistry",
+    "Electronics & Communication Engineering",
+    "Computer Science & Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-28T09:30:58.778Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T09:30:58.778Z"
+  },
+  "leaderName": "Dr. Sumathi M S",
+  "leaderDepartment": "Electronics & Telecommunication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686371c6cf0a1842d52ab09a"
+  },
+  "teamName": "Chitragupt",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847bb33f4b90e624cb4b3c5"
+  },
+  "members": [
+    {
+      "$oid": "684c41bcbf3bac9cfb1beb82"
+    },
+    {
+      "$oid": "6849842540563959c15515a4"
+    },
+    {
+      "$oid": "68497c6f5423a6573a55f629"
+    },
+    {
+      "$oid": "684a7660cc63da4b523b0d87"
+    }
+  ],
+  "memberNames": [
+    "Dr. Harish Sharma Akkera",
+    "Dr. Sabina Rahaman",
+    "Dr. Jagannatha. K.B",
+    "Dr. Surekha K B"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Electronics & Communication Engineering",
+    "Electronics & Communication Engineering",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-01T05:27:34.341Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-01T05:27:34.341Z"
+  },
+  "leaderName": "Dr. Geeta Amol Patil",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68662ac574fd88cb5e548f9b"
+  },
+  "teamName": "KRISHIMEDHA",
+  "description": "Crop's Vision, Farmer's Support",
+  "leader": {
+    "$oid": "684bfa2cbf5a59eabc3e4b79"
+  },
+  "members": [
+    {
+      "$oid": "68501b8bc4ecf55eefd051ca"
+    },
+    {
+      "$oid": "684bda5f26d8ae1995a77674"
+    },
+    {
+      "$oid": "6847f91dbca99b47ff2a052c"
+    },
+    {
+      "$oid": "684a492490502ac829e44748"
+    }
+  ],
+  "memberNames": [
+    "Dr. Vidya R",
+    "Dr. Radhika K R",
+    "Mr. Sai Niranjan R",
+    "Mr. Babu Naik Gugulothu"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Master of Business Administration",
+    "Electrical & Electronics Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-03T07:01:25.573Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-03T07:01:25.573Z"
+  },
+  "leaderName": "Dr. Ambika G N",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686655bb2b0e1082daae60d5"
+  },
+  "teamName": "AIkido-Syntax for Society",
+  "description": "Reboot Hackathon Team:",
+  "leader": {
+    "$oid": "6847c012f4b90e624cb4b412"
+  },
+  "members": [
+    {
+      "$oid": "6847bf0bf4b90e624cb4b3fc"
+    },
+    {
+      "$oid": "684a8036a65f238a4c0a9490"
+    },
+    {
+      "$oid": "68490e534cc5e4bf2344dd7b"
+    },
+    {
+      "$oid": "684924a49464a93daa91dc0b"
+    }
+  ],
+  "memberNames": [
+    "Dr. Pradeep K R",
+    "Dr. Satish Kumar T",
+    "Dr. Kallur V Vijayakumar",
+    "Dr. Saritha I G"
+  ],
+  "memberDepartments": [
+    "Artificial Intelligence and Machine Learning",
+    "Computer Science & Engineering",
+    "Mathematics",
+    "Electronics & Telecommunication Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-03T10:04:43.637Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-03T10:04:43.637Z"
+  },
+  "leaderName": "Dr. Anupama H S",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686794f2b5b4f31a27323950"
+  },
+  "teamName": "NeoPredict",
+  "description": "Tomorrow's Wellness Starts Today!!",
+  "leader": {
+    "$oid": "68499553d7c2ada76683ff5f"
+  },
+  "members": [
+    {
+      "$oid": "6846da2de7c73b88b27d4bd6"
+    },
+    {
+      "$oid": "684a4b8590502ac829e44757"
+    },
+    {
+      "$oid": "684ff3b1c93ba0d16b2bf809"
+    },
+    {
+      "$oid": "684920519464a93daa91dbfa"
+    }
+  ],
+  "memberNames": [
+    "Dr. P Ganesh",
+    "Dr. K.M. Sathish Kumar",
+    "Dr. Bincy Rose Varghese",
+    "Dr. Savitha S"
+  ],
+  "memberDepartments": [
+    "Master of Computer Applications",
+    "Mechanical Engineering",
+    "Chemistry",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-04T08:46:42.531Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-04T08:46:42.531Z"
+  },
+  "leaderName": "Dr. Aparna K",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ed02ada720784bbfb09c6"
+  },
+  "teamName": "GreenMind AI",
+  "description": "GreenMind AI is a multidisciplinary innovation initiative that aims to harness the power of Artificial Intelligence to drive sustainable, smart, and socially impactful solutions. As the name suggests, it reflects a mindset rooted in eco-conscious innovation, guided by data-driven insights and intelligent automation.",
+  "leader": {
+    "$oid": "684911584cc5e4bf2344dd9c"
+  },
+  "members": [
+    {
+      "$oid": "68480005bca99b47ff2a0540"
+    },
+    {
+      "$oid": "68480ebd6db6c28f852ee059"
+    },
+    {
+      "$oid": "684bc39c26d8ae1995a77609"
+    },
+    {
+      "$oid": "684a39a118fd7ea9aa5a2641"
+    }
+  ],
+  "memberNames": [
+    "Mr. Abhishek K L",
+    "Dr. Niranjanamurthy M",
+    "Dr. Jyothi E Singh",
+    "Mrs. Shilpa M"
+  ],
+  "memberDepartments": [
+    "Artificial Intelligence and Machine Learning",
+    "Artificial Intelligence and Machine Learning",
+    "Master of Business Administration",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-09T20:25:14.711Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-09T20:25:14.711Z"
+  },
+  "leaderName": "Dr. Athiyamaan V",
+  "leaderDepartment": "Civil Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686f9b6a2ff8dc5152c97f78"
+  },
+  "teamName": "Vinyas2025",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "68480bd96db6c28f852ee052"
+  },
+  "members": [
+    {
+      "$oid": "684849d799b6c2d6fdcc2865"
+    },
+    {
+      "$oid": "684a1c46de7d630e1960ad7c"
+    },
+    {
+      "$oid": "6847c1d9f4b90e624cb4b428"
+    },
+    {
+      "$oid": "684a493c90502ac829e4474d"
+    }
+  ],
+  "memberNames": [
+    "Dr. Srinivas B V",
+    "Dr. Jeevan Chakravarthy A S",
+    "Dr. Ambika R",
+    "Mr. Nagaraj D Chonali"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Chemistry",
+    "Electronics & Communication Engineering",
+    "Electrical & Electronics Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-10T10:52:26.507Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-10T10:52:26.507Z"
+  },
+  "leaderName": "Dr. Vinutha K",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68709660c8d9e2dff80b9494"
+  },
+  "teamName": "EcoNex Campus",
+  "description": "\"Hack. Create. Sustain\"",
+  "leader": {
+    "$oid": "68491f579464a93daa91dbf6"
+  },
+  "members": [
+    {
+      "$oid": "684e49effde2448953cd7e6c"
+    },
+    {
+      "$oid": "684a488f90502ac829e44742"
+    },
+    {
+      "$oid": "684ada5f78205cd362b8cfd4"
+    },
+    {
+      "$oid": "68491e129464a93daa91dbf0"
+    }
+  ],
+  "memberNames": [
+    "Dr. Vinay H V",
+    "Dr. Manjunatha Babu P",
+    "Dr. P Sudarsanam",
+    "Mrs. Bhavya G"
+  ],
+  "memberDepartments": [
+    "Master of Business Administration",
+    "Electrical & Electronics Engineering",
+    "Master of Computer Applications",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-11T04:43:12.202Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T04:43:12.202Z"
+  },
+  "leaderName": "Dr. Shanthi D L",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6870eb2335993d78c2e48f1f"
+  },
+  "teamName": "CHAAM ⭐",
+  "description": "Chaam Stars are more than a team — we’re a constellation of talent and passion.\nEach player shines with unique skill, lighting up the game with energy and spirit.\nTogether, we support, inspire, and elevate one another.\nFueled by teamwork and driven by ambition, we rise to every challenge.\nWe don’t just WORK— we sparkle, strike, and soar.",
+  "leader": {
+    "$oid": "6848f6ee4cc5e4bf2344dd50"
+  },
+  "members": [
+    {
+      "$oid": "684ad77378205cd362b8cfcd"
+    },
+    {
+      "$oid": "684bbe3b26d8ae1995a775c3"
+    },
+    {
+      "$oid": "6870b26a39e3509face8b50e"
+    },
+    {
+      "$oid": "684a8a12b43c8f36c653478d"
+    }
+  ],
+  "memberNames": [
+    "Dr. Asha K",
+    "Mrs. Malini M",
+    "Chetan D S",
+    "Mr. Puneetha"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Information Science & Engineering",
+    "Computer Science & Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-11T10:44:51.842Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-11T10:44:51.842Z"
+  },
+  "leaderName": "Mrs. Annapareddy Haarika",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687269901ab6839ecc305e15"
+  },
+  "teamName": "Panchkruti",
+  "description": "Union of Creators",
+  "leader": {
+    "$oid": "684bbfbb26d8ae1995a775d1"
+  },
+  "members": [
+    {
+      "$oid": "6870f6b5a6e4d4ade067a7eb"
+    },
+    {
+      "$oid": "684a23ea2dafab4b35bf8ac2"
+    },
+    {
+      "$oid": "68501ea0c4ecf55eefd051d9"
+    },
+    {
+      "$oid": "68501f50c4ecf55eefd051e2"
+    }
+  ],
+  "memberNames": [
+    "Srilaxmi B A",
+    "Mr. Vikram Chekuri",
+    "Mrs. Arpitha Shivanna",
+    "Mr. Gururaj P"
+  ],
+  "memberDepartments": [
+    "Chemistry",
+    "Electrical & Electronics Engineering",
+    "Computer Science & Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-12T13:56:32.144Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-12T13:56:32.144Z"
+  },
+  "leaderName": "Ms. Spandana L",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68749c1a65c137577d2f7bc5"
+  },
+  "teamName": "Code of Karna",
+  "description": "Coding with courage, creating for change.",
+  "leader": {
+    "$oid": "684eac056951e4894358b740"
+  },
+  "members": [
+    {
+      "$oid": "684f9cc47f9a4b87b69d2083"
+    },
+    {
+      "$oid": "6848fa684cc5e4bf2344dd5d"
+    },
+    {
+      "$oid": "684e5124583623d08ae25a32"
+    },
+    {
+      "$oid": "6849117d4cc5e4bf2344dda1"
+    }
+  ],
+  "memberNames": [
+    "Ms. Spurthy S N",
+    "Mr. Pushpanathan G",
+    "Dr. G Avinash",
+    "Mrs. Janhavi V"
+  ],
+  "memberDepartments": [
+    "Master of Computer Applications",
+    "Information Science & Engineering",
+    "Mechanical Engineering",
+    "Physics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T05:56:42.907Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-14T05:56:42.907Z"
+  },
+  "leaderName": "Ms. Ashwitha K",
+  "leaderDepartment": "Master of Computer Applications",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6874be9f747e617f74887fa7"
+  },
+  "teamName": "Solution Makers",
+  "description": "To provide sustainable automation solution",
+  "leader": {
+    "$oid": "684bc36026d8ae1995a77603"
+  },
+  "members": [
+    {
+      "$oid": "6847bc3bf4b90e624cb4b3d0"
+    },
+    {
+      "$oid": "684bc4ed26d8ae1995a7761c"
+    },
+    {
+      "$oid": "6847bd3bf4b90e624cb4b3de"
+    },
+    {
+      "$oid": "684bc59026d8ae1995a7762a"
+    }
+  ],
+  "memberNames": [
+    "Dr. Yashaswini",
+    "Mrs. Shilpa K A",
+    "Mr. Vinaykumar Y B",
+    "Dr. Kiran M D"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Information Science & Engineering",
+    "Information Science & Engineering",
+    "Mechanical Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T08:23:59.398Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-14T08:23:59.398Z"
+  },
+  "leaderName": "Mrs. Belji T",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6874c273747e617f74887fdb"
+  },
+  "teamName": "AI_KRANTHI",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6849516b6dc70fc50c5ad4cf"
+  },
+  "members": [
+    {
+      "$oid": "684956ee6dc70fc50c5ad4ea"
+    },
+    {
+      "$oid": "684d44bea0a238818ce6f751"
+    },
+    {
+      "$oid": "684953f06dc70fc50c5ad4db"
+    },
+    {
+      "$oid": "6849038d4cc5e4bf2344dd6b"
+    }
+  ],
+  "memberNames": [
+    "Dr. R Lokesh",
+    "Ms. Soumya S Vastrad",
+    "Mr. Umesh T",
+    "Mrs. Ambika Rani Subhash"
+  ],
+  "memberDepartments": [
+    "Physics",
+    "Electronics & Communication Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T08:40:19.415Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-14T08:40:19.415Z"
+  },
+  "leaderName": "Dr. Kantharaju V",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6874d05ee9c2b0b08c3c3a7c"
+  },
+  "teamName": "Elite",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847d2d9fd0930ba624fa3a7"
+  },
+  "members": [
+    {
+      "$oid": "684faf065601592bdf999cd8"
+    },
+    {
+      "$oid": "684a5a423026bec9b4218d64"
+    },
+    {
+      "$oid": "684ad64d78205cd362b8cfbe"
+    },
+    {
+      "$oid": "68502271c4ecf55eefd05202"
+    }
+  ],
+  "memberNames": [
+    "Dr. Durga Bhavani A",
+    "Dr. Thyagaraj T",
+    "Mrs. B J Tejaswini",
+    "Mr. K Chandra Sekhara Reddy"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Electronics & Communication Engineering",
+    "Humanities and Social Science",
+    "Department of Mechanical Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T09:39:42.377Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-14T09:39:42.377Z"
+  },
+  "leaderName": "Dr. Veena N",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6874de75e9c2b0b08c3c3b4f"
+  },
+  "teamName": "CodeStrom",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6848f9924cc5e4bf2344dd57"
+  },
+  "members": [
+    {
+      "$oid": "684806fd6db6c28f852ee034"
+    },
+    {
+      "$oid": "684961ffcb3b689d54182253"
+    },
+    {
+      "$oid": "684e58d6583623d08ae25a41"
+    }
+  ],
+  "memberNames": [
+    "Mr. Shivarudraiah",
+    "Dr. Suryakanth B",
+    "Ms. Chaithanya K R"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Electronics & Communication Engineering",
+    "Humanities and Social Science"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T10:39:49.685Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T03:24:25.329Z"
+  },
+  "leaderName": "Mrs. Sowmya K",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6874efcb87e739cb3842f1c5"
+  },
+  "teamName": "Silicon Squad",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684e27ad1ce6b3e9b771ec58"
+  },
+  "members": [
+    {
+      "$oid": "684cf12f41e43542508a533e"
+    },
+    {
+      "$oid": "684e780e936b7fd8bbfb2997"
+    },
+    {
+      "$oid": "684ab2ef32daee4dc9969d06"
+    },
+    {
+      "$oid": "68492d909464a93daa91dc1e"
+    }
+  ],
+  "memberNames": [
+    "Dr. Manjunath T N",
+    "Mrs. Anusha K L",
+    "Dr. G Aruna",
+    "Dr. T K Sreelakshmi"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Computer Science & Engineering",
+    "Civil Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-14T11:53:47.527Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-14T11:53:47.527Z"
+  },
+  "leaderName": "Mr. Beerappa Belasakarge",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6875dc09f6eabb2c545ca610"
+  },
+  "teamName": "TechIdea",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "68493f67cd59c7146833363a"
+  },
+  "members": [
+    {
+      "$oid": "684bc13d26d8ae1995a775dc"
+    },
+    {
+      "$oid": "684a50a890502ac829e44778"
+    },
+    {
+      "$oid": "684bbf3526d8ae1995a775cb"
+    },
+    {
+      "$oid": "684bf2c526d8ae1995a776c7"
+    }
+  ],
+  "memberNames": [
+    "Dr. Saroj Revankar",
+    "Dr. Jayadeva G S",
+    "Mrs. Kavitha D",
+    "Mr. Rajesh N V"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Electronics & Communication Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-15T04:41:45.667Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T04:41:45.667Z"
+  },
+  "leaderName": "Dr. Chethana C",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6876100f1fb6af044e8bac3d"
+  },
+  "teamName": "Cybersena",
+  "description": "Tool to protect society from cyber attacks",
+  "leader": {
+    "$oid": "6875cbecde12191c4401b401"
+  },
+  "members": [
+    {
+      "$oid": "684f92f17f4cf5310a5924ba"
+    },
+    {
+      "$oid": "684bf29c26d8ae1995a776c4"
+    },
+    {
+      "$oid": "684e4820fde2448953cd7e67"
+    },
+    {
+      "$oid": "684ba9e496f8507a86ee464c"
+    }
+  ],
+  "memberNames": [
+    "Dr. Thippeswamy G",
+    "Dr. S K Pushpa",
+    "Dr. G L Anantha Krishna",
+    "Dr. Swetha G A"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Information Science & Engineering",
+    "Mechanical Engineering",
+    "Chemistry"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-15T08:23:43.356Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T08:23:43.356Z"
+  },
+  "leaderName": "Dr.Sagargouda Patil",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6876124f1fb6af044e8bac81"
+  },
+  "teamName": "TechForge",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684979a95423a6573a55f621"
+  },
+  "members": [
+    {
+      "$oid": "6849144e4cc5e4bf2344dda9"
+    },
+    {
+      "$oid": "6847ba65f4b90e624cb4b3ba"
+    },
+    {
+      "$oid": "6847c5a5f4b90e624cb4b435"
+    },
+    {
+      "$oid": "684ae3eff44f095bcd65ae35"
+    }
+  ],
+  "memberNames": [
+    "Dr. Anand R",
+    "Dr. Muneshwara. M.S",
+    "Dr. Bhuvaneshwari C Melinamath",
+    "Dr. Chethan A S"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Information Science & Engineering",
+    "Mathematics"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-15T08:33:19.037Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T08:33:19.037Z"
+  },
+  "leaderName": "Dr. Anitha M",
+  "leaderDepartment": "Electronics & Communication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68761f7c7b085938211c5c3e"
+  },
+  "teamName": "Aavishkar",
+  "description": "Solutions to Real-World Challenges",
+  "leader": {
+    "$oid": "6847feacbca99b47ff2a053c"
+  },
+  "members": [
+    {
+      "$oid": "684bfdd7bf5a59eabc3e4b7f"
+    },
+    {
+      "$oid": "684bddc726d8ae1995a77690"
+    },
+    {
+      "$oid": "684a2ba8dc0b15a93bb2bbeb"
+    },
+    {
+      "$oid": "687596adf849718f3dfe37f1"
+    }
+  ],
+  "memberNames": [
+    "Dr. Dankan Gowda V",
+    "Mr. Channakeshava H C",
+    "Mr. Pradeep Kumar G M",
+    "Salma Itagi"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Master of Business Administration",
+    "Computer Science and Business Systems",
+    "Artificial Intelligence and Machine Learning"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-15T09:29:32.853Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T09:29:32.853Z"
+  },
+  "leaderName": "Dr. Vijayalakshmi G V",
+  "leaderDepartment": "Electronics & Communication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687623327b085938211c5c6f"
+  },
+  "teamName": "Fusion_Force",
+  "description": "Research in a multidisciplinary dimension.",
+  "leader": {
+    "$oid": "687612a79efa20629ed8c2d4"
+  },
+  "members": [
+    {
+      "$oid": "684a75b5cc63da4b523b0d81"
+    },
+    {
+      "$oid": "684bc2cb26d8ae1995a775f6"
+    },
+    {
+      "$oid": "6848fd844cc5e4bf2344dd63"
+    },
+    {
+      "$oid": "684bcfce26d8ae1995a77654"
+    }
+  ],
+  "memberNames": [
+    "Dr. Udayabhanu",
+    "Dr. Manjunatha C",
+    "Mrs. Sneha Sureddy",
+    "Ms. Sanjana V Hunashikatti"
+  ],
+  "memberDepartments": [
+    "Chemistry",
+    "Mechanical Engineering",
+    "Information Science & Engineering",
+    "Information Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-15T09:45:22.581Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T09:45:22.581Z"
+  },
+  "leaderName": "Ms. Chaitra D B",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6877363e1ec8396f5acb96bd"
+  },
+  "teamName": "Idea Spark",
+  "description": "Innovate Collaborate Thrive",
+  "leader": {
+    "$oid": "684d2c894f9d96a0027e6ea6"
+  },
+  "members": [
+    {
+      "$oid": "684bda5e26d8ae1995a77671"
+    },
+    {
+      "$oid": "684d2bd74f9d96a0027e6ea0"
+    },
+    {
+      "$oid": "685021edc4ecf55eefd051f9"
+    },
+    {
+      "$oid": "684ec948ce80c5bf21e22ea1"
+    }
+  ],
+  "memberNames": [
+    "Dr. Vishwanatha M R",
+    "Mrs. Manasa K",
+    "Ms. Bhavika Rajora",
+    "Dr. Srinidhi Acharya S R"
+  ],
+  "memberDepartments": [
+    "Master of Business Administration",
+    "Artificial Intelligence and Machine Learning",
+    "Department of Artificial Intelligence and Machine Learning",
+    "Mechanical Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-16T05:18:54.711Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-16T05:18:54.711Z"
+  },
+  "leaderName": "Mrs. Pragathi M",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68784b447f7fb9b8dab1877a"
+  },
+  "teamName": "TechSangama",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684974f75423a6573a55f619"
+  },
+  "members": [
+    {
+      "$oid": "684955186dc70fc50c5ad4e1"
+    },
+    {
+      "$oid": "684ce81491b708df8b50f10a"
+    },
+    {
+      "$oid": "68480a306db6c28f852ee03c"
+    },
+    {
+      "$oid": "684ae582f44f095bcd65ae3a"
+    }
+  ],
+  "memberNames": [
+    "Ms. Amitha S K",
+    "Dr. Vishnuvardhana S V",
+    "Dr. A Shobha Rani",
+    "Dr. Deepa N Reddy"
+  ],
+  "memberDepartments": [
+    "Artificial Intelligence and Machine Learning",
+    "Mathematics",
+    "Electronics & Communication Engineering",
+    "Electronics & Communication Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-17T01:00:52.340Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-17T01:00:52.340Z"
+  },
+  "leaderName": "Mr. Sonnegowda K",
+  "leaderDepartment": "Information Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68787ed073bc88dd5ccc4be7"
+  },
+  "teamName": "Ananta",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "68490f844cc5e4bf2344dd8e"
+  },
+  "members": [
+    {
+      "$oid": "684993f5d7c2ada76683ff5a"
+    },
+    {
+      "$oid": "684c3b76bf3bac9cfb1beb74"
+    },
+    {
+      "$oid": "684985ce40563959c15515aa"
+    },
+    {
+      "$oid": "684bcd0326d8ae1995a77648"
+    }
+  ],
+  "memberNames": [
+    "Dr. Karabi Sikdar",
+    "Dr. Chandrashekar Pathak",
+    "Mrs. Shruthi S",
+    "Mr. Balaraju G"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Physics",
+    "Artificial Intelligence and Machine Learning",
+    "Artificial Intelligence and Machine Learning"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-17T04:40:48.377Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-17T04:40:48.377Z"
+  },
+  "leaderName": "Dr. Paramita Sarkar",
+  "leaderDepartment": "Electronics & Communication Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687a0861ee62a1553f0fddbb"
+  },
+  "teamName": "Anveshana",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6847c99df4b90e624cb4b441"
+  },
+  "members": [
+    {
+      "$oid": "684e5ac6583623d08ae25a48"
+    },
+    {
+      "$oid": "684bde3c26d8ae1995a77695"
+    },
+    {
+      "$oid": "684e4426fde2448953cd7e5c"
+    },
+    {
+      "$oid": "684c0b19e9660553f590fb90"
+    }
+  ],
+  "memberNames": [
+    "Dr. Kavita Harihar",
+    "Dr. Shripad Diwakar",
+    "Dr. Prashanth N A",
+    "Mrs. Durga Devi. G.Y"
+  ],
+  "memberDepartments": [
+    "Humanities and Social Science",
+    "Mechanical Engineering",
+    "Electrical & Electronics Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-18T08:40:01.857Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-18T08:40:01.857Z"
+  },
+  "leaderName": "Mrs. Manjula B K",
+  "leaderDepartment": "Electrical & Electronics Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687b27e22d2978e489875755"
+  },
+  "teamName": "Infinity Loops",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684a7ac3cc63da4b523b0db9"
+  },
+  "members": [
+    {
+      "$oid": "68497ec85423a6573a55f634"
+    },
+    {
+      "$oid": "684a79f1cc63da4b523b0da4"
+    },
+    {
+      "$oid": "68502336c4ecf55eefd0520a"
+    },
+    {
+      "$oid": "684d1913b2536763c55ea346"
+    }
+  ],
+  "memberNames": [
+    "Dr. Anil Kumar D",
+    "Mrs. Goutami Chenumalla",
+    "Mrs. Shobha R",
+    "Dr. Nagabhushan. S.V"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Computer Science & Engineering",
+    "Department of Civil Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-19T05:06:42.183Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-19T05:06:42.183Z"
+  },
+  "leaderName": "Mrs. S Packiya Lekshmi",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687b64fdc3ad0fd749f0f83b"
+  },
+  "teamName": "EdgeMinds",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6875ccd4de12191c4401b40c"
+  },
+  "members": [
+    {
+      "$oid": "6875cf1ede12191c4401b40f"
+    },
+    {
+      "$oid": "6875d49867925fc306f2cbfa"
+    },
+    {
+      "$oid": "684a5ad03026bec9b4218d70"
+    },
+    {
+      "$oid": "685020adc4ecf55eefd051f1"
+    }
+  ],
+  "memberNames": [
+    "Ashwini S S",
+    "Shabeena Lylath",
+    "Mrs. Sindhu Ramesh",
+    "Mrs. Likitha M"
+  ],
+  "memberDepartments": [
+    "Artificial Intelligence and Machine Learning",
+    "Information Science & Engineering",
+    "Master of Business Administration",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-19T09:27:25.617Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-19T09:27:25.617Z"
+  },
+  "leaderName": "Syed Matheen Pasha",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687de391c055a61d6501a79c"
+  },
+  "teamName": "Tech Titans",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "6850205fc4ecf55eefd051ee"
+  },
+  "members": [
+    {
+      "$oid": "68501f82c4ecf55eefd051e5"
+    },
+    {
+      "$oid": "68501fd8c4ecf55eefd051e8"
+    },
+    {
+      "$oid": "68502034c4ecf55eefd051eb"
+    },
+    {
+      "$oid": "687ddf620ee6d75fcf06b2b1"
+    }
+  ],
+  "memberNames": [
+    "Mrs. Srujana S N",
+    "Mrs. Manjula S D",
+    "Mrs. Simi Sara Mani",
+    "Hamsaveni M"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Artificial Intelligence and Machine Learning"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-21T06:52:01.851Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-21T06:52:01.851Z"
+  },
+  "leaderName": "Ms. Renita Blossom Monteiro",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6881b789b6dd3ba09fb33520"
+  },
+  "teamName": "Social Hacktivists",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684a793fcc63da4b523b0d9d"
+  },
+  "members": [
+    {
+      "$oid": "6847c76af4b90e624cb4b43b"
+    },
+    {
+      "$oid": "684bb3845680a3c2c80ca276"
+    },
+    {
+      "$oid": "684bc26026d8ae1995a775f3"
+    },
+    {
+      "$oid": "685020fec4ecf55eefd051f4"
+    }
+  ],
+  "memberNames": [
+    "Dr. Kalaivani Y S",
+    "Mr. P. Jagadish",
+    "Mrs. Neha D S",
+    "Mrs. Shilpa Hiremath"
+  ],
+  "memberDepartments": [
+    "Information Science & Engineering",
+    "Computer Science & Engineering",
+    "Mathematics",
+    "Department of Electronics & Communication Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-24T04:33:13.586Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T04:33:13.586Z"
+  },
+  "leaderName": "Mrs. Aruna N",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6881c163b6dd3ba09fb3358a"
+  },
+  "teamName": "Lady Logicians",
+  "description": "Fueled by coffee, curiosity, and confidence, we don’t just write code — we craft change",
+  "leader": {
+    "$oid": "6847bd90f4b90e624cb4b3e6"
+  },
+  "members": [
+    {
+      "$oid": "6847cce9f4b90e624cb4b448"
+    },
+    {
+      "$oid": "6847bf2ff4b90e624cb4b401"
+    },
+    {
+      "$oid": "68501ed1c4ecf55eefd051dc"
+    },
+    {
+      "$oid": "68501dccc4ecf55eefd051d0"
+    }
+  ],
+  "memberNames": [
+    "Mrs. Tanya Chandra",
+    "Mrs. Chandini A",
+    "Ms. Soujanya S D",
+    "Mrs. A. Mari Kirthima"
+  ],
+  "memberDepartments": [
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Computer Science & Engineering",
+    "Computer Science & Engineering"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-24T05:15:15.602Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T05:15:15.602Z"
+  },
+  "leaderName": "Ms. Brunda S",
+  "leaderDepartment": "Computer Science & Engineering",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6881c89fb6dd3ba09fb33636"
+  },
+  "teamName": "Hackademia United",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684a6e15cc63da4b523b0d4f"
+  },
+  "members": [
+    {
+      "$oid": "68480b4b6db6c28f852ee045"
+    },
+    {
+      "$oid": "684a74e9cc63da4b523b0d7b"
+    },
+    {
+      "$oid": "6847b73df4b90e624cb4b38c"
+    },
+    {
+      "$oid": "684bc62f26d8ae1995a77638"
+    }
+  ],
+  "memberNames": [
+    "Mrs. Chandraprabha R",
+    "Dr. Seema Singh",
+    "Mr. Sachin Urabinahatti",
+    "Dr. Divya H N"
+  ],
+  "memberDepartments": [
+    "Electronics & Communication Engineering",
+    "Electronics & Telecommunication Engineering",
+    "Artificial Intelligence and Machine Learning",
+    "Master of Business Administration"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-24T05:46:07.056Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T05:46:07.056Z"
+  },
+  "leaderName": "Mr. Shobhit Tembhre",
+  "leaderDepartment": "Artificial Intelligence and Machine Learning",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6881d91db6dd3ba09fb33788"
+  },
+  "teamName": "Panchajanya",
+  "description": "Reboot Hackathon Team",
+  "leader": {
+    "$oid": "684bef6d26d8ae1995a776bc"
+  },
+  "members": [
+    {
+      "$oid": "684bd24a26d8ae1995a77660"
+    },
+    {
+      "$oid": "68502296c4ecf55eefd05205"
+    },
+    {
+      "$oid": "684a4ba590502ac829e4475a"
+    }
+  ],
+  "memberNames": [
+    "Dr. Arnab Bhattacharyya",
+    "Dr. Chethan D",
+    "Dr. Reshma M"
+  ],
+  "memberDepartments": [
+    "Mathematics",
+    "Department of Mechanical Engineering",
+    "Master of Business Administration"
+  ],
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-07-24T06:56:29.543Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T12:31:00.342Z"
+  },
+  "leaderName": "Dr. Surekha r Gondkar",
+  "leaderDepartment": "Electronics & Communication Engineering",
+  "__v": 3
+}]

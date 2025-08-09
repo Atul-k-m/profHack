@@ -10,12 +10,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Teams from './pages/Teams';
+import Leaderboard from './pages/Leaderboard';
 import Home from './pages/Home';
 import CreateTeam from './pages/CreateTeam';
 import Submission from './pages/Submission'; // Import the Submission component
 import ResetPassword from './pages/ResetPassword'; // Import the ResetPassword component
 import './App.css';
 import Organizers from './pages/Organizers';   
+
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -26,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hero" element={<Hero />} />
+            <Route path="/leaderboard" element={<Leaderboard/>} />
           <Route path="/organizers" element={<Organizers />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
