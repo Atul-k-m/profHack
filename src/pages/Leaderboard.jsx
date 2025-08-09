@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Leaderboard = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
+ const navigate = useNavigate();
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -75,7 +76,7 @@ const Leaderboard = () => {
 
   const handleBackClick = () => {
     // You can customize this to navigate wherever needed
-    window.history.back();
+    navigate('/'); // Navigate to home or any other page
   };
 
   return (
