@@ -125,12 +125,7 @@ const Leaderboard = () => {
               </h1>
             </div>
 
-            <div className="mb-4 sm:mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <p className="text-xs sm:text-sm md:text-base text-gray-700 font-medium tracking-wide max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
-                Track the progress of our innovative teams as they compete in the month-long hackathon. 
-                <span className="font-bold text-black"> Innovation meets collaboration</span> in this dynamic leaderboard.
-              </p>
-            </div>
+           
           </div>
 
           {/* Leaderboard Container - Taller and Thinner */}
