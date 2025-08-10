@@ -54,7 +54,7 @@ const Leaderboard = () => {
     { rank: 34, name: "Solution Makers", leader: "Mrs. Belji T", score: 0, badge: "" },
     { rank: 35, name: "AI_KRANTHI", leader: "Dr. Kantharaju V", score: 0, badge: "" },
     { rank: 36, name: "Elite", leader: "Dr. Veena N", score: 0, badge: "" },
-    { rank: 37, name: "CodeStrom", leader: "Mrs. Sowmya K", score: 0, badge: "" },
+    { rank: 37, name: "Face Track", leader: "Dr. Suryakanth B", score: 0, badge: "" },
     { rank: 38, name: "Silicon Squad", leader: "Mr. Beerappa Belasakarge", score: 0, badge: "" },
     { rank: 39, name: "TechIdea", leader: "Dr. Chethana C", score: 0, badge: "" },
     { rank: 40, name: "Cybersena", leader: "Dr.Sagargouda Patil", score: 0, badge: "" },
