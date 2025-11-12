@@ -135,7 +135,8 @@ const Leaderboard = () => {
       <div className="relative z-10 pt-4 sm:pt-8 md:pt-12 pb-8 sm:pb-12 md:pb-16 px-3 sm:px-4">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <div className="mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+           {/* Back Button */}
+          <div className="mb-6">
             <button
               onClick={handleBackClick}
               className="flex items-center gap-2 text-black hover:text-gray-700 transition-colors duration-200 font-medium"
@@ -144,17 +145,17 @@ const Leaderboard = () => {
               <span className="text-sm sm:text-base">Back</span>
             </button>
           </div>
-
+        
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
-            <div className="mb-4 sm:mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="mb-4 sm:mb-6">
               <h2 className="text-xs sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.3em] text-black uppercase mb-3 sm:mb-4">
                 Innovate • Collaborate • Elevate
               </h2>
               <div className="w-12 sm:w-16 md:w-20 h-0.5 bg-black mx-auto"></div>
             </div>
 
-            <div className="mb-4 sm:mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className="mb-4 sm:mb-6">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-black leading-[0.9] mb-3 sm:mb-4">
                 REBOOT
                 <br />
@@ -164,8 +165,8 @@ const Leaderboard = () => {
           </div>
 
           {/* Leaderboard Container */}
-          <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white border-2 border-black shadow-xl max-h-[700px] sm:max-h-[800px] flex flex-col">
+          <div>
+            <div className="bg-white border-2 border-black shadow-xl min-h-[400px] sm:min-h-[500px] flex flex-col">
               {/* Table Header */}
               <div className="bg-black text-white p-3 sm:p-4 flex-shrink-0">
                 <h3 className="text-base sm:text-lg md:text-xl font-black tracking-wide uppercase">
@@ -173,61 +174,15 @@ const Leaderboard = () => {
                 </h3>
               </div>
 
-              {/* Scrollable Table Content */}
-              <div className="flex-1 overflow-y-auto">
-                <div className="divide-y divide-gray-100">
-                  {ranked.map((team, index) => (
-                    <div
-                      key={`${team.name}-${index}`}
-                      className={`p-3 sm:p-4 hover:bg-gray-50 transition-colors duration-200 ${
-                        team.rank <= 3 && team.score > 0 ? 'bg-amber-50' : ''
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2 sm:gap-4">
-                        {/* Left: Rank + Info */}
-                        <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
-                          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                            <div
-                              className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center font-black text-sm sm:text-base ${
-                                team.rank === 1 ? 'bg-yellow-400 text-black' :
-                                team.rank === 2 ? 'bg-gray-300 text-black' :
-                                team.rank === 3 ? 'bg-orange-300 text-black' :
-                                'bg-black text-white'
-                              }`}
-                            >
-                              {team.rank}
-                            </div>
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2">
-                              <h4 className="text-sm sm:text-base md:text-lg font-black text-black mb-1 break-words leading-tight">
-                                {team.name}
-                              </h4>
-                              <span className="text-xs text-gray-500 font-medium">
-                                {team.teamId ? `ID: ${team.teamId}` : 'ID: —'}
-                              </span>
-                            </div>
-                            <p className="text-xs text-gray-600 font-medium break-words">
-                              Led by: {team.leader}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Right: Score */}
-                        <div className="flex items-center flex-shrink-0">
-                          <div className="text-right">
-                            <div className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Score
-                            </div>
-                            <div className="text-base sm:text-lg md:text-xl font-black text-black">
-                              {team.score.toLocaleString()}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              {/* Update Message */}
+              <div className="flex-1 flex items-center justify-center p-8 sm:p-12">
+                <div className="text-center max-w-md">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-black mb-3 sm:mb-4 tracking-tight">
+                    CURRENTLY UPDATING
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-600 font-medium">
+                    Please stay tuned. The leaderboard will be available shortly.
+                  </p>
                 </div>
               </div>
 
@@ -235,7 +190,7 @@ const Leaderboard = () => {
               <div className="bg-gray-50 p-3 sm:p-4 border-t-2 border-gray-200 flex-shrink-0">
                 <div className="flex items-center justify-center gap-2 sm:gap-3 text-xs text-gray-600 font-medium">
                   <div className="w-6 sm:w-8 h-px bg-gray-400"></div>
-                  <span className="tracking-wider uppercase">Updated using uploaded final scores</span>
+                  <span className="tracking-wider uppercase">Refresh page for updates</span>
                   <div className="w-6 sm:w-8 h-px bg-gray-400"></div>
                 </div>
               </div>
@@ -243,12 +198,10 @@ const Leaderboard = () => {
           </div>
 
           {/* Bottom Note */}
-          <div className="text-center mt-6 sm:mt-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="text-center mt-6 sm:mt-8">
             <div className="max-w-2xl mx-auto text-xs text-gray-600">
               <p>
-                Ranks computed from final scores found in the uploaded PDF. Teams with <strong>score 0</strong> had no matching
-                final score in the PDF excerpt and are listed at the bottom. If you have updated scores for those
-                teams, provide them and I'll update the leaderboard.
+                The leaderboard is being updated with the latest scores. Check back soon for the complete rankings.
               </p>
             </div>
           </div>
@@ -256,42 +209,6 @@ const Leaderboard = () => {
       </div>
 
       <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-        }
-
-        /* Custom scrollbar styling */
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 6px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: #f1f5f9;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 3px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
-
-        /* Better text wrapping for long team names */
-        .break-words {
-          word-wrap: break-word;
-          word-break: break-word;
-          hyphens: auto;
-        }
-
         /* Additional mobile-specific styles */
         @media (max-width: 640px) {
           .tracking-tighter {
@@ -302,5 +219,4 @@ const Leaderboard = () => {
     </div>
   );
 };
-
 export default Leaderboard;
