@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-
-/**
- * Leaderboard.jsx
- *
- * - Uses final scores extracted from the uploaded PDF where available.
- * - Ties share the same rank (competition ranking). Next rank skips accordingly.
- * - Teams with no final score found in the PDF are included with score: 0 and teamId: null.
- *
- * If you want the missing teams updated, provide the scores (or re-upload a PDF/CSV)
- * and I will update the array and ranks.
- */
 
 const Leaderboard = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -29,91 +16,71 @@ const Leaderboard = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // ====== Final data ======
-  // Best-effort mapping: scores and teamIds taken from uploaded PDF where found.
-  // Teams not found in PDF are included with score: 0 and teamId: null so they appear at the bottom.
+  // Updated team data
   const rawTeams = [
-    // Teams that were present in your original array (kept all) --
-    // Updated scores from the uploaded PDF when available.
-    { teamId: 6, name: "GreenByte", leader: "Mr. Ajith S", score: 82 },
-    { teamId: 34, name: "Face Track", leader: "Dr. Suryakanth B", score: 85 },
-    { teamId: 3, name: "KRISHIMEDHA", leader: "Dr. Ambika G N", score: 91 },
-    { teamId: 23, name: "NeoPredict", leader: "Dr. Aparna K", score: 69 },
-    { teamId: 20, name: "Tejasvi (तेजस्वि)", leader: "Dr. Sumathi M S", score: 0 }, // no final found
-    { teamId: 8, name: "AIkido-Syntax for Society", leader: "Dr. Anupama H S", score: 76 },
-    { teamId: 26, name: "Cybersena", leader: "Dr.Sagargouda Patil", score: 50 },
-    { teamId: 46, name: "Silicon Squad", leader: "Mr. Beerappa Belasakarge", score: 34 },
-    { teamId: 19, name: "MYTriSpark", leader: "Mr. Yatheesh N G", score: 68 }, // MY3S mapped
-    { teamId: 11, name: "NeuroAura", leader: "Dr. Mutyala Sridevi", score: 82 },
-    { teamId: null, name: "Team Chanakya", leader: "Dr. Hemamalini B H", score: 0 }, // not found in PDF
-    { teamId: 38, name: "YantraMinds", leader: "Dr. Bharathi Malakreddy A", score: 62 },
-    { teamId: 21, name: "Heart-Guard 360 Wings", leader: "Dr. Anitha V R", score: 88 },
-    { teamId: 10, name: "Jñānī Samūhaḥ (ज्ञानी समूहः)", leader: "Dr. Shoba M", score: 71 },
-    { teamId: 36, name: "CHAAM ⭐", leader: "Mrs. Annapareddy Haarika", score: 65 },
-    { teamId: 9, name: "Synergy", leader: "Dr. B.R. Arun Kumar", score: 81 }, // Synergy Innovations
-    { teamId: 25, name: "Jeevadhara", leader: "Mr. Dwarakanath G V", score: 91 },
-    { teamId: 24, name: "Vinyas2025", leader: "Dr. Vinutha K", score: 52 },
-    { teamId: 22, name: "SPUNK", leader: "Dr. Usha B A", score: 68 },
-    { teamId: 1, name: "AI_KRANTHI", leader: "Dr. Kantharaju V", score: 88 }, // AI_Kranthi in PDF
-    { teamId: null, name: "Code of Karna", leader: "Ms. Ashwitha K", score: 95 },
-    { teamId: 29, name: "Ping intelligent", leader: "Dr. Dhanalakshmi B K", score: 81 },
-    { teamId: 42, name: "PentaCoders", leader: "Dr. Mohan B A", score: 81 },
-    { teamId: 31, name: "Anveshana", leader: "Mrs. Manjula B K", score: 61 },
-    { teamId: 16, name: "AswamedhaX", leader: "Dr. N Rakesh", score: 91 },
-    { teamId: 2, name: "Solution Makers", leader: "Mrs. Belji T", score: 85 },
-    { teamId: 46, name: "Elite", leader: "Dr. Veena N", score: 65 }, // NOTE: same teamId (46) appears twice in PDF; kept as-is
-    { teamId: 4, name: "Lady Logicians", leader: "Ms. Brunda S", score: 95 },
-    { teamId: null, name: "Aavishkar", leader: "Dr. Vijayalakshmi G V", score: 0 },
-    { teamId: null, name: "Advitīya", leader: "Dr. Rajesh Gopinath", score: 0 },
-    { teamId: 40, name: "AIGLE AIR", leader: "Prof.S.Mahalakshmi", score: 74 },
-    { teamId: 5, name: "Ananta", leader: "Dr. Paramita Sarkar", score: 86 },
-    { teamId: null, name: "Chitragupt", leader: "Dr. Geeta Amol Patil", score: 0 },
-    { teamId: null, name: "Digital Dreams Venture Smart Kit", leader: "Dr. Drakshaveni G", score: 87 },
-    { teamId: 13, name: "DronAcharya", leader: "Dr. Raju Hajare", score: 88 },
-    { teamId: 32, name: "EcoNex Campus", leader: "Dr. Shanthi D L", score: 53 },
-    { teamId: null, name: "Fusion_Force", leader: "Ms. Chaitra D B", score: 0 },
-    { teamId: null, name: "GreenMind AI", leader: "Dr. Athiyamaan V", score: 71 }, // mapped to "Green AI" row
-    { teamId: null, name: "Hackademia United", leader: "Mr. Shobhit Tembhre", score: 96 },
-    { teamId: null, name: "Idea Spark", leader: "Mrs. Pragathi M", score: 0 },
-    { teamId: 33, name: "Intel Tech", leader: "Mrs. Reshma C R", score: 56 },
-    { teamId: null, name: "Panchkruti", leader: "Ms. Spandana L", score: 0 },
-    { teamId: 28, name: "PRECOL", leader: "Mr. A Venkatesh", score: 96 },
-    { teamId: 44, name: "Tech Forge", leader: "Dr. Anitha M", score: 87 },
-    { teamId: null, name: "TechIdea", leader: "Dr. Chethana C", score: 0 },
-    { teamId: null, name: "TechSangama", leader: "Mr. Sonnegowda K", score: 0 },
-    { teamId: null, name: "ನವೋನ್ಮೇಷ", leader: "Dr. Marsh M Bandi", score: 88 }, // non-ascii name present in PDF
-    { teamId: null, name: "EDGEMINDS", leader: "Syed Matheen Pasha", score: 0 },
-    { teamId: 45, name: "Ashwamedha", leader: "Dr. Mallikarjuna Gowda C.P", score: 54 },
-    { teamId: 18, name: "Infinity Loops", leader: "Mrs. S Packiya Lekshmi", score: 71 },
-    { teamId: null, name: "Social Hacktivists", leader: "Mrs. Aruna N", score: 0 },
-    { teamId: 7, name: "Apahshakti", leader: "Dr. Chandrashekharappa Agasnalli", score: 93 },
-    { teamId: null, name: "Panchajanya", leader: "Dr. Surekha R Gondkar", score: 0 },
-    { teamId: 15, name: "Tech Titans", leader: "Ms. Renita Blossom Monteiro", score: 93 }
-    // If you have additional teams in your original list not present above, we can append them here.
+    { teamId: 1, name: "AI_Kranthi", leader: "Dr. Kantharaju V", score: 70 },
+    { teamId: 2, name: "AIGLE AIR", leader: "Prof.S.Mahalakshmi", score: 88 },
+    { teamId: 3, name: "AIkido-Syntax for Society", leader: "Dr. Anupama H S", score: 83 },
+    { teamId: 4, name: "Anveshana", leader: "Mrs. Manjula B K", score: 73 },
+    { teamId: 5, name: "ApahaShakti", leader: "Dr. Chandrashekharappa Agasnalli", score: 93 },
+    { teamId: 6, name: "Ashwamedha", leader: "Dr. Mallikarjuna Gowda C.P", score: 70 },
+    { teamId: 7, name: "AswamedhaX", leader: "Dr. N Rakesh", score: 90 },
+    { teamId: 8, name: "CHAAM", leader: "Mrs. Annapareddy Haarika", score: 70 },
+    { teamId: 9, name: "CHAAM", leader: "Mrs. Annapareddy Haarika", score: 70 },
+    { teamId: 10, name: "Code of Karna", leader: "Ms. Ashwitha K", score: 78 },
+    { teamId: 11, name: "cybersena", leader: "Dr.Sagargouda Patil", score: 55 },
+    { teamId: 12, name: "Digital Dream Venture Smart Kit", leader: "Dr. Drakshaveni G", score: 75 },
+    { teamId: 13, name: "Ananta", leader: "Dr. Paramita Sarkar", score: 75 },
+    { teamId: 14, name: "DronAcharya", leader: "Dr. Raju Hajare", score: 86 },
+    { teamId: 15, name: "EcoNexCampus", leader: "Dr. Shanthi D L", score: 65 },
+    { teamId: 16, name: "ELITE", leader: "Dr. Veena N", score: 65 },
+    { teamId: 17, name: "Face Track", leader: "Dr. Suryakanth B", score: 85 },
+    { teamId: 18, name: "Green AI", leader: "Dr. Athiyamaan V", score: 81 },
+    { teamId: 19, name: "GreenByte", leader: "Mr. Ajith S", score: 89 },
+    { teamId: 20, name: "Hackademia United", leader: "Mr. Shobhit Tembhre", score: 92 },
+    { teamId: 21, name: "Heart-Guard 360 Wings", leader: "Dr. Anitha V R", score: 91 },
+    { teamId: 22, name: "Infinity Loops", leader: "Mrs. S Packiya Lekshmi", score: 72 },
+    { teamId: 23, name: "Intel Tech", leader: "Mrs. Reshma C R", score: 60 },
+    { teamId: 24, name: "Jeevadhara", leader: "Mr. Dwarakanath G V", score: 80 },
+    { teamId: 25, name: "Jñānī Samūhaḥ", leader: "Dr. Shoba M", score: 82 },
+    { teamId: 26, name: "KRISHIMEDHA", leader: "Dr. Ambika G N", score: 88 },
+    { teamId: 27, name: "Lady Logicians", leader: "Ms. Brunda S", score: 80 },
+    { teamId: 28, name: "MY3S", leader: "Mr. Yatheesh N G", score: 84 },
+    { teamId: 29, name: "NeoPredict", leader: "Dr. Aparna K", score: 81 },
+    { teamId: 30, name: "NeuroAura", leader: "Dr. Mutyala Sridevi", score: 90 },
+    { teamId: 31, name: "PentaCoders", leader: "Dr. Mohan B A", score: 74 },
+    { teamId: 32, name: "Ping Intelligent", leader: "Dr. Dhanalakshmi B K", score: 83 },
+    { teamId: 33, name: "PRECOL", leader: "Mr. A Venkatesh", score: 75 },
+    { teamId: 34, name: "Rescue Net", leader: "Unknown", score: 82 },
+    { teamId: 35, name: "Silicon Squad", leader: "Mr. Beerappa Belasakarge", score: 78 },
+    { teamId: 36, name: "Solution Makers", leader: "Mrs. Belji T", score: 70 },
+    { teamId: 37, name: "SPUNK", leader: "Dr. Usha B A", score: 86 },
+    { teamId: 38, name: "Synergy Innovations", leader: "Dr. B.R. Arun Kumar", score: 84 },
+    { teamId: 39, name: "TECH FORGE", leader: "Dr. Anitha M", score: 88 },
+    { teamId: 40, name: "Tech Titans", leader: "Ms. Renita Blossom Monteiro", score: 82 },
+    // { teamId: 41, name: "Tejaswi", leader: "Dr. Sumathi M S", score: 0 },
+    { teamId: 42, name: "vinyas2025", leader: "Dr. Vinutha K", score: 65 },
+    { teamId: 43, name: "YantraMinds", leader: "Dr. Bharathi Malakreddy A", score: 82 },
+    { teamId: 44, name: "ನವೋನ್ಮೇಷ", leader: "Dr. Marsh M Bandi", score: 90 }
   ];
 
-  // ====== Ranking logic (competition ranking: tie -> same rank, next rank = index+1) ======
-  // 1) Sort descending by score
+  // Sort by score descending
   const sorted = [...rawTeams].sort((a, b) => b.score - a.score);
 
-  // 2) Assign competition-style ranks:
-  //    - items with same score get same rank
-  //    - rank number = index + 1 (so ties consume positions and next rank skips)
+  // Assign competition-style ranks
   const ranked = sorted.map((team, idx) => {
     if (idx === 0) {
       return { ...team, rank: 1 };
     }
     const prev = sorted[idx - 1];
-    // If same score as previous, reuse previous rank
     if (team.score === prev.score) {
       return { ...team, rank: prev.rank };
     }
-    // else rank = idx + 1 (competition ranking)
     return { ...team, rank: idx + 1 };
   });
 
   const handleBackClick = () => {
-    navigate('/');
+    window.history.back();
   };
 
   return (
@@ -135,7 +102,6 @@ const Leaderboard = () => {
       <div className="relative z-10 pt-4 sm:pt-8 md:pt-12 pb-8 sm:pb-12 md:pb-16 px-3 sm:px-4">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-           {/* Back Button */}
           <div className="mb-6">
             <button
               onClick={handleBackClick}
@@ -166,7 +132,7 @@ const Leaderboard = () => {
 
           {/* Leaderboard Container */}
           <div>
-            <div className="bg-white border-2 border-black shadow-xl min-h-[400px] sm:min-h-[500px] flex flex-col">
+            <div className="bg-white border-2 border-black shadow-xl h-[500px] sm:h-[600px] flex flex-col">
               {/* Table Header */}
               <div className="bg-black text-white p-3 sm:p-4 flex-shrink-0">
                 <h3 className="text-base sm:text-lg md:text-xl font-black tracking-wide uppercase">
@@ -174,23 +140,81 @@ const Leaderboard = () => {
                 </h3>
               </div>
 
-              {/* Update Message */}
-              <div className="flex-1 flex items-center justify-center p-8 sm:p-12">
-                <div className="text-center max-w-md">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-black mb-3 sm:mb-4 tracking-tight">
-                    CURRENTLY UPDATING
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600 font-medium">
-                    Please stay tuned. The leaderboard will be available shortly.
-                  </p>
-                </div>
+              {/* Leaderboard Table */}
+              <div className="flex-1 overflow-y-auto overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-100 border-b-2 border-gray-300 sticky top-0">
+                    <tr>
+                      <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-black text-black uppercase tracking-wide">
+                        Rank
+                      </th>
+                      <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-black text-black uppercase tracking-wide">
+                        Team
+                      </th>
+                      <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-black text-black uppercase tracking-wide hidden sm:table-cell">
+                        Leader
+                      </th>
+                      <th className="px-3 sm:px-4 py-2 sm:py-3 text-center text-xs sm:text-sm font-black text-black uppercase tracking-wide">
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ranked.map((team, idx) => (
+                      <tr
+                        key={idx}
+                        className={`border-b border-gray-200 hover:bg-amber-50 transition-colors ${
+                          team.rank <= 3 ? 'bg-amber-50/50' : ''
+                        }`}
+                      >
+                        <td className="px-3 sm:px-4 py-2 sm:py-3">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-sm sm:text-base font-black ${
+                              team.rank === 1 ? 'text-yellow-600' :
+                              team.rank === 2 ? 'text-gray-500' :
+                              team.rank === 3 ? 'text-amber-700' :
+                              'text-black'
+                            }`}>
+                              #{team.rank}
+                            </span>
+                            {team.rank === 1 && <span className="text-lg">🥇</span>}
+                            {team.rank === 2 && <span className="text-lg">🥈</span>}
+                            {team.rank === 3 && <span className="text-lg">🥉</span>}
+                          </div>
+                        </td>
+                        <td className="px-3 sm:px-4 py-2 sm:py-3">
+                          <div className="font-bold text-xs sm:text-sm text-black">
+                            {team.name}
+                          </div>
+                          <div className="text-xs text-gray-600 sm:hidden mt-1">
+                            {team.leader}
+                          </div>
+                        </td>
+                        <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-700 hidden sm:table-cell">
+                          {team.leader}
+                        </td>
+                        <td className="px-3 sm:px-4 py-2 sm:py-3 text-center">
+                          <span className={`inline-block px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-black ${
+                            team.score >= 90 ? 'bg-green-100 text-green-800' :
+                            team.score >= 80 ? 'bg-blue-100 text-blue-800' :
+                            team.score >= 70 ? 'bg-yellow-100 text-yellow-800' :
+                            team.score > 0 ? 'bg-orange-100 text-orange-800' :
+                            'bg-gray-100 text-gray-600'
+                          }`}>
+                            {team.score}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
 
               {/* Table Footer */}
               <div className="bg-gray-50 p-3 sm:p-4 border-t-2 border-gray-200 flex-shrink-0">
                 <div className="flex items-center justify-center gap-2 sm:gap-3 text-xs text-gray-600 font-medium">
                   <div className="w-6 sm:w-8 h-px bg-gray-400"></div>
-                  <span className="tracking-wider uppercase">Refresh page for updates</span>
+                  <span className="tracking-wider uppercase">Updated with latest scores</span>
                   <div className="w-6 sm:w-8 h-px bg-gray-400"></div>
                 </div>
               </div>
@@ -201,22 +225,14 @@ const Leaderboard = () => {
           <div className="text-center mt-6 sm:mt-8">
             <div className="max-w-2xl mx-auto text-xs text-gray-600">
               <p>
-                The leaderboard is being updated with the latest scores. Check back soon for the complete rankings.
+                Rankings based on latest scores. Tied teams share the same rank.
               </p>
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        /* Additional mobile-specific styles */
-        @media (max-width: 640px) {
-          .tracking-tighter {
-            letter-spacing: -0.03em;
-          }
-        }
-      `}</style>
     </div>
   );
 };
+
 export default Leaderboard;
