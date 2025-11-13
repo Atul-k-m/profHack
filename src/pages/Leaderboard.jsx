@@ -68,17 +68,17 @@ const Leaderboard = () => {
   const sorted = [...rawTeams].sort((a, b) => b.score - a.score);
 
   // Assign competition-style ranks
-  const ranked = sorted.map((team, idx) => {
-    if (idx === 0) {
-      return { ...team, rank: 1 };
-    }
-    const prev = sorted[idx - 1];
-    if (team.score === prev.score) {
-      return { ...team, rank: prev.rank };
-    }
-    return { ...team, rank: idx + 1 };
-  });
+ let currentRank = 1;
+let lastScore = null;
+const ranked = [];
 
+sorted.forEach((team) => {
+  if (team.score !== lastScore) {
+    currentRank = ranked.length + 1; // compact rank
+  }
+  ranked.push({ ...team, rank: currentRank });
+  lastScore = team.score;
+});
   const handleBackClick = () => {
     window.history.back();
   };
