@@ -58,7 +58,7 @@ const Leaderboard = () => {
     { teamId: 38, name: "Synergy Innovations", leader: "Dr. B.R. Arun Kumar", score: 84 },
     { teamId: 39, name: "TECH FORGE", leader: "Dr. Anitha M", score: 88 },
     { teamId: 40, name: "Tech Titans", leader: "Ms. Renita Blossom Monteiro", score: 82 },
-    // { teamId: 41, name: "Tejaswi", leader: "Dr. Sumathi M S", score: 0 },
+     { teamId: 41, name: "Tejaswi", leader: "Dr. Sumathi M S", score: 80 },
     { teamId: 42, name: "vinyas2025", leader: "Dr. Vinutha K", score: 65 },
     { teamId: 43, name: "YantraMinds", leader: "Dr. Bharathi Malakreddy A", score: 82 },
     { teamId: 44, name: "ನವೋನ್ಮೇಷ", leader: "Dr. Marsh M Bandi", score: 90 }
