@@ -69,7 +69,7 @@ const Leaderboard = () => {
     { teamId: 50, name: "Idea Spark", leader: "Unknown", score: 100 },
     { teamId: 51, name: "Panchkruti", leader: "Unknown", score: 100 },
     { teamId: 52, name: "TechSangama", leader: "Unknown", score: 100 },
-    { teamId: 53, name: "Social Hacktivists", leader: "Unknown", score: 80 },
+    { teamId: 53, name: "Rescue Net", leader: "Unknown", score: 80 },
     { teamId: 54, name: "Panchajanya", leader: "Unknown", score: 60 }
   ];
 
